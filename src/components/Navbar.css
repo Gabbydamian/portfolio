@@ -8,6 +8,7 @@
   --black: #0d0d0d;
   --grey: #9b9b9b;
   --white: #fff;
+  --transition: 0.3s ease-in-out;
 }
 ul{
   margin: 0;
@@ -33,6 +34,7 @@ a{
   top: 0;
   left: 0;
   right: 0;
+  height: 90px;
 }
 
 .logo-box{
@@ -41,6 +43,7 @@ a{
 
 .logo{
   color: var(--orange);
+  transition: var(--transition);
 }
 
 .logo:hover{
@@ -51,7 +54,7 @@ a{
 }
 
 .nav-item{
-  margin: auto 25px;
+  margin: auto 15px;
 }
 
 .nav-item.active .nav-link{
@@ -62,24 +65,24 @@ a{
   padding: 5px 10px;
   text-transform: uppercase;
   font-weight: bold;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
   color: var(--grey);
 }
 
 .nav-link:hover{
   border-bottom: 2px solid var(--white);
   color: var(--white);
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
 
 }
 
 .btn{
-  margin: auto 50px auto 50px;
+  margin: auto 30px auto 50px;
   padding: 10px 17px;
   border-radius: 5px;
   outline: none;
   border: 1px solid var(--orange);
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
   cursor: pointer;
 }
 
