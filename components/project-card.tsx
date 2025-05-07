@@ -3,15 +3,8 @@ import Link from "next/link"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink } from "lucide-react"
+import { Project } from "@/app/types/project"
 
-interface Project {
-  id: number
-  title: string
-  description: string
-  image: string
-  tags: string[]
-  link: string
-}
 
 interface ProjectCardProps {
   project: Project
@@ -27,7 +20,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-gray-400 mb-4">{project.description}</p>
         <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
+          {project.tags?.map((tag) => (
             <Badge key={tag} variant="secondary">
               {tag}
             </Badge>
