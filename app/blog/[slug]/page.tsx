@@ -1,11 +1,16 @@
-"use client"
+"use client";
 
-import { MainLayout } from "@/components/main-layout"
-import { MarkdownRenderer } from "@/components/markdown-renderer"
-import { notFound } from "next/navigation"
-import { formatDate } from "@/lib/utils"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
+import { use } from "react";
+import { MainLayout } from "@/components/main-layout";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { notFound } from "next/navigation";
+import { formatDate } from "@/lib/utils";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+
+type Params = {
+  params: Promise<{ slug: string }>;
+};
 
 // This would be replaced with a database query in a real app
 const getBlogPost = (slug: string) => {
@@ -316,23 +321,26 @@ Technical skills alone aren't enough for career advancement.
 A successful tech career is built on a foundation of technical excellence, continuous learning, strong relationships, and strategic career planning. By focusing on these areas, you can navigate the ever-changing technology landscape and build a fulfilling career.
       `,
     },
-  }
+  };
 
-  return posts[slug as keyof typeof posts] || null
-}
+  return posts[slug as keyof typeof posts] || null;
+};
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = getBlogPost(params.slug)
+export default function BlogPost({ params }: Params) {
+  const resolvedParams = use(params);
+  const post = getBlogPost(resolvedParams.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
     <MainLayout>
-      <article className="container mx-auto px-4 py-12 max-w-4xl">
+      <article className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{post.title}</h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            {post.title}
+          </h1>
           <div className="flex items-center text-gray-400 mb-4">
             <span>{formatDate(post.date)}</span>
             <span className="mx-2">•</span>
@@ -340,13 +348,21 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           </div>
           {post.category && (
             <div className="mb-6">
-              <Badge variant="outline" className="bg-gray-700 hover:bg-gray-600">
+              <Badge
+                variant="outline"
+                className="bg-gray-700 hover:bg-gray-600"
+              >
                 {post.category}
               </Badge>
             </div>
           )}
           <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">
-            <Image src={post.coverImage || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
+            <Image
+              src={post.coverImage || "/placeholder.svg"}
+              alt={post.title}
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
@@ -355,5 +371,5 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         </div>
       </article>
     </MainLayout>
-  )
+  );
 }

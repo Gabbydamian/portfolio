@@ -41,7 +41,7 @@ export default function SubmitBlogPage() {
   if (isSubmitted) {
     return (
       <MainLayout>
-        <div className="container mx-auto px-4 py-12 max-w-2xl">
+        <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,8 @@ export default function SubmitBlogPage() {
           >
             <h1 className="text-3xl font-bold mb-4">Thank You!</h1>
             <p className="text-xl text-gray-300 mb-6">
-              Your blog post has been submitted for review. We'll notify you once it's approved.
+              Your blog post has been submitted for review. We'll notify you
+              once it's approved.
             </p>
             <div className="flex justify-center gap-4">
               <Button asChild>
@@ -63,12 +64,12 @@ export default function SubmitBlogPage() {
           </motion.div>
         </div>
       </MainLayout>
-    )
+    );
   }
 
   return (
     <MainLayout>
-      <div className="container mx-auto px-4 py-12 max-w-2xl">
+      <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,7 +78,8 @@ export default function SubmitBlogPage() {
         >
           <h1 className="text-4xl font-bold mb-4">Submit a Blog Post</h1>
           <p className="text-gray-400">
-            Share your knowledge with the community. All submissions are reviewed before publishing.
+            Share your knowledge with the community. All submissions are
+            reviewed before publishing.
           </p>
         </motion.div>
 
@@ -149,5 +151,5 @@ export default function SubmitBlogPage() {
         </div>
       </div>
     </MainLayout>
-  )
+  );
 }

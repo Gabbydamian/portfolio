@@ -1,0 +1,22 @@
+TODO: Integrate Supabase for auth and database (Blogs, Projects, Submissions);
+TODO: Write functions for CRUD Operations
+TODO: Add dark/light mode toggle
+TODO: {
+    read time for blogs
+      function calculateReadTime(content: string): string {
+        const wordsPerMinute = 200; // Average reading speed
+        const wordCount = content.split(/\s+/).length; // Count words in the content
+        const minutes = Math.ceil(wordCount / wordsPerMinute); // Round up to the nearest minute
+        return `${minutes} min read`;
+      }
+    }
+TODO: {
+
+  generate slug
+  function generateSlug(title: string): string {
+  return title
+    .toLowerCase() // Convert to lowercase
+    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
+    .replace(/\s+/g, "-"); // Replace spaces with hyphens
+}
+}

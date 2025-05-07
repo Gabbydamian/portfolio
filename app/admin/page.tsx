@@ -1,40 +1,40 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { MainLayout } from "@/components/main-layout"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BlogPostEditor } from "@/components/blog-post-editor"
-import { useToast } from "@/hooks/use-toast"
-import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
-import { Check, X, Edit, Trash, Plus } from "lucide-react"
+import { useState } from "react";
+import { MainLayout } from "@/components/main-layout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BlogPostEditor } from "@/components/blog-post-editor";
+import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Check, X, Edit, Trash, Plus } from "lucide-react";
 
 // Mock authentication - would be replaced with Supabase auth
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = (email: string, password: string) => {
-    setIsLoading(true)
+    setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
       // For demo purposes, any input will "authenticate"
-      setIsAuthenticated(true)
-      setIsLoading(false)
-    }, 1000)
-  }
+      setIsAuthenticated(true);
+      setIsLoading(false);
+    }, 1000);
+  };
 
   const logout = () => {
-    setIsAuthenticated(false)
-  }
+    setIsAuthenticated(false);
+  };
 
-  return { isAuthenticated, isLoading, login, logout }
-}
+  return { isAuthenticated, isLoading, login, logout };
+};
 
 // Sample pending submissions
 const pendingSubmissions = [
@@ -45,7 +45,8 @@ const pendingSubmissions = [
     email: "jane@example.com",
     date: "2023-10-15",
     category: "development",
-    excerpt: "A deep dive into React Hooks and how they can simplify your code...",
+    excerpt:
+      "A deep dive into React Hooks and how they can simplify your code...",
   },
   {
     id: 2,
@@ -54,55 +55,56 @@ const pendingSubmissions = [
     email: "mike@example.com",
     date: "2023-10-12",
     category: "design",
-    excerpt: "Exploring upcoming trends in web design and what to expect in 2024...",
+    excerpt:
+      "Exploring upcoming trends in web design and what to expect in 2024...",
   },
-]
+];
 
 export default function AdminPage() {
-  const { isAuthenticated, isLoading, login, logout } = useAuth()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const { toast } = useToast()
+  const { isAuthenticated, isLoading, login, logout } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    login(email, password)
-  }
+    e.preventDefault();
+    login(email, password);
+  };
 
   const handleSavePost = () => {
     // This would save to Supabase in a real app
     toast({
       title: "Post saved",
       description: "Your blog post has been saved successfully.",
-    })
-  }
+    });
+  };
 
   const handleSaveProject = () => {
     // This would save to Supabase in a real app
     toast({
       title: "Project saved",
       description: "Your project has been saved successfully.",
-    })
-  }
+    });
+  };
 
   const handleApproveSubmission = (id: number) => {
     toast({
       title: "Submission approved",
       description: "The blog post has been approved and published.",
-    })
-  }
+    });
+  };
 
   const handleRejectSubmission = (id: number) => {
     toast({
       title: "Submission rejected",
       description: "The blog post has been rejected.",
-    })
-  }
+    });
+  };
 
   if (!isAuthenticated) {
     return (
       <MainLayout>
-        <div className="container mx-auto px-4 py-12 max-w-md">
+        <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-lg">
           <h1 className="text-3xl font-bold mb-8 text-center">Admin Login</h1>
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
@@ -129,19 +131,21 @@ export default function AdminPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
             </Button>
-            <p className="text-sm text-center text-gray-400 mt-4">Note: This is a demo. Any credentials will work.</p>
+            <p className="text-sm text-center text-gray-400 mt-4">
+              Note: This is a demo. Any credentials will work.
+            </p>
           </form>
         </div>
       </MainLayout>
-    )
+    );
   }
 
   return (
     <MainLayout>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 md:px-24 py-12 mt-24">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <Button variant="outline" onClick={logout}>
+          <Button variant="outline" onClick={logout} className=" hover:bg-red-800">
             Logout
           </Button>
         </div>
@@ -158,11 +162,16 @@ export default function AdminPage() {
 
           <TabsContent value="submissions">
             <div className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">Pending Blog Submissions</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                Pending Blog Submissions
+              </h2>
               {pendingSubmissions.length > 0 ? (
                 <div className="space-y-4">
                   {pendingSubmissions.map((submission) => (
-                    <div key={submission.id} className="p-4 bg-gray-900 rounded-lg">
+                    <div
+                      key={submission.id}
+                      className="p-4 bg-gray-900 rounded-lg"
+                    >
                       <div className="flex justify-between items-start mb-2">
                         <div>
                           <h3 className="font-bold">{submission.title}</h3>
@@ -178,8 +187,10 @@ export default function AdminPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="bg-green-900 hover:bg-green-800"
-                            onClick={() => handleApproveSubmission(submission.id)}
+                            className="bg-green-700 hover:bg-green-600"
+                            onClick={() =>
+                              handleApproveSubmission(submission.id)
+                            }
                           >
                             <Check className="w-4 h-4 mr-1" /> Approve
                           </Button>
@@ -187,21 +198,28 @@ export default function AdminPage() {
                             size="sm"
                             variant="outline"
                             className="bg-red-900 hover:bg-red-800"
-                            onClick={() => handleRejectSubmission(submission.id)}
+                            onClick={() =>
+                              handleRejectSubmission(submission.id)
+                            }
                           >
                             <X className="w-4 h-4 mr-1" /> Reject
                           </Button>
                         </div>
                       </div>
                       <p className="text-gray-300">{submission.excerpt}</p>
-                      <Button variant="link" className="p-0 h-auto text-primary">
+                      <Button
+                        variant="link"
+                        className="p-0 h-auto text-primary"
+                      >
                         View Full Submission
                       </Button>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-400">No pending submissions to review.</p>
+                <p className="text-gray-400">
+                  No pending submissions to review.
+                </p>
               )}
             </div>
           </TabsContent>
@@ -222,7 +240,10 @@ export default function AdminPage() {
                   "Design Systems for Developers",
                   "Navigating Your Tech Career",
                 ].map((title, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-gray-900 rounded-lg">
+                  <div
+                    key={i}
+                    className="flex items-center justify-between p-4 bg-gray-900 rounded-lg"
+                  >
                     <span>{title}</span>
                     <div className="space-x-2">
                       <Button variant="outline" size="sm">
@@ -252,7 +273,10 @@ export default function AdminPage() {
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <select id="category" className="w-full rounded-md border border-input bg-background px-3 py-2">
+                  <select
+                    id="category"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2"
+                  >
                     <option value="">Select a category</option>
                     <option value="development">Development</option>
                     <option value="design">Design</option>
@@ -262,7 +286,10 @@ export default function AdminPage() {
                 </div>
                 <div>
                   <Label htmlFor="coverImage">Cover Image URL</Label>
-                  <Input id="coverImage" placeholder="https://example.com/image.jpg" />
+                  <Input
+                    id="coverImage"
+                    placeholder="https://example.com/image.jpg"
+                  />
                 </div>
               </div>
               <div className="mb-4">
@@ -282,21 +309,27 @@ export default function AdminPage() {
                 </Button>
               </div>
               <div className="space-y-4">
-                {["Portfolio Website", "E-commerce Platform", "Weather App", "Task Management System"].map(
-                  (title, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-gray-900 rounded-lg">
-                      <span>{title}</span>
-                      <div className="space-x-2">
-                        <Button variant="outline" size="sm">
-                          <Edit className="w-4 h-4 mr-1" /> Edit
-                        </Button>
-                        <Button variant="destructive" size="sm">
-                          <Trash className="w-4 h-4 mr-1" /> Delete
-                        </Button>
-                      </div>
+                {[
+                  "Portfolio Website",
+                  "E-commerce Platform",
+                  "Weather App",
+                  "Task Management System",
+                ].map((title, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between p-4 bg-gray-900 rounded-lg"
+                  >
+                    <span>{title}</span>
+                    <div className="space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Edit className="w-4 h-4 mr-1" /> Edit
+                      </Button>
+                      <Button variant="destructive" size="sm">
+                        <Trash className="w-4 h-4 mr-1" /> Delete
+                      </Button>
                     </div>
-                  ),
-                )}
+                  </div>
+                ))}
               </div>
             </div>
           </TabsContent>
@@ -311,19 +344,31 @@ export default function AdminPage() {
                 </div>
                 <div>
                   <Label htmlFor="project-description">Description</Label>
-                  <Textarea id="project-description" placeholder="Project description" />
+                  <Textarea
+                    id="project-description"
+                    placeholder="Project description"
+                  />
                 </div>
                 <div>
                   <Label htmlFor="project-image">Image URL</Label>
-                  <Input id="project-image" placeholder="https://example.com/image.jpg" />
+                  <Input
+                    id="project-image"
+                    placeholder="https://example.com/image.jpg"
+                  />
                 </div>
                 <div>
                   <Label htmlFor="project-link">Project Link</Label>
-                  <Input id="project-link" placeholder="https://example.com/project" />
+                  <Input
+                    id="project-link"
+                    placeholder="https://example.com/project"
+                  />
                 </div>
                 <div>
                   <Label htmlFor="project-tags">Tags (comma separated)</Label>
-                  <Input id="project-tags" placeholder="React, Node.js, MongoDB" />
+                  <Input
+                    id="project-tags"
+                    placeholder="React, Node.js, MongoDB"
+                  />
                 </div>
               </div>
               <Button onClick={handleSaveProject}>Save Project</Button>
@@ -356,5 +401,5 @@ export default function AdminPage() {
         </Tabs>
       </div>
     </MainLayout>
-  )
+  );
 }
