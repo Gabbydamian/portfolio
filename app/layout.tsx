@@ -13,9 +13,15 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Damian's Portfolio",
-  description: "Personal portfolio and blog",
-  generator: "v0.dev",
+  title: "Damian Gabriel",
+  description: "Damian's portfolio and blog",
+  generator: "Next.js",
+  authors: [
+    {
+      name: "Damian Gabriel",
+      url: "https://astridamian.vercel.app/",
+    },
+  ],
 };
 
 export default function RootLayout({

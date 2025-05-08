@@ -187,7 +187,7 @@ export default function About() {
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start px-0  py-0 md:py-4 md:px-8">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-[#3E7B45]">
                 <Image
-                  src="/headshot.jpg"
+                  src="/headshot.webp"
                   alt="Damian Gabriel"
                   fill
                   className="object-cover"
