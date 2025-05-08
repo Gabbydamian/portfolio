@@ -9,82 +9,167 @@ import {
   GraduationCap,
   Mail,
   MapPin,
-  Film,
-  Music,
+  Clapperboard,
+  Headphones,
   CastleIcon as ChessKnight,
-  BookOpen,
   Globe,
   Send,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ContactForm } from "@/components/contact-form";
+import Link from "next/link";
 
 export default function About() {
   const [showContactForm, setShowContactForm] = useState(false);
 
   const skills = [
-    { name: "JavaScript", color: "bg-[#3E7B45] text-white" },
-    { name: "React", color: "bg-[#4A5899] text-white" },
-    { name: "Node.js", color: "bg-gray-800 text-white" },
-    { name: "TypeScript", color: "bg-gray-800 text-white" },
-    { name: "Python", color: "bg-[#3E7B45] text-white" },
+    {
+      name: "JavaScript",
+      color:
+        "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+    },
+    {
+      name: "TypeScript",
+      color:
+        "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
+    },
+    {
+      name: "Python",
+      color:
+        "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+    },
+    {
+      name: "React",
+      color: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+    },
+    {
+      name: "Node.js",
+      color:
+        "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+    },
+    {
+      name: "Docker",
+      color: "bg-sky-50 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
+    },
+    {
+      name: "Next.js",
+      color:
+        "bg-slate-50 text-slate-800 dark:bg-slate-800/30 dark:text-slate-300",
+    },
+    {
+      name: "Git",
+      color: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+    },
+    {
+      name: "GraphQL",
+      color: "bg-pink-50 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
+    },
+    {
+      name: "Tailwind CSS",
+      color: "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+    },
+    {
+      name: "Figma",
+      color:
+        "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+    },
+    {
+      name: "UI/UX Design",
+      color:
+        "bg-violet-50 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+    },
+    {
+      name: "SQL",
+      color: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+    },
+    {
+      name: "Linux/Unix",
+      color:
+        "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+    },
+    {
+      name: "AI Systems",
+      color:
+        "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+    },
+    {
+      name: "APIs",
+      color: "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+    },
+    {
+      name: "Supabase",
+      color:
+        "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+    },
+    {
+      name: "OOP",
+      color: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300",
+    },
   ];
 
   const interests = [
     {
-      icon: <Film className="w-5 h-5" />,
+      icon: <Clapperboard className="w-5 h-5" />,
       text: "Classic film analysis and theory",
     },
     {
-      icon: <Music className="w-5 h-5" />,
+      icon: <Headphones className="w-5 h-5" />,
       text: "Music production and discovery",
     },
     { icon: <ChessKnight className="w-5 h-5" />, text: "Competitive chess" },
     {
-      icon: <BookOpen className="w-5 h-5" />,
+      icon: <Rocket className="w-5 h-5" />,
       text: "Learning new technologies and skills",
     },
   ];
 
   const experience = [
     {
-      title: "Senior Frontend Developer",
-      company: "TechNova Solutions",
-      period: "2021 - Present",
+      title: "Frontend Developer",
+      company: "Valdymas",
+      period: "Mar 2025 – Present",
       description:
-        "Led development of responsive web applications using React, Redux, and TypeScript.",
+        "Built responsive interfaces for a student management system and a full-stack savings/loan app using React, Next.js, and Supabase. Focused on authentication, data security, and performance visualization.",
     },
     {
-      title: "Full Stack Developer",
-      company: "CodeCraft Studio",
-      period: "2019 - 2021",
+      title: "Frontend Developer (Next.js)",
+      company: "Hire-ng",
+      period: "Apr 2024 – Present",
       description:
-        "Developed and maintained web applications using MERN stack and implemented CI/CD pipelines.",
+        "Developed reusable components using Next.js and TailwindCSS. Partnered with design teams to deliver optimized, engaging user interfaces and improve load times.",
     },
     {
-      title: "Junior Developer",
-      company: "WebSphere Inc.",
-      period: "2018 - 2019",
+      title: "Frontend Developer Intern",
+      company: "IINVIO",
+      period: "Nov 2023 – Feb 2024",
       description:
-        "Created custom WordPress themes and plugins for clients in various industries.",
+        "Collaborated on React-based app components and system architecture prototypes. Contributed to product research and business model development.",
     },
   ];
 
   const education = [
     {
-      degree: "BSc in Computer Science",
-      institution: "University of Technology",
-      period: "2014 - 2018",
+      degree: "B.Sc. in Quantity Surveying",
+      institution: "Obafemi Awolowo University",
+      period: "2017 – 2024",
       description:
-        "Graduated with First Class Honors, specializing in Web Technologies and Artificial Intelligence.",
+        "Graduated with Second Class Honours (Upper Division). Built foundational analytical and project planning skills.",
     },
     {
-      degree: "Advanced Certification in UI/UX Design",
-      institution: "Design Academy",
-      period: "2019",
+      degree: "CompTIA IT Fundamentals (ITF+)",
+      institution: "CompTIA",
+      period: "Sep 2024 – Nov 2024",
       description:
-        "Completed intensive 6-month program focused on user interface and experience design principles.",
+        "Studied core IT concepts, security, operating systems, and troubleshooting. Achieved strong mock exam scores (avg. 83%).",
+    },
+    {
+      degree: "Introduction to Computer Science (CS50X)",
+      institution: "Harvard University (edX)",
+      period: "Nov 2023 – Jun 2024",
+      description:
+        "Covered CS fundamentals with C, Python, JavaScript, and SQL. Focused on algorithmic thinking and secure web development.",
     },
   ];
 
@@ -99,91 +184,53 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="bg-gray-900 rounded-xl p-8 col-span-2"
           >
-            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start px-0  py-0 md:py-4 md:px-8">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-[#3E7B45]">
                 <Image
-                  src="/placeholder.svg?height=200&width=200"
-                  alt="Damian"
+                  src="/headshot.jpg"
+                  alt="Damian Gabriel"
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="flex-1">
-                <h1 className="text-4xl font-bold mb-4">Damian</h1>
-                <p className="text-gray-300 mb-6">
-                  I'm a passionate full-stack developer with a love for creating
-                  beautiful, interactive web experiences. My journey in
-                  programming started 5 years ago, and I've been building
-                  digital solutions ever since.
+                <h1 className="text-4xl font-bold mb-4 flex items-center">
+                  Damian Gabriel O.
+                </h1>
+                <p className="text-gray-300 mb-6 text-justify">
+                  <span className="font-semibold text-rose-500">
+                    Developer.{" "}
+                  </span>
+                  <span className="font-semibold text-amber-500">
+                    Problem-solver.{" "}
+                  </span>
+                  <span className="font-semibold text-cyan-500">
+                    UX thinker.{" "}
+                  </span>
+                  I build full-stack web apps that are
+                  <span className="text-green-400 font-medium">
+                    {" "}
+                    fast, clean, and built to scale.{" "}
+                  </span>
+                  A product MVP, admin dashboard, or internal tool? I’ve got you
+                  covered. I build with{" "}
+                  <span className="text-blue-400">React</span>,{" "}
+                  <span className="text-blue-400">Next.js</span>, and modern
+                  backend stacks, I focus on {""}
+                  detail, performance, and creating products that people
+                  actually enjoy using.
                 </p>
-                <p className="text-gray-300 mb-6">
-                  When I'm not coding, you'll find me exploring new music,
-                  watching classic films, or engaged in an intense chess match.
-                  I believe in continuous learning and pushing the boundaries of
-                  what's possible with technology.
-                </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 justify-center">
                   {skills.map((skill) => (
                     <Badge
                       key={skill.name}
-                      className={`${skill.color} px-4 py-1 text-sm rounded-full`}
+                      className={`${skill.color} px-4 py-1 text-sm rounded-sm hover:shadow-md transition duration-300 cursor-default`}
                     >
                       {skill.name}
                     </Badge>
                   ))}
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Interests Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-gray-900 rounded-xl p-8"
-          >
-            <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="text-[#3E7B45] mr-2">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 16V12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 8H12.01"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              Interests
-            </h2>
-            <div className="space-y-4">
-              {interests.map((interest, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <span className="text-[#3E7B45]">{interest.icon}</span>
-                  <span>{interest.text}</span>
-                </div>
-              ))}
             </div>
           </motion.div>
 
@@ -247,6 +294,60 @@ export default function About() {
             </div>
           </motion.div>
 
+          {/* Interests Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-gray-900 rounded-xl p-8 col-span-2"
+          >
+            <h2 className="text-2xl font-bold mb-6 flex items-center text-center justify-self-center">
+              {/* <span className="text-[#3E7B45] mr-2">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12 16V12"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12 8H12.01"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span> */}
+              Interests
+            </h2>
+            <div className="flex flex-wrap gap-6 justify-center">
+              {interests.map((interest, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-lg min-w-[200px]"
+                >
+                  <span className="text-[#3E7B45]">{interest.icon}</span>
+                  <span className="text-sm md:text-base">{interest.text}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
           {/* Contact Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -266,19 +367,33 @@ export default function About() {
                   <span className="text-[#3E7B45]">
                     <Mail className="w-5 h-5" />
                   </span>
-                  <span>contact@damian.dev</span>
+                  <span>
+                    <Link
+                      href={"mailto:gabbydamian92@gmail.com"}
+                      className="hover:text-[#3E7B45] transition-colors font-medium"
+                    >
+                      gabbydamian92@gmail.com
+                    </Link>
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-[#3E7B45]">
                     <Globe className="w-5 h-5" />
                   </span>
-                  <span>damian.dev</span>
+                  <span>
+                    <Link
+                      href={"https://astridamian.vercel.app/"}
+                      className="hover:text-[#3e7b45] transition-colors font-medium"
+                    >
+                      astridamian.dev
+                    </Link>
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-[#3E7B45]">
                     <MapPin className="w-5 h-5" />
                   </span>
-                  <span>Lagos, Nigeria</span>
+                  <span className="font-medium">Lagos, Nigeria</span>
                 </div>
                 <div className="mt-6">
                   <Button

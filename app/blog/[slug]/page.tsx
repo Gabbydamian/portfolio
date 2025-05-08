@@ -14,7 +14,7 @@ export default async function BlogPost({ params }: Params) {
 
   try {
     const result = await fetchBlogPostBySlug(slug);
-    console.log("Result: ", result);
+    // console.log("Result: ", result);
 
     const post = result.error ? null : result.blogPost ?? null;
 

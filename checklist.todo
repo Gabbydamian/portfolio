@@ -1,4 +1,5 @@
 TODO: Integrate Supabase for auth and database (Blogs, Projects, Submissions);
+TODO: Replace email in about sectoion from "gabbydamian92@gmail.com"
 TODO: Write functions for CRUD Operations
 TODO: Add dark/light mode toggle
 TODO: {
