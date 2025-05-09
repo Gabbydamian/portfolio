@@ -1,5 +1,6 @@
 export type Blog = {
   author: string | null;
+  email: string | null;
   category: string | null;
   content: string;
   cover_img: string | null;
@@ -9,6 +10,7 @@ export type Blog = {
   read_time: string | null;
   slug: string;
   title: string;
+  approved: boolean;
 };
 
 export type BlogProps = {
@@ -25,4 +27,9 @@ export type BlogCategory =
 
 export type BlogPageProps = {
   post: Blog;
+};
+
+
+export type PendingSubmissionsProps = {
+  submissions: Blog[];
 };

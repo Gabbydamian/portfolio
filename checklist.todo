@@ -1,5 +1,5 @@
 TODO: Integrate Supabase for auth and database (Blogs, Projects, Submissions);
-TODO: Add meta tags
+TODO: Add meta tags from open graph tab after deployment and source
 TODO: Add robots.txt
 TODO: Replace email in about sectoion from "gabbydamian92@gmail.com"
 TODO: Write functions for CRUD Operations

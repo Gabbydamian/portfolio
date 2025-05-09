@@ -4,5 +4,5 @@ export type Project = {
   link: string;
   tags: string[] | null;
   title: string;
-  uuid: string;
+  id: string;
 };

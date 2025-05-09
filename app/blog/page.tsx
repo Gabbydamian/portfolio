@@ -3,7 +3,7 @@ import Blogs from "@/components/Blogs";
 import { fetchBlogPosts } from "@/actions/blogActions";
 
 export default async function BlogsPage() {
-  const result = await fetchBlogPosts();
+  const result = await fetchBlogPosts("approved");
   // console.log("Result: ", result);
   const blogs = result.error ? [] : result.blogs ?? [];
   const error = result.error ? "Failed to fetch projects" : null;
