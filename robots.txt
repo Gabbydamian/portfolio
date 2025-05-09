@@ -6,4 +6,4 @@ Allow: /
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://astrid-damian.vercel.app/sitemap.xml
+Sitemap: https://astridamian.vercel.app/sitemap.xml
