@@ -1,42 +1,61 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { MainLayout } from "@/components/main-layout"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { BlogPostEditor } from "@/components/blog-post-editor"
-import { useToast } from "@/hooks/use-toast"
-import { motion } from "framer-motion"
-import Link from "next/link"
+import { useState } from "react";
+import { MainLayout } from "@/components/main-layout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { BlogPostEditor } from "@/components/blog-post-editor";
+import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import removeMarkdown from "remove-markdown";
+import { addNewBlogPost } from "@/actions/blogActions";
 
 export default function SubmitBlogPage() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [title, setTitle] = useState("")
-  const [category, setCategory] = useState("")
-  const [content, setContent] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const { toast } = useToast()
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
 
-    // In a real app, this would send data to your backend/Supabase
-    // For now, we'll simulate a successful submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+    const excerpt = removeMarkdown(content).slice(0, 60).trim() + "...";
+    const approved = false;
+
+    try {
+      await addNewBlogPost({
+        title,
+        category,
+        content,
+        excerpt,
+        approved,
+      });
+
       toast({
-        title: "Submission received!",
-        description: "Your blog post has been submitted for review.",
-      })
-    }, 1500)
-  }
+        title: "Post saved",
+        description: "Your blog post was saved.",
+      });
+
+      setTitle("");
+      setCategory("");
+      setContent("");
+    } catch (error) {
+      toast({
+        title: "Error saving post",
+        description:
+          error instanceof Error ? error.message : "An error occurred",
+        variant: "destructive",
+      });
+    }
+  };
 
   if (isSubmitted) {
     return (

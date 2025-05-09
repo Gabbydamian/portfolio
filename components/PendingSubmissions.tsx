@@ -6,26 +6,51 @@ import { Check, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Blog } from "@/app/types/blog";
 import { PendingSubmissionsProps } from "@/app/types/blog";
+import { approveBlogPost, rejectBlogPost } from "@/actions/blogActions";
+import { useRouter } from "next/navigation";
 
 export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
   const { toast } = useToast();
+  const router = useRouter();
 
-  console.log("Pending Submissions: ", submissions);
+  // console.log("Pending Submissions: ", submissions);
 
-  const handleApproveSubmission = (id: string) => {
-    // This would be a server action in production
+  const handleApproveSubmission = async (id: string) => {
+    const { error } = await approveBlogPost(id);
+
+    if (error) {
+      toast({
+        title: "Error occured",
+        description: "The blog post could not be approved.",
+      });
+      console.error("Approval failed");
+      return;
+    }
     toast({
       title: "Submission approved",
       description: "The blog post has been approved and published.",
     });
+    router.refresh();
   };
 
-  const handleRejectSubmission = (id: string) => {
+  const handleRejectSubmission = async (id: string) => {
     // This would be a server action in production
+
+    const { error } = await rejectBlogPost(id);
+
+    if (error) {
+      toast({
+        title: "Error occured",
+        description: "The blog post could not be rejected.",
+      });
+      console.error("Rejection failed");
+      return;
+    }
     toast({
-      title: "Submission rejected",
-      description: "The blog post has been rejected.",
+      title: "Submission Rejected",
+      description: "The blog post has been rejected and deleted.",
     });
+    router.refresh();
   };
 
   return (

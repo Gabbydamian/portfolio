@@ -29,7 +29,15 @@ export type BlogPageProps = {
   post: Blog;
 };
 
-
 export type PendingSubmissionsProps = {
   submissions: Blog[];
 };
+
+export interface NewBlogPost {
+  title: string;
+  category: string;
+  cover_img?: string;
+  content: string;
+  excerpt: string;
+  approved?: boolean;
+}

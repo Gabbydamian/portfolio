@@ -2,9 +2,8 @@
 
 import { createClient } from "@/utils/supabase/supabase";
 import { calculateReadTime, generateSlug } from "@/lib/utils";
-import { Blog } from "@/app/types/blog";
-import { error } from "console";
-
+// import { Blog } from "@/app/types/blog";
+import { NewBlogPost } from "@/app/types/blog";
 export async function fetchBlogPosts(status?: string) {
   const supabase = await createClient();
 
@@ -43,27 +42,68 @@ export async function fetchBlogPostBySlug(slug: string) {
   return { blogPost: data, error: null };
 }
 
-export async function addNewBlogPost(blog: Partial<Blog>) {
+
+export async function addNewBlogPost(data: NewBlogPost) {
   const supabase = await createClient();
 
-  const { author, category, content, cover_img, excerpt, title } = blog;
-  const read_time = calculateReadTime(content || "");
-  const slug = generateSlug(title || "");
+  const slug = await generateSlug(data.title);
+  const read_time = await calculateReadTime(data.content);
+
+  const blog = {
+    ...data,
+    slug,
+    read_time,
+    author: "Damian Gabriel",
+    email: "gabbydamian92@gmail.com",
+  };
+
+  const { error } = await supabase.from("blogs").insert([blog]);
+
+  if (error) {
+    console.error("Error inserting blog post:", error);
+    throw error;
+  }
+}
+
+
+export async function approveBlogPost(id: string) {
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from("blogs")
-    .insert([
-      author,
-      category,
-      content,
-      cover_img,
-      excerpt,
-      read_time,
-      slug,
-      title,
-    ]);
+    .update({ approved: true })
+    .eq("id", id);
 
   if (error) {
-    console.error("An error occured: ", error);
+    console.error("Error approving blog post:", error.message);
+    return { success: false, error: error.message };
   }
+
+  return { success: true };
+}
+
+export async function rejectBlogPost(id: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("blogs").delete().eq("id", id);
+
+  if (error) {
+    console.error("Error rejecting blog post:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+}
+
+export async function deleteBlogPost(id: string) {
+  const supabse = await createClient();
+
+  const { error } = await supabse.from("blogs").delete().eq("id", id);
+
+  if (error) {
+    console.error("Error Deleting blog post:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
 }

@@ -7,33 +7,39 @@ import { Label } from "@/components/ui/label";
 import { BlogPostEditor } from "@/components/blog-post-editor";
 import { useToast } from "@/hooks/use-toast";
 import { addNewBlogPost } from "@/actions/blogActions";
+import removeMarkdown from "remove-markdown";
 
 export function NewPost() {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
   const [category, setCategory] = useState("");
-  const [cover_img, setCover_img] = useState("");
+  const [coverImg, setCoverImg] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSavePost = async () => {
-    setIsLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const excerpt = removeMarkdown(content).slice(0, 60).trim() + "...";
+    const approved = true;
 
     try {
-      // This would call a server action to save the post
-      await addNewBlogPost({ title, slug, category, cover_img, content });
+      await addNewBlogPost({
+        title,
+        category,
+        cover_img: coverImg,
+        content,
+        excerpt,
+        approved,
+      });
 
       toast({
         title: "Post saved",
-        description: "Your blog post has been saved successfully.",
+        description: "Your blog post was saved.",
       });
 
-      // Reset form after successful save
       setTitle("");
-      setSlug("");
       setCategory("");
-      setCover_img("");
+      setCoverImg("");
       setContent("");
     } catch (error) {
       toast({
@@ -42,19 +48,18 @@ export function NewPost() {
           error instanceof Error ? error.message : "An error occurred",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg p-6">
+    <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg p-6">
       <h2 className="text-xl font-semibold mb-4">Create New Post</h2>
       <div className="space-y-4 mb-4">
         <div>
           <Label htmlFor="title">Title</Label>
           <Input
             id="title"
+            name="title"
             placeholder="Post title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -62,19 +67,10 @@ export function NewPost() {
           />
         </div>
         <div>
-          <Label htmlFor="slug">Slug</Label>
-          <Input
-            id="slug"
-            placeholder="post-slug"
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            required
-          />
-        </div>
-        <div>
           <Label htmlFor="category">Category</Label>
           <select
             id="category"
+            name="category"
             className="w-full rounded-md border border-input bg-background px-3 py-2"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -88,22 +84,23 @@ export function NewPost() {
           </select>
         </div>
         <div>
-          <Label htmlFor="coverImage">Cover Image URL</Label>
+          <Label htmlFor="cover_img">Cover Image URL</Label>
           <Input
-            id="coverImage"
+            id="cover_img"
+            name="cover_img"
             placeholder="https://example.com/image.jpg"
-            value={cover_img}
-            onChange={(e) => setCover_img(e.target.value)}
+            value={coverImg}
+            onChange={(e) => setCoverImg(e.target.value)}
           />
         </div>
       </div>
+
       <div className="mb-4">
         <Label>Content</Label>
         <BlogPostEditor value={content} onChange={setContent} />
       </div>
-      <Button onClick={handleSavePost} disabled={isLoading}>
-        {isLoading ? "Saving..." : "Save Post"}
-      </Button>
-    </div>
+
+      <Button type="submit">Save Post</Button>
+    </form>
   );
 }

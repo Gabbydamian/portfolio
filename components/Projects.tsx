@@ -53,10 +53,10 @@ export function Projects({
         {projects.length > 0 &&
           projects.map((project, index) => (
             <motion.div
-              key={project.id}
+              key={project.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
               <ProjectCard project={project} />
             </motion.div>

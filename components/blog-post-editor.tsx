@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { MarkdownRenderer } from "@/components/markdown-renderer"
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 
 interface BlogPostEditorProps {
-  value?: string
-  onChange?: (value: string) => void
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export function BlogPostEditor({ value, onChange }: BlogPostEditorProps) {
@@ -35,15 +33,14 @@ function greet() {
 > This is a blockquote
 
 Enjoy writing your blog posts!
-`,
-  )
+`
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMarkdown(e.target.value)
-    if (onChange) {
-      onChange(e.target.value)
-    }
-  }
+    const val = e.target.value;
+    setMarkdown(val);
+    onChange?.(val);
+  };
 
   return (
     <Tabs defaultValue="write">
@@ -67,5 +64,5 @@ Enjoy writing your blog posts!
         </div>
       </TabsContent>
     </Tabs>
-  )
+  );
 }
