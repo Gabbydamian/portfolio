@@ -18,7 +18,7 @@ export function Projects({
   return (
     <div className="container mx-auto px-4 md:px-24 py-12 mt-24">
       <motion.h1
-        className="text-4xl md:text-5xl font-bold mb-8 text-center"
+        className="text-4xl md:text-5xl font-bold mb-12 md:mb-20 text-center underline"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

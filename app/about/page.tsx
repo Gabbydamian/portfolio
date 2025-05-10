@@ -194,10 +194,10 @@ export default function About() {
                 />
               </div>
               <div className="flex-1">
-                <h1 className="text-4xl font-bold mb-4 flex items-center">
+                <h1 className="text-4xl font-bold mb-4 flex items-center text-center md:text-left">
                   Damian Gabriel O.
                 </h1>
-                <p className="text-gray-300 mb-6 text-justify">
+                <p className="text-gray-300 mb-6 text-center md:text-justify">
                   <span className="font-semibold text-rose-500">
                     Developer.{" "}
                   </span>
@@ -239,7 +239,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-gray-900 rounded-xl p-8"
+            className="bg-gray-900 rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <span className="text-[#3E7B45] mr-2">
@@ -269,7 +269,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-gray-900 rounded-xl p-8"
+            className="bg-gray-900 rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <span className="text-[#3E7B45] mr-2">

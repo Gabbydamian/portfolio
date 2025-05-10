@@ -25,9 +25,6 @@ export function Projects({ projects }: { projects: Project[] }) {
     <div className="bg-gray-800 rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Projects</h2>
-        <Button size="sm">
-          <Plus className="w-4 h-4 mr-1" /> Add New
-        </Button>
       </div>
       <div className="space-y-4">
         {displayProjects.map((project, i) => (

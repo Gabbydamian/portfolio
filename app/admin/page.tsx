@@ -64,13 +64,16 @@ export default async function AdminPage() {
         </div>
 
         <Tabs defaultValue="submissions">
-          <TabsList className="mb-8">
-            <TabsTrigger value="submissions">Pending Submissions</TabsTrigger>
-            <TabsTrigger value="posts">Blog Posts</TabsTrigger>
-            <TabsTrigger value="new-post">New Post</TabsTrigger>
-            <TabsTrigger value="projects">Projects</TabsTrigger>
-            <TabsTrigger value="new-project">New Project</TabsTrigger>
-          </TabsList>
+          {/* Wrap TabsList in a div with overflow-x-auto */}
+          <div className="overflow-x-auto pb-2 mb-6">
+            <TabsList className="w-max min-w-full justify-start">
+              <TabsTrigger value="submissions">Pending Submissions</TabsTrigger>
+              <TabsTrigger value="posts">Blog Posts</TabsTrigger>
+              <TabsTrigger value="new-post">New Post</TabsTrigger>
+              <TabsTrigger value="projects">Projects</TabsTrigger>
+              <TabsTrigger value="new-project">New Project</TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="submissions">
             <PendingSubmissions submissions={pendingSubmissions} />

@@ -141,3 +141,48 @@
   scrollbar-width: none;
   /* Firefox */
 }
+
+
+/* Optional CSS to improve the scrolling experience 
+   Add to your global.css or create a new module */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.tabs-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.tabs-scroll-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  
+  /* Optional: Improve mobile touch scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Add scroll indicators if desired */
+.tabs-scroll-container {
+  position: relative;
+}
+
+/* Optional scroll indicators (fade effect at edges) */
+.tabs-scroll-container::after,
+.tabs-scroll-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tabs-scroll-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.9), transparent);
+}
+
+.tabs-scroll-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
+}

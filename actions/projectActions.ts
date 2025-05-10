@@ -5,7 +5,10 @@ import { createClient } from "@/utils/supabase/supabase";
 export async function fetchProjects() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("projects").select("*");
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("rank", { ascending: true });
   if (error) {
     return { projectsData: null, error };
   }
@@ -19,7 +22,7 @@ export async function addProject(
   tags: string[] | null,
   title: string,
   uuid: string
-){
+) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -40,4 +43,4 @@ export async function addProject(
     return { projectData: null, error };
   }
   return { projectData: data, error: null };
-};
+}
