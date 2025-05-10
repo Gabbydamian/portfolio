@@ -47,6 +47,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-gray-700"
           onClick={() => setIsPlaying(!isPlaying)}
+          aria-label="play"
         >
           <Play className="h-4 w-4" />
         </Button>
@@ -54,6 +55,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           variant="ghost"
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-gray-700"
+          aria-label="mute"
         >
           <Volume2 className="h-4 w-4" />
         </Button>
@@ -61,6 +63,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           variant="ghost"
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-gray-700"
+          aria-label="expand"
         >
           <Maximize2 className="h-4 w-4" />
         </Button>

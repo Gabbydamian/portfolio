@@ -17,7 +17,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           src={project.image || "/placeholder.svg"}
           alt={project.title}
           fill
-          className="object-cover"
+          className="object-cover object-top"
         />
       </div>
       <CardContent className="p-6 flex-1">
@@ -35,7 +35,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <Link
           target="__blank"
           href={project.link}
-          className="inline-flex items-center text-primary hover:underline"
+          className="inline-flex items-center text-white hover:underline hover:text-primary transition-colors duration-200"
         >
           View Project <ExternalLink className="ml-1 h-4 w-4" />
         </Link>
