@@ -48,6 +48,7 @@
     "cmdk": "1.0.4",
     "embla-carousel-react": "8.5.1",
     "framer-motion": "latest",
+    "howler": "^2.2.4",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "next": "15.2.4",
@@ -60,6 +61,7 @@
     "react-particles": "latest",
     "react-resizable-panels": "^2.1.7",
     "react-syntax-highlighter": "^15.6.1",
+    "react-toastify": "^11.0.5",
     "recharts": "2.15.0",
     "remark-gfm": "latest",
     "remove-markdown": "^0.6.2",
@@ -72,6 +74,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.12",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",

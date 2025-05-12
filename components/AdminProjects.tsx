@@ -2,27 +2,58 @@
 
 import { Button } from "@/components/ui/button";
 import { Edit, Trash, Plus } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Blog } from "@/app/types/blog";
 import { Project } from "@/app/types/project";
+import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import { deleteProject } from "@/actions/projectActions";
 
 export function Projects({ projects }: { projects: Project[] }) {
-  const { toast } = useToast();
-
-  // If no projects are provided, use these sample projects
   const displayProjects: Project[] = projects ?? [];
 
-  const handleDelete = (id: string) => {
-    // This would be a server action in production
-    console.log(id);
-    toast({
-      title: "Project deleted",
-      description: "The project has been deleted.",
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      const { error } = await deleteProject(id);
+
+      if (error) {
+        toast.error("Failed to deleted project", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+      toast.success("Project Deleted Succefully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      toast.error("Failed to deleted project", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      console.error(error);
+    }
   };
 
   return (
     <div className="bg-gray-800 rounded-lg p-6">
+      <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Projects</h2>
       </div>
@@ -32,7 +63,15 @@ export function Projects({ projects }: { projects: Project[] }) {
             key={i}
             className="flex items-center justify-between p-4 bg-gray-900 rounded-lg"
           >
-            <span>{typeof project === "string" ? project : project.title}</span>
+            <span>
+              <Link
+                href={`${project.link}`}
+                target="__blank"
+                className="hover:underline"
+              >
+                {project.title}
+              </Link>
+            </span>
             <div className="space-x-2">
               <Button variant="outline" size="sm">
                 <Edit className="w-4 h-4 mr-1" /> Edit
@@ -40,9 +79,7 @@ export function Projects({ projects }: { projects: Project[] }) {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() =>
-                  handleDelete(project.id)
-                }
+                onClick={() => handleDelete(project.id)}
               >
                 <Trash className="w-4 h-4 mr-1" /> Delete
               </Button>

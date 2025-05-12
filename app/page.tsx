@@ -40,9 +40,19 @@ export default function Home() {
               </h1>
               {/* TODO: Change React to Web Applications */}
               <p className="max-w-3xl mx-auto text-lg md:text-lg text-gray-300 mb-8">
-                Quantity Surveyor turned frontend developer, bringing analytical
-                precision to React applications. Crafting responsive web
-                experiences that simplify complexity across diverse domains.
+                Quantity Surveyor turned{" "}
+                <span className="highlight">
+                  <span className="font-semibold text-cyan-500">
+                    Software developer
+                  </span>{" "}
+                  and{" "}
+                  <span className="font-semibold text-green-500">
+                    IT expert
+                  </span>
+                </span>
+                , bringing analytical precision to web applications. Building
+                responsive web experiences that simplify complexity across
+                diverse domains.
               </p>
             </motion.div>
           </main>

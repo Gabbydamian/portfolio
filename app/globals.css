@@ -129,6 +129,13 @@
   @apply my-8 border-gray-700;
 }
 
+.highlight {
+  background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=6b26d93a);
+  margin: -2px -6px;
+  padding: 4px 6px;
+  /* color: #6b26d93a; */
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -153,9 +160,11 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .tabs-scroll-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+
   /* Optional: Improve mobile touch scrolling */
   -webkit-overflow-scrolling: touch;
 }
@@ -179,10 +188,10 @@
 
 .tabs-scroll-container::after {
   right: 0;
-  background: linear-gradient(to left, rgba(0,0,0,0.9), transparent);
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.9), transparent);
 }
 
 .tabs-scroll-container::before {
   left: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent);
 }

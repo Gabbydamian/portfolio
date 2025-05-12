@@ -23,7 +23,7 @@ export function Projects({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Projects
+        My Projects
       </motion.h1>
 
       {error && (

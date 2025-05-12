@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { addProject } from "@/actions/projectActions";
+import { ToastContainer, toast } from "react-toastify";
 
 export function NewProject() {
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -16,38 +16,82 @@ export function NewProject() {
   const [projectLink, setProjectLink] = useState("");
   const [tags, setTags] = useState("");
 
-  const handleSaveProject = async () => {
-    setIsLoading(true);
+  // const handleSaveProject = async () => {
+  //   setIsLoading(true);
+
+  //   try {
+  //     // This would call a server action to save the project
+  //     // await addNewProject({ title, description, imageUrl, projectLink, tags });
+
+  //     toast({
+  //       title: "Project saved",
+  //       description: "Your project has been saved successfully.",
+  //     });
+
+  //     // Reset form after successful save
+  //     setTitle("");
+  //     setDescription("");
+  //     setImageUrl("");
+  //     setProjectLink("");
+  //     setTags("");
+  //   } catch (error) {
+  //     toast({
+  //       title: "Error saving project",
+  //       description:
+  //         error instanceof Error ? error.message : "An error occurred",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     try {
-      // This would call a server action to save the project
-      // await addNewProject({ title, description, imageUrl, projectLink, tags });
-
-      toast({
-        title: "Project saved",
-        description: "Your project has been saved successfully.",
+      await addProject({
+        title,
+        description,
+        image: imageUrl,
+        tags: [tags],
+        link: projectLink,
       });
 
-      // Reset form after successful save
-      setTitle("");
+      toast.success("Project Added Succefully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setDescription("");
       setImageUrl("");
       setProjectLink("");
       setTags("");
+      setTitle("");
     } catch (error) {
-      toast({
-        title: "Error saving project",
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
+      toast.error("An error occured! Unable to Add Project", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
-    } finally {
-      setIsLoading(false);
+
+      console.error(error);
     }
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg p-6">
+    <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg p-6">
+      <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">Create New Project</h2>
       <div className="space-y-4 mb-4">
         <div>
@@ -98,9 +142,9 @@ export function NewProject() {
           />
         </div>
       </div>
-      <Button onClick={handleSaveProject} disabled={isLoading}>
+      <Button type="submit" disabled={isLoading}>
         {isLoading ? "Saving..." : "Save Project"}
       </Button>
-    </div>
+    </form>
   );
 }

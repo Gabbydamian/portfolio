@@ -17,7 +17,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           src={post.cover_img || "/placeholder.svg"}
           alt={post.title}
           fill
-          className="object-cover"
+          className="object-cover object-top"
         />
       </div>
       <CardContent className="p-6 flex-1">
