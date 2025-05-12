@@ -18,6 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           alt={project.title}
           fill
           className="object-cover object-top"
+          loading="eager"
         />
       </div>
       <CardContent className="p-6 flex-1">

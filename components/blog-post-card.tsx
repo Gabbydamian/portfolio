@@ -18,6 +18,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           alt={post.title}
           fill
           className="object-cover object-top"
+          loading="eager"
         />
       </div>
       <CardContent className="p-6 flex-1">
