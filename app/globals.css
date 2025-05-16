@@ -130,10 +130,16 @@
 }
 
 .highlight {
+  /* background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=6d28d9cc);
+  margin: -2px -6px;
+  padding: 4px 6px; */
+  background: transparent;
+}
+
+.dark .highlight {
   background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=6b26d93a);
   margin: -2px -6px;
   padding: 4px 6px;
-  /* color: #6b26d93a; */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

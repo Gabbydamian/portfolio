@@ -1,19 +1,52 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { MapPin } from "lucide-react"
+import { useEffect, useState } from "react";
+import { MapPin } from "lucide-react";
 
 export function LocationInfo() {
-  const [temperature, setTemperature] = useState("32°C")
-  const [location, setLocation] = useState("Lagos, NG")
+  const [temperature, setTemperature] = useState<string | null>("30");
+  const [location, setLocation] = useState<string | null>(null);
 
-  // In a real app, you might fetch this data from a weather API
+  useEffect(() => {
+    async function fetchLocationAndWeather() {
+      try {
+        // Get location from IP
+        const locRes = await fetch("https://ip-api.com/json/");
+        const locData = await locRes.json();
+        const city = locData.city;
+        const country = locData.countryCode;
+        if (city && country) {
+          setLocation(`${city}, ${country}`);
+        } else {
+          setLocation("Unknown location");
+        }
+
+        // Get weather from Open-Meteo
+        const lat = locData.lat;
+        const lon = locData.lon;
+        if (lat && lon) {
+          const weatherRes = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+          );
+          const weatherData = await weatherRes.json();
+          const temp = weatherData.current_weather?.temperature;
+          setTemperature(temp !== undefined ? `${Math.round(temp)}°C` : "--°C");
+        } else {
+          setTemperature("--°C");
+        }
+      } catch (e) {
+        setTemperature("--°C");
+        setLocation("Unknown location");
+      }
+    }
+    fetchLocationAndWeather();
+  }, []);
 
   return (
-    <div className="flex items-center text-sm text-gray-400">
-      <span className="mr-2">{temperature}</span>
+    <div className="flex items-center text-sm bg-background/60 backdrop-blur border border-border rounded px-3 py-1 shadow-lg">
+      <span className="mr-2">{temperature ?? "--°C"}</span>
       <MapPin className="h-4 w-4 mr-1" />
-      <span>{location}</span>
+      <span>{location ?? "Locating..."}</span>
     </div>
-  )
+  );
 }

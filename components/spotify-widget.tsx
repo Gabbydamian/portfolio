@@ -165,7 +165,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
 
   if (!floating) {
     return (
-      <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl px-4 py-2 flex items-center space-x-3 transition-all duration-300">
+      <div className="backdrop-blur bg-background/60 border border-border shadow-xl rounded-2xl px-4 py-2 flex items-center space-x-3 transition-all duration-300">
         {playerContent}
       </div>
     );
@@ -179,7 +179,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "auto", opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
-            className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl px-4 py-2 flex items-center space-x-3 transition-all duration-300"
+            className="backdrop-blur bg-background/60 border border-border shadow-xl rounded-2xl px-4 py-2 flex items-center space-x-3 transition-all duration-300"
           >
             {playerContent}
           </motion.div>
@@ -192,7 +192,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="h-10 w-10 rounded-full bg-gray-800 hover:bg-primary/80 shadow-lg"
+              className="h-10 w-10 rounded-full bg-background/60 backdrop-blur border border-border shadow-lg"
               onClick={() => setIsExpanded(true)}
             >
               <span className="sr-only">Expand music player</span>

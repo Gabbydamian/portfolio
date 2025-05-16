@@ -1,26 +1,36 @@
-"use client"
+"use client";
 
-import { useCallback, useEffect, useState } from "react"
-import Particles from "react-particles"
-import type { Container, Engine } from "tsparticles-engine"
-import { loadSlim } from "tsparticles-slim"
+import { useCallback, useEffect, useState } from "react";
+import Particles from "react-particles";
+import type { Container, Engine } from "tsparticles-engine";
+import { loadSlim } from "tsparticles-slim";
 
 export function ParticleBackground() {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
+  const [color, setColor] = useState("#9333ea"); // default dark mode color
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      const isDark =
+        window.matchMedia("(prefers-color-scheme: dark)").matches ||
+        document.documentElement.classList.contains("dark");
+      setColor(isDark ? "#9333ea" : "#6d28d9"); // darker purple for light mode
+    }
+  }, []);
 
   const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine)
-  }, [])
+    await loadSlim(engine);
+  }, []);
 
-  const particlesLoaded = useCallback(async (container: Container | undefined) => {
-    // Optional: Do something when particles are loaded
-  }, [])
+  const particlesLoaded = useCallback(
+    async (container: Container | undefined) => {
+      // Optional: Do something when particles are loaded
+    },
+    []
+  );
 
-  if (!mounted) return null
+  if (!mounted) return null;
 
   return (
     <Particles
@@ -49,10 +59,10 @@ export function ParticleBackground() {
         },
         particles: {
           color: {
-            value: "#9333ea",
+            value: color,
           },
           links: {
-            color: "#9333ea",
+            color: color,
             distance: 150,
             enable: true,
             opacity: 0.3,
@@ -88,5 +98,5 @@ export function ParticleBackground() {
         detectRetina: true,
       }}
     />
-  )
+  );
 }

@@ -90,7 +90,10 @@ export function NewProject() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg p-6">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6"
+    >
       <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">Create New Project</h2>
       <div className="space-y-4 mb-4">

@@ -6,13 +6,21 @@ import { SocialIcons } from "@/components/social-icons";
 import { SpotifyWidget } from "@/components/spotify-widget";
 import { LocationInfo } from "@/components/location-info";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 
 export default function Home() {
+  const { theme } = useTheme();
+  const isDark =
+    theme === "dark" ||
+    (!theme &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
   const styles = {
     insetText: {
-      color: "white",
-      textShadow:
-        "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.1), 0px 0px 3px rgba(0,0,0,0.1)",
+      color: isDark ? "white" : "#18181b",
+      textShadow: isDark
+        ? "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.1), 0px 0px 3px rgba(0,0,0,0.1)"
+        : "0 2px 8px rgba(0,0,0,0.08)",
       // fontFamily: "sans-serif",
       // fontWeight: "bold",
       letterSpacing: "2px",
@@ -29,23 +37,27 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-2xl md:text-3xl font-light text-gray-200 mb-2">
+              <h2 className="text-2xl md:text-3xl font-light text-foreground mb-2">
                 Hey! I&apos;m
               </h2>
               <h1
-                className="text-6xl md:text-8xl font-extrabold text-white mb-6"
+                className="text-6xl md:text-8xl font-extrabold text-primary-foreground mb-6"
                 style={styles.insetText}
               >
                 DAM<span className="italic">I</span>AN
               </h1>
-              <p className="max-w-3xl mx-auto text-lg md:text-lg text-gray-300 mb-8">
+              <p
+                className={`max-w-3xl mx-auto text-lg md:text-lg mb-8 ${
+                  isDark ? "text-muted-foreground" : "text-black"
+                }`}
+              >
                 Quantity Surveyor turned{" "}
                 <span className="highlight">
-                  <span className="font-semibold text-cyan-500">
+                  <span className="font-semibold text-[#06B6D4]">
                     Software developer
                   </span>{" "}
                   and{" "}
-                  <span className="font-semibold text-green-500">
+                  <span className="font-semibold text-[#22C55E]">
                     IT expert
                   </span>
                 </span>
@@ -56,7 +68,7 @@ export default function Home() {
             </motion.div>
           </main>
 
-          <footer className="w-full p-4 border-t border-gray-800">
+          <footer className="w-full p-4 border-t border-border">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
               <LocationInfo />
               <div className="my-4 md:my-0">

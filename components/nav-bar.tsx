@@ -23,7 +23,7 @@ export function NavBar() {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 z-40 w-full border-b border-gray-800 bg-background/80 backdrop-blur">
+    <header className="fixed top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
       <div className="container relative flex h-16 items-center justify-center">
         <nav className="relative flex items-center space-x-4 px-4 sm:px-6 lg:px-8">
           {navItems.map((item) => (
@@ -34,7 +34,7 @@ export function NavBar() {
                 "relative px-3 py-2 text-sm font-medium transition-colors",
                 activeTab === item.path
                   ? "text-primary"
-                  : "text-white hover:text-foreground"
+                  : "text-foreground hover:text-primary"
               )}
             >
               {item.name}

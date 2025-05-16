@@ -52,7 +52,7 @@ export function Projects({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg p-6">
+    <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
       <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Projects</h2>
@@ -61,7 +61,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         {displayProjects.map((project, i) => (
           <div
             key={i}
-            className="flex items-center justify-between p-4 bg-gray-900 rounded-lg"
+            className="flex items-center justify-between p-4 bg-background/80 backdrop-blur border border-border rounded-lg"
           >
             <span>
               <Link

@@ -76,17 +76,20 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg p-6">
+    <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
       <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">Pending Blog Submissions</h2>
       {submissions.length > 0 ? (
         <div className="space-y-4">
           {submissions.map((submission) => (
-            <div key={submission.id} className="p-4 bg-gray-900 rounded-lg">
+            <div
+              key={submission.id}
+              className="p-4 bg-background/80 backdrop-blur border border-border rounded-lg"
+            >
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <h3 className="font-bold">{submission.title}</h3>
-                  <div className="text-sm text-gray-400 mb-1">
+                  <div className="text-sm text-muted-foreground mb-1">
                     By {submission.author} ({submission.email}) on{" "}
                     {new Date(submission.date_created).toLocaleDateString()}
                   </div>
@@ -98,7 +101,7 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="bg-green-700 hover:bg-green-600"
+                    className="bg-green-700 hover:bg-green-600 text-white"
                     onClick={() => handleApproveSubmission(submission.id)}
                   >
                     <Check className="w-4 h-4 mr-1" /> Approve
@@ -106,14 +109,14 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="bg-red-900 hover:bg-red-800"
+                    className="bg-red-900 hover:bg-red-800 text-white"
                     onClick={() => handleRejectSubmission(submission.id)}
                   >
                     <X className="w-4 h-4 mr-1" /> Reject
                   </Button>
                 </div>
               </div>
-              <p className="text-gray-300">{submission.excerpt}</p>
+              <p className="text-muted-foreground">{submission.excerpt}</p>
               <Button variant="link" className="p-0 h-auto text-primary">
                 View Full Submission
               </Button>
@@ -121,7 +124,9 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400">No pending submissions to review.</p>
+        <p className="text-muted-foreground">
+          No pending submissions to review.
+        </p>
       )}
     </div>
   );

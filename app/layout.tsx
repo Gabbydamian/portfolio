@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeTransitionOverlay } from "@/components/theme-transition-overlay";
 
 // const inter = Inter({ subsets: ["latin"] })
 const montserrat = Montserrat({

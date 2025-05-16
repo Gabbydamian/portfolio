@@ -44,7 +44,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 bg-gray-800 p-6 rounded-lg relative"
+      className="space-y-4 bg-card text-card-foreground p-6 pt-0 rounded-lg relative"
     >
       <ToastContainer />
       {/* <Button
@@ -95,7 +95,8 @@ export function ContactForm({ onClose }: ContactFormProps) {
 
       <Button
         type="submit"
-        className="w-full bg-[#3E7B45] hover:bg-[#2D5A33] text-white"
+        className="w-full"
+        variant="default"
         disabled={isSubmitting}
       >
         {isSubmitting ? (

@@ -179,7 +179,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900 rounded-xl p-8 col-span-2"
+            className="bg-card text-card-foreground rounded-xl p-8 col-span-2"
           >
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start px-0  py-0 md:py-4 md:px-8">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-[#3E7B45]">
@@ -201,7 +201,7 @@ export default function About() {
                     <FileDown className="w-6 h-6" />
                   </Link>
                 </h1>
-                <p className="text-gray-300 mb-6 text-center md:text-justify">
+                <p className="text-muted-foreground mb-6 text-center md:text-justify">
                   <span className="font-semibold text-rose-500">
                     Developer.{" "}
                   </span>
@@ -216,7 +216,7 @@ export default function About() {
                     {" "}
                     fast, clean, and built to scale.{" "}
                   </span>
-                  A product MVP, admin dashboard, or internal tool? I’ve got you
+                  A product MVP, admin dashboard, or internal tool? I've got you
                   covered. I build with{" "}
                   <span className="text-blue-400 font-medium">React</span>,{" "}
                   <span className="text-blue-400 font-medium">Next.js</span>,
@@ -243,7 +243,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-gray-900 rounded-xl p-8 col-span-2 md:col-span-1"
+            className="bg-card text-card-foreground rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <span className="text-[#3E7B45] mr-2">
@@ -255,14 +255,14 @@ export default function About() {
               {experience.map((job, index) => (
                 <div
                   key={index}
-                  className="relative pl-6 border-l border-gray-700"
+                  className="relative pl-6 border-l border-border"
                 >
                   <div className="absolute w-3 h-3 bg-[#3E7B45] rounded-full -left-[6.5px] top-1"></div>
                   <h3 className="text-xl font-bold">{job.title}</h3>
-                  <p className="text-gray-400 mb-2">
+                  <p className="text-muted-foreground mb-2">
                     {job.company} • {job.period}
                   </p>
-                  <p className="text-gray-300">{job.description}</p>
+                  <p className="text-muted-foreground">{job.description}</p>
                 </div>
               ))}
             </div>
@@ -273,7 +273,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-gray-900 rounded-xl p-8 col-span-2 md:col-span-1"
+            className="bg-card text-card-foreground rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <span className="text-[#3E7B45] mr-2">
@@ -285,14 +285,14 @@ export default function About() {
               {education.map((edu, index) => (
                 <div
                   key={index}
-                  className="relative pl-6 border-l border-gray-700"
+                  className="relative pl-6 border-l border-border"
                 >
                   <div className="absolute w-3 h-3 bg-[#3E7B45] rounded-full -left-[6.5px] top-1"></div>
                   <h3 className="text-xl font-bold">{edu.degree}</h3>
-                  <p className="text-gray-400 mb-2">
+                  <p className="text-muted-foreground mb-2">
                     {edu.institution} • {edu.period}
                   </p>
-                  <p className="text-gray-300">{edu.description}</p>
+                  <p className="text-muted-foreground">{edu.description}</p>
                 </div>
               ))}
             </div>
@@ -303,50 +303,21 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-gray-900 rounded-xl p-8 col-span-2"
+            className="bg-card text-card-foreground rounded-xl p-8 col-span-2"
           >
-            <h2 className="text-2xl font-bold mb-6 flex items-center text-center justify-self-center">
-              {/* <span className="text-[#3E7B45] mr-2">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 16V12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 8H12.01"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span> */}
+            <h2 className="text-2xl font-bold mb-6 flex items-center text-center justify-self-center text-foreground">
               Interests
             </h2>
             <div className="flex flex-wrap gap-6 justify-center">
               {interests.map((interest, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-lg min-w-[200px]"
+                  className="flex items-center gap-2 bg-muted px-4 py-2 rounded-lg min-w-[200px]"
                 >
-                  <span className="text-[#3E7B45]">{interest.icon}</span>
-                  <span className="text-sm md:text-base">{interest.text}</span>
+                  <span className="text-primary">{interest.icon}</span>
+                  <span className="text-sm md:text-base text-foreground">
+                    {interest.text}
+                  </span>
                 </div>
               ))}
             </div>
@@ -357,16 +328,16 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="bg-gray-900 rounded-xl p-8 col-span-2"
+            className="bg-card text-card-foreground rounded-xl p-8 col-span-2"
           >
+            <h2 className="text-2xl font-bold mb-6 flex items-center justify-center text-center">
+              <span className="text-[#3E7B45] mr-2">
+                <Mail className="w-6 h-6" />
+              </span>
+              Get In Touch
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="space-y-8 col-span-1 place-items-center md:place-items-start">
-                <h2 className="text-2xl font-bold mb-6 flex items-center">
-                  <span className="text-[#3E7B45] mr-2">
-                    <Mail className="w-6 h-6" />
-                  </span>
-                  Get In Touch
-                </h2>
+              <div className="space-y-8 col-span-1 place-items-center md:place-items-start mt-6">
                 <div className="flex items-center gap-3">
                   <span className="text-[#3E7B45]">
                     <Mail className="w-5 h-5" />

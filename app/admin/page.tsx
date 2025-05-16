@@ -75,23 +75,38 @@ export default async function AdminPage() {
             </TabsList>
           </div>
 
-          <TabsContent value="submissions">
+          <TabsContent
+            value="submissions"
+            className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
+          >
             <PendingSubmissions submissions={pendingSubmissions} />
           </TabsContent>
 
-          <TabsContent value="posts">
+          <TabsContent
+            value="posts"
+            className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
+          >
             <BlogPosts blogs={blogPosts} />
           </TabsContent>
 
-          <TabsContent value="new-post">
+          <TabsContent
+            value="new-post"
+            className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
+          >
             <NewPost />
           </TabsContent>
 
-          <TabsContent value="projects">
+          <TabsContent
+            value="projects"
+            className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
+          >
             <Projects projects={projects} />
           </TabsContent>
 
-          <TabsContent value="new-project">
+          <TabsContent
+            value="new-project"
+            className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
+          >
             <NewProject />
           </TabsContent>
         </Tabs>
