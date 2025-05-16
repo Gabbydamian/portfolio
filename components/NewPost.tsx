@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BlogPostEditor } from "@/components/blog-post-editor";
-import { useToast } from "@/hooks/use-toast";
+import { ToastContainer, toast } from "react-toastify";
 import { addNewBlogPost } from "@/actions/blogActions";
 import removeMarkdown from "remove-markdown";
 
 export function NewPost() {
-  const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [coverImg, setCoverImg] = useState("");
@@ -32,27 +31,37 @@ export function NewPost() {
         approved,
       });
 
-      toast({
-        title: "Post saved",
-        description: "Your blog post was saved.",
-      });
-
       setTitle("");
       setCategory("");
       setCoverImg("");
       setContent("");
+      toast.success("New post added successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (error) {
-      toast({
-        title: "Error saving post",
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
+      toast.error("Something went wrong...", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg p-6">
+      <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">Create New Post</h2>
       <div className="space-y-4 mb-4">
         <div>

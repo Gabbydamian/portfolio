@@ -63,10 +63,6 @@ export default function About() {
       color: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
     },
     {
-      name: "GraphQL",
-      color: "bg-pink-50 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
-    },
-    {
       name: "Tailwind CSS",
       color: "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
     },
@@ -355,14 +351,14 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="bg-gray-900 rounded-xl p-8 col-span-2"
           >
-            <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="text-[#3E7B45] mr-2">
-                <Mail className="w-6 h-6" />
-              </span>
-              Get In Touch
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="space-y-8 col-span-1 place-items-center md:place-items-start">
+                <h2 className="text-2xl font-bold mb-6 flex items-center">
+                  <span className="text-[#3E7B45] mr-2">
+                    <Mail className="w-6 h-6" />
+                  </span>
+                  Get In Touch
+                </h2>
                 <div className="flex items-center gap-3">
                   <span className="text-[#3E7B45]">
                     <Mail className="w-5 h-5" />
@@ -395,29 +391,18 @@ export default function About() {
                   </span>
                   <span className="font-medium">Lagos, Nigeria</span>
                 </div>
-                <div className="mt-6">
-                  <Button
-                    onClick={() => setShowContactForm(!showContactForm)}
-                    className="bg-[#3E7B45] hover:bg-[#2D5A33] text-white w-full py-6 flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </Button>
-                </div>
               </div>
-              <div>
+              <div className="col-span-2">
                 <AnimatePresence>
-                  {showContactForm && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <ContactForm onClose={() => setShowContactForm(false)} />
-                    </motion.div>
-                  )}
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <ContactForm onClose={() => setShowContactForm(false)} />
+                  </motion.div>
                 </AnimatePresence>
               </div>
             </div>

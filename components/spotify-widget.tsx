@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  Minimize,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -133,35 +140,23 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
             <Volume2 className="h-4 w-4" />
           )}
         </Button>
-        <Button
+        {/* <Button
           variant="ghost"
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-primary/80"
           aria-label="expand"
         >
           <Maximize2 className="h-4 w-4" />
-        </Button>
+        </Button> */}
         {!isHomePage && floating && (
           <Button
             variant="ghost"
             size="icon"
             className="h-8 w-8 rounded-full hover:bg-primary/80"
+            aria-label="expand"
             onClick={() => setIsExpanded(false)}
           >
-            <span className="sr-only">Collapse</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <Minimize className="h-4 w-4" />
           </Button>
         )}
       </div>
@@ -201,19 +196,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
               onClick={() => setIsExpanded(true)}
             >
               <span className="sr-only">Expand music player</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
+              <Maximize2 className="h-4 w-4" />
             </Button>
           </motion.div>
         )}

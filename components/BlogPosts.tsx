@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Edit, Trash, Plus } from "lucide-react";
-// import { useToast } from "@/hooks/use-toast";
 import { ToastContainer, toast } from "react-toastify";
 import { Blog } from "@/app/types/blog";
 import { deleteBlogPost } from "@/actions/blogActions";
@@ -19,7 +18,7 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
     const { error } = await deleteBlogPost(id);
 
     if (error) {
-      toast.success("Blog post Added Succefully", {
+      toast.error("Something went wrong...", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -32,7 +31,7 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
       console.error("Deletion failed");
       return;
     }
-    toast.error("Blogpost deleted Succefully", {
+    toast.success("Blogpost deleted Succefully", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -47,6 +46,7 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
 
   return (
     <div className="bg-gray-800 rounded-lg p-6">
+      <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Blog Posts</h2>
         {/* <Button size="sm">

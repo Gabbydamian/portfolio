@@ -38,7 +38,6 @@ export default function Home() {
               >
                 DAM<span className="italic">I</span>AN
               </h1>
-              {/* TODO: Change React to Web Applications */}
               <p className="max-w-3xl mx-auto text-lg md:text-lg text-gray-300 mb-8">
                 Quantity Surveyor turned{" "}
                 <span className="highlight">

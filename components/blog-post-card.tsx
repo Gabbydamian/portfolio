@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { Blog } from "@/app/types/blog";
+import { Link as HrefLink } from "lucide-react";
 
 interface BlogPostCardProps {
   post: Blog;
@@ -29,7 +30,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
         <h3 className="text-xl font-bold mb-2">{post.title}</h3>
         <p className="text-gray-400 mb-3">{post.excerpt}</p>
         {post.category && (
-          <Badge variant="outline" className="bg-gray-700 hover:bg-gray-600">
+          <Badge variant="default" >
             {post.category}
           </Badge>
         )}
@@ -37,9 +38,9 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       <CardFooter className="p-6 pt-0">
         <Link
           href={`/blog/${post.slug}`}
-          className="inline-flex items-center text-primary hover:underline"
+          className="inline-flex items-center text-white hover:underline"
         >
-          Read more
+          Read more <HrefLink className="ml-1 h-4 w-4" />
         </Link>
       </CardFooter>
     </Card>

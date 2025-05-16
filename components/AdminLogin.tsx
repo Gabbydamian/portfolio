@@ -5,11 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { userLogin } from "@/actions/userActions";
-import { useToast } from "@/hooks/use-toast";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 export function AdminLogin() {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -23,25 +22,40 @@ export function AdminLogin() {
       const { success } = await userLogin(email, password);
 
       if (!success) {
-        toast({
-          title: "Login failed",
-          description: "Invalid email or password.",
-          variant: "destructive",
+        toast.error("Login Failed", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
         });
         return;
       }
       router.refresh();
 
-      toast({
-        title: "Login successful",
-        description: "Welcome to your admin dashboard.",
+      toast.success("Login Successful", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
     } catch (error) {
-      toast({
-        title: "Login failed",
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
+      toast.error(error instanceof Error ? error.message : "An error occured", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
     } finally {
       setIsLoading(false);
@@ -50,6 +64,7 @@ export function AdminLogin() {
 
   return (
     <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-lg">
+      <ToastContainer />
       <h1 className="text-3xl font-bold mb-8 text-center">Admin Login</h1>
       <form onSubmit={handleLogin} className="space-y-6">
         <div className="space-y-2">

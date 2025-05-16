@@ -3,14 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Blog } from "@/app/types/blog";
+import { ToastContainer, toast } from "react-toastify";
 import { PendingSubmissionsProps } from "@/app/types/blog";
 import { approveBlogPost, rejectBlogPost } from "@/actions/blogActions";
 import { useRouter } from "next/navigation";
 
 export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
-  const { toast } = useToast();
   const router = useRouter();
 
   // console.log("Pending Submissions: ", submissions);
@@ -19,16 +17,28 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
     const { error } = await approveBlogPost(id);
 
     if (error) {
-      toast({
-        title: "Error occured",
-        description: "The blog post could not be approved.",
+      toast.error("an error occured", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
       console.error("Approval failed");
       return;
     }
-    toast({
-      title: "Submission approved",
-      description: "The blog post has been approved and published.",
+    toast.success("Something went wrong...", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
     });
     router.refresh();
   };
@@ -39,22 +49,35 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
     const { error } = await rejectBlogPost(id);
 
     if (error) {
-      toast({
-        title: "Error occured",
-        description: "The blog post could not be rejected.",
+      toast.error("Something went wrong...", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
       console.error("Rejection failed");
       return;
     }
-    toast({
-      title: "Submission Rejected",
-      description: "The blog post has been rejected and deleted.",
+    toast.success("Approval rejected successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
     });
     router.refresh();
   };
 
   return (
     <div className="bg-gray-800 rounded-lg p-6">
+      <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">Pending Blog Submissions</h2>
       {submissions.length > 0 ? (
         <div className="space-y-4">

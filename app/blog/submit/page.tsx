@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BlogPostEditor } from "@/components/blog-post-editor";
-import { useToast } from "@/hooks/use-toast";
+import { ToastContainer, toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import removeMarkdown from "remove-markdown";
@@ -22,7 +22,6 @@ export default function SubmitBlogPage() {
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,27 +38,39 @@ export default function SubmitBlogPage() {
         approved,
       });
 
-      toast({
-        title: "Post saved",
-        description: "Your blog post was saved.",
+      toast.success("Blog post submitted", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
 
       setTitle("");
       setCategory("");
       setContent("");
     } catch (error) {
-      toast({
-        title: "Error saving post",
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
+      toast.error("Something went wrong...", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
+      console.error(error);
     }
   };
 
   if (isSubmitted) {
     return (
       <MainLayout>
+        <ToastContainer />
         <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

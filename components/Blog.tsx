@@ -13,7 +13,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
   return (
     <article className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
           {post.title}
         </h1>
         <div className="flex items-center text-gray-400 mb-4">
@@ -23,7 +23,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
         </div>
         {post.category && (
           <div className="mb-6">
-            <Badge variant="outline" className="bg-gray-700 hover:bg-gray-600">
+            <Badge variant="default">
               {post.category}
             </Badge>
           </div>
