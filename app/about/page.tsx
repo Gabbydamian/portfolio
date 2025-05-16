@@ -15,6 +15,7 @@ import {
   Globe,
   Send,
   Rocket,
+  FileDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -191,7 +192,14 @@ export default function About() {
               </div>
               <div className="flex-1">
                 <h1 className="text-4xl font-bold mb-4 flex items-center text-center md:text-left">
-                  Damian Gabriel O.
+                  Damian Gabriel O.{" "}
+                  <Link
+                    href="/Damian_Gabriel-Resume.pdf"
+                    target="_blank"
+                    className="ml-2 hover:text-primary transition-colors"
+                  >
+                    <FileDown className="w-6 h-6" />
+                  </Link>
                 </h1>
                 <p className="text-gray-300 mb-6 text-center md:text-justify">
                   <span className="font-semibold text-rose-500">
@@ -210,9 +218,9 @@ export default function About() {
                   </span>
                   A product MVP, admin dashboard, or internal tool? I’ve got you
                   covered. I build with{" "}
-                  <span className="text-blue-400">React</span>,{" "}
-                  <span className="text-blue-400">Next.js</span>, and modern
-                  backend stacks, I focus on {""}
+                  <span className="text-blue-400 font-medium">React</span>,{" "}
+                  <span className="text-blue-400 font-medium">Next.js</span>,
+                  and modern backend stacks, I focus on {""}
                   detail, performance, and creating products that people
                   actually enjoy using.
                 </p>
