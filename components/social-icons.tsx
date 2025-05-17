@@ -3,7 +3,7 @@ import { Github, Linkedin, Twitter } from "lucide-react";
 
 export function SocialIcons() {
   return (
-    <div className="flex items-center space-x-4 bg-background/60 backdrop-blur border border-border rounded shadow-lg px-3 py-1">
+    <div className="flex items-center space-x-4 bg-background/60 backdrop-blur border border-border rounded-xl shadow-lg px-3 py-3">
       <Link
         href="https://github.com/Gabbydamian"
         target="_blank"

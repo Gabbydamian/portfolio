@@ -182,7 +182,7 @@ export default function About() {
             className="bg-card text-card-foreground rounded-xl p-8 col-span-2"
           >
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start px-0  py-0 md:py-4 md:px-8">
-              <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-[#3E7B45]">
+              <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary">
                 <Image
                   src="/headshot.webp"
                   alt="Damian Gabriel"
@@ -196,7 +196,7 @@ export default function About() {
                   <Link
                     href="/Damian_Gabriel-Resume.pdf"
                     target="_blank"
-                    className="ml-2 hover:text-primary transition-colors"
+                    className="ml-2 hover:text-[#6B26D9] transition-colors"
                   >
                     <FileDown className="w-6 h-6" />
                   </Link>
@@ -246,7 +246,7 @@ export default function About() {
             className="bg-card text-card-foreground rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="text-[#3E7B45] mr-2">
+              <span className="text-primary mr-2">
                 <Briefcase className="w-6 h-6" />
               </span>
               Experience
@@ -257,7 +257,7 @@ export default function About() {
                   key={index}
                   className="relative pl-6 border-l border-border"
                 >
-                  <div className="absolute w-3 h-3 bg-[#3E7B45] rounded-full -left-[6.5px] top-1"></div>
+                  <div className="absolute w-3 h-3 bg-primary rounded-full -left-[6.5px] top-1"></div>
                   <h3 className="text-xl font-bold">{job.title}</h3>
                   <p className="text-muted-foreground mb-2">
                     {job.company} • {job.period}
@@ -276,7 +276,7 @@ export default function About() {
             className="bg-card text-card-foreground rounded-xl p-8 col-span-2 md:col-span-1"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="text-[#3E7B45] mr-2">
+              <span className="text-primary mr-2">
                 <GraduationCap className="w-6 h-6" />
               </span>
               Education
@@ -287,7 +287,7 @@ export default function About() {
                   key={index}
                   className="relative pl-6 border-l border-border"
                 >
-                  <div className="absolute w-3 h-3 bg-[#3E7B45] rounded-full -left-[6.5px] top-1"></div>
+                  <div className="absolute w-3 h-3 bg-primary rounded-full -left-[6.5px] top-1"></div>
                   <h3 className="text-xl font-bold">{edu.degree}</h3>
                   <p className="text-muted-foreground mb-2">
                     {edu.institution} • {edu.period}
@@ -331,7 +331,7 @@ export default function About() {
             className="bg-card text-card-foreground rounded-xl p-8 col-span-2"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center justify-center text-center">
-              <span className="text-[#3E7B45] mr-2">
+              <span className="text-primary mr-2">
                 <Mail className="w-6 h-6" />
               </span>
               Get In Touch
@@ -339,33 +339,33 @@ export default function About() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="space-y-8 col-span-1 place-items-center md:place-items-start mt-6">
                 <div className="flex items-center gap-3">
-                  <span className="text-[#3E7B45]">
+                  <span className="text-primary">
                     <Mail className="w-5 h-5" />
                   </span>
                   <span>
                     <Link
                       href={"mailto:gabbydamian92@gmail.com"}
-                      className="hover:text-[#3E7B45] transition-colors font-medium"
+                      className="hover:text-primary transition-colors font-medium"
                     >
                       gabbydamian92@gmail.com
                     </Link>
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#3E7B45]">
+                  <span className="text-primary">
                     <Globe className="w-5 h-5" />
                   </span>
                   <span>
                     <Link
                       href={"https://astridamian.vercel.app/"}
-                      className="hover:text-[#3e7b45] transition-colors font-medium"
+                      className="hover:text-primary transition-colors font-medium"
                     >
                       astridamian.dev
                     </Link>
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[#3E7B45]">
+                  <span className="text-primary">
                     <MapPin className="w-5 h-5" />
                   </span>
                   <span className="font-medium">Lagos, Nigeria</span>

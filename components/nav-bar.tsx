@@ -25,7 +25,7 @@ export function NavBar() {
   return (
     <header className="fixed top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
       <div className="container relative flex h-16 items-center justify-center">
-        <nav className="relative flex items-center space-x-4 px-4 sm:px-6 lg:px-8">
+        <nav className="relative flex items-center space-x-1 md:space-x-4 px-2 md:px-8">
           {navItems.map((item) => (
             <Link
               key={item.path}
