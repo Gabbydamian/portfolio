@@ -12,7 +12,7 @@ interface BlogPostCardProps {
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
   return (
-    <Card className="overflow-hidden bg-card border-border h-full flex flex-col">
+    <Card className="overflow-hidden bg-card border-border hover:border-primary hover:scale-[1.01] transition-all duration-200 h-full flex flex-col">
       <div className="relative h-48">
         <Image
           src={post.cover_img || "/placeholder.svg"}

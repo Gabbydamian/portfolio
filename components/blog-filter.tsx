@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { BlogCategory } from "@/app/types/blog";
 
-type Category = "all" | "development" | "design" | "career" | "personal";
+// type Category = "all" | "development" | "design" | "security" | "personal";
 
 interface BlogFilterProps {
-  onFilterChange: (category: Category) => void;
+  onFilterChange: (category: BlogCategory) => void;
 }
 
 export function BlogFilter({ onFilterChange }: BlogFilterProps) {
-  const [activeFilter, setActiveFilter] = useState<Category>("all");
+  const [activeFilter, setActiveFilter] = useState<BlogCategory>("all");
 
-  const handleFilterClick = (category: Category) => {
+  const handleFilterClick = (category: BlogCategory ) => {
     setActiveFilter(category);
     onFilterChange(category);
   };
@@ -46,15 +47,7 @@ export function BlogFilter({ onFilterChange }: BlogFilterProps) {
       >
         Design
       </Button>
-      <Button
-        variant={activeFilter === "career" ? "default" : "outline"}
-        className={`rounded-full ${
-          activeFilter === "career" ? "bg-gray-900" : ""
-        }`}
-        onClick={() => handleFilterClick("career")}
-      >
-        Career
-      </Button>
+
       <Button
         variant={activeFilter === "personal" ? "default" : "outline"}
         className={`rounded-full ${
@@ -63,6 +56,15 @@ export function BlogFilter({ onFilterChange }: BlogFilterProps) {
         onClick={() => handleFilterClick("personal")}
       >
         Personal
+      </Button>
+      <Button
+        variant={activeFilter === "security" ? "default" : "outline"}
+        className={`rounded-full ${
+          activeFilter === "security" ? "bg-gray-900" : ""
+        }`}
+        onClick={() => handleFilterClick("security")}
+      >
+        Security
       </Button>
     </div>
   );

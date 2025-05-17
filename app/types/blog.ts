@@ -22,8 +22,8 @@ export type BlogCategory =
   | "all"
   | "development"
   | "design"
-  | "career"
-  | "personal";
+  | "personal"
+  | "security";
 
 export type BlogPageProps = {
   post: Blog;
