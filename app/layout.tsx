@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { QueryProvider } from "./providers/queryProvider";
 // import { ThemeTransitionOverlay } from "@/components/theme-transition-overlay";
 
 // const inter = Inter({ subsets: ["latin"] })
@@ -59,7 +60,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">{children}</div>
+          <div className="relative flex min-h-screen flex-col">
+            <QueryProvider>{children}</QueryProvider>
+          </div>
           <Analytics />
         </ThemeProvider>
       </body>

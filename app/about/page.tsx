@@ -191,7 +191,7 @@ export default function About() {
                 />
               </div>
               <div className="flex-1">
-                <h1 className="text-4xl font-bold mb-4 flex items-center text-center md:text-left">
+                <h1 className="text-2xl md:text-4xl font-bold mb-4 flex items-center text-center md:text-left justify-self-center md:justify-self-start">
                   Damian Gabriel O.{" "}
                   <Link
                     href="/Damian_Gabriel-Resume.pdf"

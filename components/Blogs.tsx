@@ -9,12 +9,27 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PenLine, Lock } from "lucide-react";
 import { BlogCategory, BlogProps } from "@/app/types/blog";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBlogPosts } from "@/actions/blogActions";
 
-const Blogs = ({ fetchedBlogs, blogsError }: BlogProps) => {
+const Blogs = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: () => fetchBlogPosts("approved"),
+  });
+
   const [filteredCategory, setFilteredCategory] = useState<BlogCategory>("all");
-  const filteredPosts = fetchedBlogs.filter(
+  const filteredPosts = data?.blogs?.filter(
     (post) => filteredCategory === "all" || post.category === filteredCategory
   );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>An error occured</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 md:px-24 py-12 mt-24">
@@ -49,7 +64,7 @@ const Blogs = ({ fetchedBlogs, blogsError }: BlogProps) => {
       <BlogFilter onFilterChange={setFilteredCategory} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredPosts.map((post, index) => (
+        {filteredPosts?.map((post, index) => (
           <motion.div
             key={post.id}
             initial={{ opacity: 0, y: 20 }}
@@ -61,7 +76,7 @@ const Blogs = ({ fetchedBlogs, blogsError }: BlogProps) => {
         ))}
       </div>
 
-      {filteredPosts.length === 0 && (
+      {filteredPosts?.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-400">No posts found in this category.</p>
         </div>
