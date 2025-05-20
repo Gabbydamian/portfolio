@@ -6,6 +6,8 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "./providers/queryProvider";
+import { LocationProvider } from "@/app/contexts/location-context";
+import { SpotifyProvider } from "@/app/contexts/spotify-context";
 // import { ThemeTransitionOverlay } from "@/components/theme-transition-overlay";
 
 // const inter = Inter({ subsets: ["latin"] })
@@ -60,9 +62,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">
-            <QueryProvider>{children}</QueryProvider>
-          </div>
+          <LocationProvider>
+            <SpotifyProvider>
+              <QueryProvider>{children}</QueryProvider>
+            </SpotifyProvider>
+          </LocationProvider>
           <Analytics />
         </ThemeProvider>
       </body>

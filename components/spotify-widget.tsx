@@ -13,7 +13,8 @@ import {
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Howl, Howler } from "howler";
+import { useSpotify } from "@/app/contexts/spotify-context";
+import { Slider } from "@/components/ui/slider";
 
 interface SpotifyWidgetProps {
   floating?: boolean;
@@ -31,72 +32,24 @@ const tracks = [
 ];
 
 export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
-  const [isPlaying, setIsPlaying] = useState(false); //Set to true
-  const [isMuted, setIsMuted] = useState(true); //set to false
   const [isExpanded, setIsExpanded] = useState(true);
-  const [currentTrack, setCurrentTrack] = useState(tracks[0]);
-
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const soundRef = useRef<Howl | null>(null);
-
-  useEffect(() => {
-    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-    setCurrentTrack(randomTrack);
-
-    soundRef.current = new Howl({
-      src: [randomTrack.audio],
-      html5: true,
-      volume: 0.3,
-      loop: true,
-      autoplay: false,
-    });
-
-    return () => {
-      soundRef.current?.unload();
-    };
-  }, []);
-
-  useEffect(() => {
-    const sound = soundRef.current;
-    if (!sound) return;
-
-    if (isPlaying) {
-      sound.play();
-    } else {
-      sound.pause();
-    }
-  }, [isPlaying]);
-
-  useEffect(() => {
-    Howler.mute(isMuted);
-  }, [isMuted]);
+  const {
+    isPlaying,
+    isMuted,
+    currentTrack,
+    togglePlay,
+    toggleMute,
+    volume,
+    setVolume,
+  } = useSpotify();
 
   useEffect(() => {
     if (isHomePage) {
       setIsExpanded(true);
     }
   }, [isHomePage]);
-
-  useEffect(() => {
-    const triggerPlay = () => {
-      if (soundRef.current && !soundRef.current.playing()) {
-        soundRef.current.play();
-        setIsPlaying(true);
-      }
-
-      window.removeEventListener("scroll", triggerPlay);
-      window.removeEventListener("mousemove", triggerPlay);
-    };
-
-    window.addEventListener("scroll", triggerPlay);
-    window.addEventListener("mousemove", triggerPlay);
-
-    return () => {
-      window.removeEventListener("scroll", triggerPlay);
-      window.removeEventListener("mousemove", triggerPlay);
-    };
-  }, []);
 
   const playerContent = (
     <div className="flex items-center p-2 space-x-3 relative">
@@ -118,7 +71,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           variant="ghost"
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-primary/80"
-          onClick={() => setIsPlaying((prev) => !prev)}
+          onClick={togglePlay}
           aria-label="play/pause"
         >
           {isPlaying ? (
@@ -131,7 +84,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           variant="ghost"
           size="icon"
           className="h-8 w-8 rounded-full hover:bg-primary/80"
-          onClick={() => setIsMuted((prev) => !prev)}
+          onClick={toggleMute}
           aria-label="mute"
         >
           {isMuted ? (
@@ -140,14 +93,15 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
             <Volume2 className="h-4 w-4" />
           )}
         </Button>
-        {/* <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full hover:bg-primary/80"
-          aria-label="expand"
-        >
-          <Maximize2 className="h-4 w-4" />
-        </Button> */}
+        <div className="w-20">
+          <Slider
+            value={[volume * 100]}
+            onValueChange={([value]) => setVolume(value / 100)}
+            max={100}
+            step={1}
+            className="w-full"
+          />
+        </div>
         {!isHomePage && floating && (
           <Button
             variant="ghost"
