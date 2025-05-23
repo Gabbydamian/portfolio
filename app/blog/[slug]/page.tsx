@@ -10,7 +10,7 @@ type Params = {
 };
 
 export default async function BlogPost({ params }: Params) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const result = await fetchBlogPostBySlug(slug);

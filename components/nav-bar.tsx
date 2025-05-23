@@ -22,6 +22,13 @@ export function NavBar() {
     setActiveTab(pathname);
   }, [pathname]);
 
+  const isActive = (itemPath: string) => {
+    if (itemPath === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(itemPath);
+  };
+
   return (
     <header className="fixed top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
       <div className="container relative flex h-16 items-center justify-center">
@@ -33,13 +40,13 @@ export function NavBar() {
               prefetch={true}
               className={cn(
                 "relative px-3 py-2 text-sm font-medium transition-colors",
-                activeTab === item.path
+                isActive(item.path)
                   ? "text-primary"
                   : "text-foreground hover:text-primary"
               )}
             >
               {item.name}
-              {activeTab === item.path && (
+              {isActive(item.path) && (
                 <motion.div
                   className="absolute bottom-0 left-0 h-1 w-full bg-primary"
                   layoutId="navbar-indicator"

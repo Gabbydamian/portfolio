@@ -11,6 +11,7 @@ import { PenLine, Lock } from "lucide-react";
 import { BlogCategory, BlogProps } from "@/app/types/blog";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogPosts } from "@/actions/blogActions";
+// import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const Blogs = () => {
   const { data, isLoading, error } = useQuery({
@@ -33,6 +34,7 @@ const Blogs = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-24 py-12 mt-24">
+      {/* <Breadcrumbs /> */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

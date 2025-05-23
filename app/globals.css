@@ -201,3 +201,175 @@
   left: 0;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent);
 }
+
+/* MDXEditor Styles */
+.mdx-editor {
+  --accentBase: var(--indigo-1);
+  --accentBgSubtle: var(--indigo-2);
+  --accentBg: var(--indigo-3);
+  --accentBgHover: var(--indigo-4);
+  --accentBgActive: var(--indigo-5);
+  --accentLine: var(--indigo-6);
+  --accentBorder: var(--indigo-7);
+  --accentBorderHover: var(--indigo-8);
+  --accentSolid: var(--indigo-9);
+  --accentSolidHover: var(--indigo-10);
+  --accentText: var(--indigo-11);
+  --accentTextContrast: var(--indigo-12);
+
+  --baseBase: var(--slate-1);
+  --baseBgSubtle: var(--slate-2);
+  --baseBg: var(--slate-3);
+  --baseBgHover: var(--slate-4);
+  --baseBgActive: var(--slate-5);
+  --baseLine: var(--slate-6);
+  --baseBorder: var(--slate-7);
+  --baseBorderHover: var(--slate-8);
+  --baseSolid: var(--slate-9);
+  --baseSolidHover: var(--slate-10);
+  --baseText: var(--slate-11);
+  --baseTextContrast: var(--slate-12);
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.mdx-editor.dark-theme {
+  --accentBase: var(--indigo-1);
+  --accentBgSubtle: var(--indigo-2);
+  --accentBg: var(--indigo-3);
+  --accentBgHover: var(--indigo-4);
+  --accentBgActive: var(--indigo-5);
+  --accentLine: var(--indigo-6);
+  --accentBorder: var(--indigo-7);
+  --accentBorderHover: var(--indigo-8);
+  --accentSolid: var(--indigo-9);
+  --accentSolidHover: var(--indigo-10);
+  --accentText: var(--indigo-11);
+  --accentTextContrast: var(--indigo-12);
+
+  --baseBase: var(--slate-1);
+  --baseBgSubtle: var(--slate-2);
+  --baseBg: var(--slate-3);
+  --baseBgHover: var(--slate-4);
+  --baseBgActive: var(--slate-5);
+  --baseLine: var(--slate-6);
+  --baseBorder: var(--slate-7);
+  --baseBorderHover: var(--slate-8);
+  --baseSolid: var(--slate-9);
+  --baseSolidHover: var(--slate-10);
+  --baseText: var(--slate-11);
+  --baseTextContrast: var(--slate-12);
+
+  color: var(--baseText);
+  --basePageBg: var(--slate-1);
+  background: var(--basePageBg);
+}
+
+.mdx-editor .cm-editor {
+  background: var(--baseBg) !important;
+  color: var(--baseText) !important;
+}
+
+.mdx-editor .cm-toolbar {
+  background: var(--baseBg) !important;
+  border-color: var(--baseBorder) !important;
+}
+
+.mdx-editor .cm-toolbar button {
+  color: var(--baseText) !important;
+}
+
+.mdx-editor .cm-toolbar button:hover {
+  background: var(--accentBgHover) !important;
+}
+
+.mdx-editor .cm-content {
+  color: var(--baseText) !important;
+}
+
+.mdx-editor .cm-line {
+  color: var(--baseText) !important;
+}
+
+.mdx-editor .cm-activeLine {
+  background: var(--accentBgSubtle) !important;
+}
+
+.mdx-editor .cm-selectionBackground {
+  background: var(--accentBg) !important;
+}
+
+/* MDXEditor Code Block Styles */
+.mdx-editor .cm-code-block {
+  background: var(--baseBgSubtle) !important;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.mdx-editor .cm-code-block .cm-line {
+  font-family: var(--font-mono);
+}
+
+.mdx-editor .cm-code-block .cm-lineNumbers {
+  color: var(--baseText) !important;
+  border-right: 1px solid var(--baseBorder) !important;
+}
+
+.mdx-editor .cm-code-block .cm-content {
+  padding-left: 1rem;
+}
+
+.mdx-editor .cm-code-block .cm-language {
+  color: var(--baseText);
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--accentBg);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  border: 1px solid var(--accentBorder);
+}
+
+/* Language Select Styling */
+.mdx-editor .cm-language-select {
+  background: var(--baseBg) !important;
+  color: var(--baseText) !important;
+  border: 1px solid var(--baseBorder) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.875rem !important;
+  outline: none !important;
+}
+
+.mdx-editor .cm-language-select option {
+  background: var(--baseBg) !important;
+  color: var(--baseText) !important;
+}
+
+/* Fix paragraph text color in light mode */
+.mdx-editor:not(.dark-theme) .cm-content {
+  color: black !important;
+}
+
+.mdx-editor:not(.dark-theme) .cm-line {
+  color: black !important;
+}
+
+.mdx-editor:not(.dark-theme) .prose p {
+  color: black !important;
+}
+
+.mdx-editor:not(.dark-theme) .prose li {
+  color: black !important;
+}
+
+/* Remove conflicting styles */
+.mdx-editor .cm-content {
+  color: inherit !important;
+}
+
+.mdx-editor .cm-line {
+  color: inherit !important;
+}

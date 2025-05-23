@@ -8,10 +8,12 @@ import { formatDate } from "@/lib/utils";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import type { BlogPageProps } from "@/app/types/blog";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const BlogPage = ({ post }: BlogPageProps) => {
   return (
     <article className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
+      <Breadcrumbs />
       <div className="mb-8">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
           {post.title}
@@ -23,9 +25,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
         </div>
         {post.category && (
           <div className="mb-6">
-            <Badge variant="default">
-              {post.category}
-            </Badge>
+            <Badge variant="default">{post.category}</Badge>
           </div>
         )}
         <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">

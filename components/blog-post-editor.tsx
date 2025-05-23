@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { MDXEditorComponent } from "@/components/mdx-editor";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTheme } from "next-themes";
 
 interface BlogPostEditorProps {
   value?: string;
@@ -11,6 +12,8 @@ interface BlogPostEditorProps {
 }
 
 export function BlogPostEditor({ value, onChange }: BlogPostEditorProps) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const [markdown, setMarkdown] = useState(
     value ||
       `# Hello, Markdown!
@@ -36,8 +39,7 @@ Enjoy writing your blog posts!
 `
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const val = e.target.value;
+  const handleChange = (val: string) => {
     setMarkdown(val);
     onChange?.(val);
   };
@@ -49,16 +51,15 @@ Enjoy writing your blog posts!
         <TabsTrigger value="preview">Preview</TabsTrigger>
       </TabsList>
       <TabsContent value="write">
-        <Textarea
-          value={markdown}
-          onChange={handleChange}
-          className="min-h-[400px] font-mono"
-          placeholder="Write your blog post in Markdown..."
-        />
+        <MDXEditorComponent value={markdown} onChange={handleChange} />
       </TabsContent>
       <TabsContent value="preview">
-        <div className="border rounded-md p-4 min-h-[400px] bg-gray-900">
-          <div className="prose prose-invert">
+        <div
+          className={`border rounded-md p-4 min-h-[400px] ${
+            isDark ? "bg-background" : "bg-white"
+          }`}
+        >
+          <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none`}>
             <MarkdownRenderer content={markdown} />
           </div>
         </div>

@@ -25,7 +25,8 @@ const tracks = [
     title: "Rainy Lofi City",
     artist: "Pixabay Music",
     audio:
-      "https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/music//lofi.mp3",
+      // "https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/music//lofi.mp3",
+      "",
     cover:
       "https://th.bing.com/th/id/R.4a98ce482bd7504e34e999724f1b8f93?rik=9ITkpQqZ4AnWqw&pid=ImgRaw&r=0",
   },
@@ -53,7 +54,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
 
   const playerContent = (
     <div className="flex items-center p-2 space-x-3 relative">
-      <div className="relative h-8 w-8 rounded overflow-hidden bg-gray-900">
+      {/* <div className="relative h-8 w-8 rounded overflow-hidden bg-gray-900">
         <Image
           src={currentTrack.cover}
           alt="Album cover"
@@ -61,7 +62,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
           height={32}
           className="object-cover"
         />
-      </div>
+      </div> */}
       <div className="text-sm">
         <p className="font-medium leading-none">{currentTrack.title}</p>
         <p className="text-xs text-gray-400">{currentTrack.artist}</p>
@@ -93,7 +94,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
             <Volume2 className="h-4 w-4" />
           )}
         </Button>
-        <div className="w-20">
+        <div className="w-20 self-center">
           <Slider
             value={[volume * 100]}
             onValueChange={([value]) => setVolume(value / 100)}
