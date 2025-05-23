@@ -45,16 +45,36 @@ export async function fetchBlogPostBySlug(slug: string) {
 export async function addNewBlogPost(data: NewBlogPost) {
   const supabase = await createClient();
 
-  const slug =  generateSlug(data.title);
-  const read_time =  calculateReadTime(data.content);
+  const slug = generateSlug(data.title);
+  const read_time = calculateReadTime(data.content);
+
+  let author, email, approved;
+
+  let user = await supabase.auth.getUser();
+
+  if (user) {
+    author = "Damian Gabriel";
+    email = "gabbydamian92@gmail.com";
+    approved = true;
+  } else {
+    author = data.name || "Anonymous";
+    email = data.email || "Anonymous";
+    approved = false;
+  }
 
   const blog = {
-    ...data,
+    title: data.title,
+    content: data.content,
+    excerpt: data.excerpt,
+    category: data.category,
     slug,
     read_time,
-    author: "Damian Gabriel",
-    email: "gabbydamian92@gmail.com",
+    author: author,
+    email: email,
+    approved: approved,
   };
+
+  // console.log(blog);
 
   const { error } = await supabase.from("blogs").insert([blog]);
 

@@ -40,4 +40,6 @@ export interface NewBlogPost {
   content: string;
   excerpt: string;
   approved?: boolean;
+  name?: string;
+  email?: string;
 }

@@ -32,7 +32,8 @@ const tracks: Track[] = [
     title: "Rainy Lofi City",
     artist: "Pixabay Music",
     audio:
-      "https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/music//lofi.mp3",
+      // "https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/music//lofi.mp3",
+      "",
     cover:
       "https://th.bing.com/th/id/R.4a98ce482bd7504e34e999724f1b8f93?rik=9ITkpQqZ4AnWqw&pid=ImgRaw&r=0",
   },

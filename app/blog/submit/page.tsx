@@ -37,6 +37,8 @@ export default function SubmitBlogPage() {
         content,
         excerpt,
         approved,
+        name,
+        email,
       });
 
       toast.success("Blog post submitted", {
