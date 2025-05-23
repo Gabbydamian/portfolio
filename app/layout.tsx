@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "./providers/queryProvider";
 import { LocationProvider } from "@/app/contexts/location-context";
 import { SpotifyProvider } from "@/app/contexts/spotify-context";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 // import { ThemeTransitionOverlay } from "@/components/theme-transition-overlay";
 
 // const inter = Inter({ subsets: ["latin"] })
@@ -68,6 +69,7 @@ export default function RootLayout({
             </SpotifyProvider>
           </LocationProvider>
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
