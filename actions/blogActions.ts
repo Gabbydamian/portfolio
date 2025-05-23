@@ -45,8 +45,8 @@ export async function fetchBlogPostBySlug(slug: string) {
 export async function addNewBlogPost(data: NewBlogPost) {
   const supabase = await createClient();
 
-  const slug = await generateSlug(data.title);
-  const read_time = await calculateReadTime(data.content);
+  const slug =  generateSlug(data.title);
+  const read_time =  calculateReadTime(data.content);
 
   const blog = {
     ...data,
@@ -106,19 +106,21 @@ export async function deleteBlogPost(id: string) {
   return { success: true };
 }
 
-export async function updateBlogPost(id: string, data: NewBlogPost) {
+export async function updateBlogPost(id: string, formData: NewBlogPost) {
   const supabase = await createClient();
-  const slug = generateSlug(data.title);
-  const readTime = calculateReadTime(data.content);
+  const slug = generateSlug(formData.title);
+  const readTime = calculateReadTime(formData.content);
+
+  // console.log(formData, slug, readTime);
 
   const { error } = await supabase
     .from("blogs")
     .update({
-      title: data.title,
-      category: data.category,
-      cover_img: data.cover_img,
-      content: data.content,
-      excerpt: data.excerpt,
+      title: formData.title,
+      category: formData.category,
+      cover_img: formData.cover_img,
+      content: formData.content,
+      excerpt: formData.excerpt,
       slug,
       read_time: readTime,
     })

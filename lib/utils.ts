@@ -14,7 +14,7 @@ export function formatDate(dateString: string): string {
   }).format(date);
 }
 
-export async function calculateReadTime(content: string): Promise<string> {
+export function  calculateReadTime(content: string): string {
   const wordsPerMinute = 200;
   const wordCount = content.split(/\s+/).length;
   const minutes = Math.ceil(wordCount / wordsPerMinute); 
@@ -22,7 +22,7 @@ export async function calculateReadTime(content: string): Promise<string> {
 }
 
 
-export async function generateSlug(title: string): Promise<string> {
+export function generateSlug(title: string): string {
   return title
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "")

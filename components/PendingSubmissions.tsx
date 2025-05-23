@@ -1,15 +1,41 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
+// import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
+import { Check, X, Upload } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import { PendingSubmissionsProps } from "@/app/types/blog";
 import { approveBlogPost, rejectBlogPost } from "@/actions/blogActions";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { generateSlug } from "@/lib/utils";
+import Image from "next/image";
+import { uploadImage, validateImage } from "@/lib/image-utils";
+import { createClient } from "@/utils/supabase/client";
 
 export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
   const router = useRouter();
+  const [submissionSlugs, setSubmissionSlugs] = useState<{
+    [key: string]: string;
+  }>({});
+
+  useEffect(() => {
+    const generateSlugs = async () => {
+      const slugs: { [key: string]: string } = {};
+      for (const submission of submissions) {
+        slugs[submission.id] =  generateSlug(submission.title);
+      }
+      setSubmissionSlugs(slugs);
+    };
+
+    if (submissions && submissions.length > 0) {
+      generateSlugs();
+    } else {
+      setSubmissionSlugs({});
+    }
+  }, [submissions]);
 
   // console.log("Pending Submissions: ", submissions);
 
@@ -117,9 +143,13 @@ export function PendingSubmissions({ submissions }: PendingSubmissionsProps) {
                 </div>
               </div>
               <p className="text-muted-foreground">{submission.excerpt}</p>
-              <Button variant="link" className="p-0 h-auto text-primary">
-                View Full Submission
-              </Button>
+              {submissionSlugs[submission.id] && (
+                <Button variant="link" className="p-0 h-auto text-primary">
+                  <Link href={`/blog/${submissionSlugs[submission.id]}`}>
+                    View Full Submission
+                  </Link>
+                </Button>
+              )}
             </div>
           ))}
         </div>

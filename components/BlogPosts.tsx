@@ -46,10 +46,10 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
     router.refresh();
   };
 
-  const handleEdit = async (data: any) => {
+  const handleEdit = async (formData: any) => {
     if (!editingPost) return;
 
-    const { error } = await updateBlogPost(editingPost.id, data);
+    const { error } = await updateBlogPost(editingPost.id, formData);
 
     if (error) {
       toast.error("Failed to update post", {
