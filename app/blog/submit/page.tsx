@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import removeMarkdown from "remove-markdown";
 import { addNewBlogPost } from "@/actions/blogActions";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export default function SubmitBlogPage() {
   const [name, setName] = useState("");
@@ -71,6 +72,7 @@ export default function SubmitBlogPage() {
     return (
       <MainLayout>
         <ToastContainer theme="dark" />
+        <Breadcrumbs />
         <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -102,6 +104,7 @@ export default function SubmitBlogPage() {
   return (
     <MainLayout>
       <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
+        <Breadcrumbs />
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

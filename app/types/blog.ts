@@ -35,8 +35,8 @@ export type PendingSubmissionsProps = {
 
 export interface NewBlogPost {
   title: string;
-  category: string;
-  cover_img?: string;
+  category: string | null;
+  cover_img?: string | null;
   content: string;
   excerpt: string;
   approved?: boolean;

@@ -1,92 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { addProject } from "@/actions/projectActions";
 import { ToastContainer, toast } from "react-toastify";
+import { addProject } from "@/actions/projectActions";
+import { Project } from "@/app/types/project";
 
-export function NewProject() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [projectLink, setProjectLink] = useState("");
-  const [tags, setTags] = useState("");
+interface ProjectFormData {
+  title: string;
+  description: string;
+  image_url: string | null;
+  link: string;
+  tags: string[];
+}
 
-  // const handleSaveProject = async () => {
-  //   setIsLoading(true);
+interface ProjectFormProps {
+  initialData?: Partial<Project>;
+  onSubmit: (data: ProjectFormData) => Promise<void>;
+  submitLabel?: string;
+}
 
-  //   try {
-  //     // This would call a server action to save the project
-  //     // await addNewProject({ title, description, imageUrl, projectLink, tags });
+export function ProjectForm({
+  initialData,
+  onSubmit,
+  submitLabel = "Save Project",
+}: ProjectFormProps) {
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [description, setDescription] = useState(
+    initialData?.description || ""
+  );
+  const [imageUrl, setImageUrl] = useState(initialData?.image_url || "");
+  const [projectLink, setProjectLink] = useState(initialData?.link || "");
+  const [tags, setTags] = useState(
+    initialData?.tags ? initialData.tags.join(", ") : ""
+  );
 
-  //     toast({
-  //       title: "Project saved",
-  //       description: "Your project has been saved successfully.",
-  //     });
-
-  //     // Reset form after successful save
-  //     setTitle("");
-  //     setDescription("");
-  //     setImageUrl("");
-  //     setProjectLink("");
-  //     setTags("");
-  //   } catch (error) {
-  //     toast({
-  //       title: "Error saving project",
-  //       description:
-  //         error instanceof Error ? error.message : "An error occurred",
-  //       variant: "destructive",
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      await addProject({
-        title,
-        description,
-        image: imageUrl,
-        tags: [tags],
-        link: projectLink,
-      });
-
-      toast.success("Project Added Succefully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setDescription("");
-      setImageUrl("");
-      setProjectLink("");
-      setTags("");
-      setTitle("");
-    } catch (error) {
-      toast.error("An error occured! Unable to Add Project", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-
-      console.error(error);
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title || "");
+      setDescription(initialData.description || "");
+      setImageUrl(initialData.image_url || "");
+      setProjectLink(initialData.link || "");
+      setTags(initialData.tags ? initialData.tags.join(", ") : "");
     }
+  }, [initialData]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const tagsArray = tags.split(",").map((tag) => tag.trim());
+    await onSubmit({
+      title,
+      description,
+      image_url: imageUrl || null,
+      link: projectLink,
+      tags: tagsArray,
+    });
   };
 
   return (
@@ -95,7 +66,7 @@ export function NewProject() {
       className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6"
     >
       <ToastContainer />
-      <h2 className="text-xl font-semibold mb-4">Create New Project</h2>
+      <h2 className="text-xl font-semibold mb-4">{submitLabel}</h2>
       <div className="space-y-4 mb-4">
         <div>
           <Label htmlFor="project-title">Title</Label>
@@ -133,6 +104,7 @@ export function NewProject() {
             placeholder="https://example.com/project"
             value={projectLink}
             onChange={(e) => setProjectLink(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -145,9 +117,40 @@ export function NewProject() {
           />
         </div>
       </div>
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Saving..." : "Save Project"}
-      </Button>
+      <Button type="submit">{submitLabel}</Button>
     </form>
+  );
+}
+
+export function NewProject() {
+  const handleCreate = async (data: ProjectFormData) => {
+    try {
+      await addProject(data);
+      toast.success("New project added successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      toast.error("Something went wrong...", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  return (
+    <ProjectForm onSubmit={handleCreate} submitLabel="Create New Project" />
   );
 }

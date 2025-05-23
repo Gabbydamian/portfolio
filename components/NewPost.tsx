@@ -11,8 +11,8 @@ import removeMarkdown from "remove-markdown";
 
 interface PostFormData {
   title: string;
-  category: string;
-  cover_img: string;
+  category: string | null;
+  cover_img: string | null;
   content: string;
   excerpt: string;
 }

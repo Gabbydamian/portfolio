@@ -1,20 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash, Plus } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import { Blog } from "@/app/types/blog";
-import { deleteBlogPost } from "@/actions/blogActions";
+import { deleteBlogPost, updateBlogPost } from "@/actions/blogActions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { PostForm } from "./NewPost";
 
 export function BlogPosts({ blogs }: { blogs: Blog[] }) {
   const router = useRouter();
+  const [editingPost, setEditingPost] = useState<Blog | null>(null);
 
   const displayPosts: Blog[] = blogs ?? [];
 
   const handleDelete = async (id: string) => {
-    console.log(id);
     const { error } = await deleteBlogPost(id);
 
     if (error) {
@@ -31,7 +33,7 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
       console.error("Deletion failed");
       return;
     }
-    toast.success("Blogpost deleted Succefully", {
+    toast.success("Blogpost deleted Successfully", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -44,14 +46,63 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
     router.refresh();
   };
 
+  const handleEdit = async (data: any) => {
+    if (!editingPost) return;
+
+    const { error } = await updateBlogPost(editingPost.id, data);
+
+    if (error) {
+      toast.error("Failed to update post", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    toast.success("Post updated successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+    setEditingPost(null);
+    router.refresh();
+  };
+
+  if (editingPost) {
+    return (
+      <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Edit Post</h2>
+          <Button variant="outline" onClick={() => setEditingPost(null)}>
+            Cancel
+          </Button>
+        </div>
+        <PostForm
+          initialData={editingPost}
+          onSubmit={handleEdit}
+          submitLabel="Update Post"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
       <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Blog Posts</h2>
-        {/* <Button size="sm">
-          <Plus className="w-4 h-4 mr-1" /> Add New
-        </Button> */}
       </div>
       <div className="space-y-4">
         {displayPosts.map((post, i) => (
@@ -69,7 +120,11 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
               </Link>
             </span>
             <div className="space-x-2">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEditingPost(post)}
+              >
                 <Edit className="w-4 h-4 mr-1" /> Edit
               </Button>
               <Button

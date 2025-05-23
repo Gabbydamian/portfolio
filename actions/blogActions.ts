@@ -42,7 +42,6 @@ export async function fetchBlogPostBySlug(slug: string) {
   return { blogPost: data, error: null };
 }
 
-
 export async function addNewBlogPost(data: NewBlogPost) {
   const supabase = await createClient();
 
@@ -64,7 +63,6 @@ export async function addNewBlogPost(data: NewBlogPost) {
     throw error;
   }
 }
-
 
 export async function approveBlogPost(id: string) {
   const supabase = await createClient();
@@ -102,6 +100,32 @@ export async function deleteBlogPost(id: string) {
 
   if (error) {
     console.error("Error Deleting blog post:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+}
+
+export async function updateBlogPost(id: string, data: NewBlogPost) {
+  const supabase = await createClient();
+  const slug = generateSlug(data.title);
+  const readTime = calculateReadTime(data.content);
+
+  const { error } = await supabase
+    .from("blogs")
+    .update({
+      title: data.title,
+      category: data.category,
+      cover_img: data.cover_img,
+      content: data.content,
+      excerpt: data.excerpt,
+      slug,
+      read_time: readTime,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error updating blog post:", error.message);
     return { success: false, error: error.message };
   }
 
