@@ -19,7 +19,7 @@ export async function uploadImage(
     throw new Error("File size too large. Maximum size is 5MB.");
   }
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Generate a unique filename
   const fileExt = file.name.split(".").pop();

@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BlogPostEditor } from "@/components/blog-post-editor";
-import { ToastContainer, toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import removeMarkdown from "remove-markdown";
@@ -30,6 +29,7 @@ export default function SubmitBlogPage() {
     const excerpt = removeMarkdown(content).slice(0, 60).trim() + "...";
     const approved = false;
 
+    setIsSubmitting(true);
     try {
       await addNewBlogPost({
         title,
@@ -40,40 +40,22 @@ export default function SubmitBlogPage() {
         name,
         email,
       });
-
-      toast.success("Blog post submitted", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-
+      setIsSubmitted(true);
+      setName
       setTitle("");
+      setEmail("")
       setCategory("");
       setContent("");
     } catch (error) {
-      toast.error("Something went wrong...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      console.error(error);
+      setIsSubmitted(false);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   if (isSubmitted) {
     return (
       <MainLayout>
-        <ToastContainer theme="dark" />
         <Breadcrumbs />
         <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
           <motion.div

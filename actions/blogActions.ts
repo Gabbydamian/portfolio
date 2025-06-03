@@ -50,9 +50,9 @@ export async function addNewBlogPost(data: NewBlogPost) {
 
   let author, email, approved;
 
-  let user = await supabase.auth.getUser();
+  let session = await supabase.auth.getSession()
 
-  if (user) {
+  if (session.data.session) {
     author = "Damian Gabriel";
     email = "gabbydamian92@gmail.com";
     approved = true;

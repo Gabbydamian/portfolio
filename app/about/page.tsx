@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { MainLayout } from "@/components/main-layout";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -16,11 +16,18 @@ import {
   Send,
   Rocket,
   FileDown,
+  Gamepad2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ContactForm } from "@/components/contact-form";
 import Link from "next/link";
+import { SVGElementType } from "react";
+
+interface InterestType {
+  icon: ReactElement;
+  text: string;
+}
 
 export default function About() {
   const [showContactForm, setShowContactForm] = useState(false);
@@ -106,7 +113,7 @@ export default function About() {
     },
   ];
 
-  const interests = [
+  const interests: InterestType[] = [
     {
       icon: <Clapperboard className="w-5 h-5" />,
       text: "Classic film analysis and theory",
@@ -120,6 +127,10 @@ export default function About() {
       icon: <Rocket className="w-5 h-5" />,
       text: "Learning new technologies and skills",
     },
+    // {
+    //   icon: <Gamepad2 className="w-5 h-5" />,
+    //   text: "Gameplay",
+    // },
   ];
 
   const experience = [

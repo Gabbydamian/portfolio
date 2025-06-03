@@ -24,11 +24,24 @@ import {
   linkDialogPlugin,
   diffSourcePlugin,
   DiffSourceToggleWrapper,
+  imagePlugin,
+  InsertImage,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { useTheme } from "next-themes";
 import { useCallback, useMemo, useState } from "react";
 import debounce from "lodash/debounce";
+// Add image upload handler for MDXEditor using Supabase
+import { uploadImage, validateImage } from "@/lib/image-utils";
+
+async function handleImageUpload(image: File): Promise<string> {
+  const error = validateImage(image);
+  if (error) throw new Error(error);
+  // Use the file name (without extension) as the base name
+  const name = image.name.replace(/\.[^/.]+$/, "");
+  // Upload to the 'blog-images' bucket
+  return await uploadImage(image, "blog-images", name);
+}
 
 interface MDXEditorProps {
   value?: string;
@@ -85,6 +98,9 @@ export function MDXEditorComponent({
       }),
       linkPlugin(),
       linkDialogPlugin(),
+      imagePlugin({
+        imageUploadHandler: handleImageUpload,
+      }),
       tablePlugin(),
       diffSourcePlugin(),
       toolbarPlugin({
@@ -99,6 +115,7 @@ export function MDXEditorComponent({
             <ListsToggle />
             <CodeToggle />
             <InsertCodeBlock />
+            <InsertImage />
           </DiffSourceToggleWrapper>
         ),
       }),
