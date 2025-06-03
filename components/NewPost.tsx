@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BlogPostEditor } from "@/components/blog-post-editor";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { addNewBlogPost } from "@/actions/blogActions";
 import removeMarkdown from "remove-markdown";
 
@@ -53,7 +53,6 @@ export function PostForm({
       onSubmit={handleSubmit}
       className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-lg p-6 space-y-6"
     >
-      <ToastContainer theme="dark" />
       <h2 className="text-2xl font-semibold text-foreground">{submitLabel}</h2>
       <div className="space-y-4">
         <div className="space-y-2">
@@ -120,27 +119,9 @@ export function NewPost() {
   const handleCreate = async (data: PostFormData) => {
     try {
       await addNewBlogPost({ ...data, approved: true });
-      toast.success("New post added successfully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.success("New post added successfully");
     } catch (error) {
-      toast.error("Something went wrong...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Something went wrong...");
     }
   };
   return <PostForm onSubmit={handleCreate} submitLabel="Create New Post" />;

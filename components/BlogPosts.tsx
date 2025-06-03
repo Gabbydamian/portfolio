@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash, Plus } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { Blog } from "@/app/types/blog";
 import { deleteBlogPost, updateBlogPost } from "@/actions/blogActions";
 import { useRouter } from "next/navigation";
@@ -20,29 +20,11 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
     const { error } = await deleteBlogPost(id);
 
     if (error) {
-      toast.error("Something went wrong...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Something went wrong...");
       console.error("Deletion failed");
       return;
     }
-    toast.success("Blogpost deleted Successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    toast.success("Blogpost deleted Successfully");
     router.refresh();
   };
 
@@ -52,29 +34,11 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
     const { error } = await updateBlogPost(editingPost.id, formData);
 
     if (error) {
-      toast.error("Failed to update post", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Failed to update post");
       return;
     }
 
-    toast.success("Post updated successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    toast.success("Post updated successfully");
 
     setEditingPost(null);
     router.refresh();
@@ -100,7 +64,6 @@ export function BlogPosts({ blogs }: { blogs: Blog[] }) {
 
   return (
     <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
-      <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Blog Posts</h2>
       </div>

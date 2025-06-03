@@ -7,7 +7,13 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
+  const [mounted, setMounted] = React.useState(false);
   const { theme, setTheme } = useTheme();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isDark =
     theme === "dark" ||
     (!theme &&
@@ -17,6 +23,14 @@ export function ThemeToggle() {
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
+
+  if (!mounted) {
+    return (
+      <Button variant="outline" size="icon" aria-label="Toggle theme">
+        <span className="sr-only">Toggle theme</span>
+      </Button>
+    );
+  }
 
   return (
     <Button

@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { addProject } from "@/actions/projectActions";
-import { Project } from "@/app/types/project";
+import type { Project } from "@/app/types/project";
 
 interface ProjectFormData {
   title: string;
@@ -65,7 +65,6 @@ export function ProjectForm({
       onSubmit={handleSubmit}
       className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6"
     >
-      <ToastContainer />
       <h2 className="text-xl font-semibold mb-4">{submitLabel}</h2>
       <div className="space-y-4 mb-4">
         <div>
@@ -122,31 +121,23 @@ export function ProjectForm({
   );
 }
 
-export function NewProject() {
+export type NewProjectProps = {
+  initialData?: Project;
+  onSubmit: (data: any) => Promise<void>;
+  submitLabel?: string;
+};
+
+export function NewProject({
+  initialData,
+  onSubmit,
+  submitLabel = "Create Project",
+}: NewProjectProps) {
   const handleCreate = async (data: ProjectFormData) => {
     try {
       await addProject(data);
-      toast.success("New project added successfully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.success("New project added successfully");
     } catch (error) {
-      toast.error("Something went wrong...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Something went wrong...");
     }
   };
 

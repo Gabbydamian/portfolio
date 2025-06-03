@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { userLogin } from "@/actions/userActions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export function AdminLogin() {
@@ -22,41 +22,14 @@ export function AdminLogin() {
       const { success } = await userLogin(email, password);
 
       if (!success) {
-        toast.error("Login Failed", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        toast.error("Login Failed");
         return;
       }
       router.refresh();
 
-      toast.success("Login Successful", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.success("Login Successful");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "An error occured", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error(error instanceof Error ? error.message : "An error occured");
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +37,6 @@ export function AdminLogin() {
 
   return (
     <div className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-lg">
-      <ToastContainer />
       <h1 className="text-3xl font-bold mb-8 text-center">Admin Login</h1>
       <form onSubmit={handleLogin} className="space-y-6">
         <div className="space-y-2">

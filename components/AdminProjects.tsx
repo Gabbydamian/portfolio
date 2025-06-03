@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { Project } from "@/app/types/project";
 import { deleteProject, updateProject } from "@/actions/projectActions";
 import { useRouter } from "next/navigation";
@@ -19,29 +19,11 @@ export function Projects({ projects }: { projects: Project[] }) {
     const { error } = await deleteProject(id);
 
     if (error) {
-      toast.error("Something went wrong...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Something went wrong...");
       return;
     }
 
-    toast.success("Project deleted successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    toast.success("Project deleted successfully");
     router.refresh();
   };
 
@@ -51,30 +33,11 @@ export function Projects({ projects }: { projects: Project[] }) {
     const { error } = await updateProject(editingProject.id, data);
 
     if (error) {
-      toast.error("Failed to update project", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("Failed to update project");
       return;
     }
 
-    toast.success("Project updated successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-
+    toast.success("Project updated successfully");
     setEditingProject(null);
     router.refresh();
   };
@@ -99,7 +62,6 @@ export function Projects({ projects }: { projects: Project[] }) {
 
   return (
     <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
-      <ToastContainer />
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Projects</h2>
       </div>

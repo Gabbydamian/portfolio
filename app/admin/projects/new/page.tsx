@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ProjectForm } from "@/components/NewProject";
 import { addProject } from "@/actions/projectActions";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function NewProjectPage() {

@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { getProject } from "@/actions/projectActions";
 import { ProjectForm } from "@/components/NewProject";
 import { updateProject } from "@/actions/projectActions";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 interface EditProjectPageProps {

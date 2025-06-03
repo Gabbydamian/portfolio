@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 import { Send, Loader2 } from "lucide-react";
 
 interface ContactFormProps {
@@ -27,16 +27,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
-      toast.success("Message sent!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.success("Message sent!");
       onClose();
     }, 1500);
   };
@@ -46,7 +37,6 @@ export function ContactForm({ onClose }: ContactFormProps) {
       onSubmit={handleSubmit}
       className="space-y-4 bg-card text-card-foreground p-6 pt-0 rounded-lg relative"
     >
-      <ToastContainer />
       {/* <Button
         type="button"
         variant="ghost"
