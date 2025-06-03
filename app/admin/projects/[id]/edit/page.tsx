@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getProject } from "@/actions/projectActions";
+// import { getProject } from "@/actions/projectActions";
 import { ProjectForm } from "@/components/NewProject";
 import { updateProject } from "@/actions/projectActions";
 // import { toast } from "react-toastify";
@@ -20,18 +20,18 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
   const [project, setProject] = useState<any>(null);
 
   // Fetch project data on mount
-  useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        const data = await getProject(params.id);
-        setProject(data);
-      } catch (error) {
-        toast.error("Failed to fetch project");
-        router.push("/admin/projects");
-      }
-    };
-    fetchProject();
-  }, [params.id, router]);
+  // useEffect(() => {
+  //   const fetchProject = async () => {
+  //     try {
+  //       const data = await getProject(params.id);
+  //       setProject(data);
+  //     } catch (error) {
+  //       toast.error("Failed to fetch project");
+  //       router.push("/admin/projects");
+  //     }
+  //   };
+  //   fetchProject();
+  // }, [params.id, router]);
 
   const handleUpdate = async (data: any) => {
     try {
@@ -59,7 +59,6 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
             title: project.title,
             description: project.description,
             imageUrl: project.image_url,
-            githubUrl: project.github_url,
             liveUrl: project.live_url,
             technologies: project.technologies.join(", "),
           }}

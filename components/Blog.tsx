@@ -10,8 +10,16 @@ import { Badge } from "@/components/ui/badge";
 import type { BlogPageProps } from "@/app/types/blog";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ShareButton } from "@/components/share-button";
+import { Spinner } from "@/components/ui/spinner";
 
-const BlogPage = ({ post }: BlogPageProps) => {
+const BlogPage = ({
+  post,
+  isLoading,
+}: BlogPageProps & { isLoading?: boolean }) => {
+  if (isLoading) {
+    return <Spinner className="my-32" />;
+  }
+
   const shareUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}/blog/${post.slug}`

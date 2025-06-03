@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Send, Loader2 } from "lucide-react";
+import { submitContactForm } from "@/actions/contactActions";
 
 interface ContactFormProps {
   onClose: () => void;
@@ -24,12 +25,28 @@ export function ContactForm({ onClose }: ContactFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const result = await submitContactForm({
+        name,
+        email,
+        message,
+      });
+
+      if (result.success) {
+        toast.success("Message sent successfully!");
+        // Clear form
+        setName("");
+        setEmail("");
+        setMessage("");
+        onClose();
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again later.");
+    } finally {
       setIsSubmitting(false);
-      toast.success("Message sent!");
-      onClose();
-    }, 1500);
+    }
   };
 
   return (

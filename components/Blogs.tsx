@@ -11,6 +11,7 @@ import { PenLine, Lock } from "lucide-react";
 import { BlogCategory, BlogProps } from "@/app/types/blog";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogPosts } from "@/actions/blogActions";
+import { Spinner } from "@/components/ui/spinner";
 
 const Blogs = () => {
   const { data, isLoading, error } = useQuery({
@@ -24,7 +25,7 @@ const Blogs = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner className="my-32" />;
   }
 
   if (error) {

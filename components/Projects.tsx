@@ -4,6 +4,7 @@ import { ProjectCard } from "@/components/project-card";
 // import { Project } from "@/app/types/project";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/actions/projectActions";
+import { Spinner } from "@/components/ui/spinner";
 
 // interface ProjectsProps {
 //   fetchedProjects: Project[];
@@ -19,10 +20,10 @@ export function Projects() {
   // const error = projectsError;
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner className="my-32" />;
   }
-  if (error){
-    return <div>An error occured</div>
+  if (error) {
+    return <div>An error occured</div>;
   }
 
   return (
@@ -47,20 +48,25 @@ export function Projects() {
         </motion.p>
       )}
 
-      {data && Array.isArray(data.projectsData) && data.projectsData.length === 0 && !error && (
-        <motion.p
-          className="text-lg text-center text-gray-500 max-w-xl mx-auto"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          No Projects have been added yet. Please check back later or contact an
-          Admin!
-        </motion.p>
-      )}
+      {data &&
+        Array.isArray(data.projectsData) &&
+        data.projectsData.length === 0 &&
+        !error && (
+          <motion.p
+            className="text-lg text-center text-gray-500 max-w-xl mx-auto"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            No Projects have been added yet. Please check back later or contact
+            an Admin!
+          </motion.p>
+        )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {data && Array.isArray(data.projectsData) && data.projectsData.length > 0 &&
+        {data &&
+          Array.isArray(data.projectsData) &&
+          data.projectsData.length > 0 &&
           data.projectsData.map((project, index) => (
             <motion.div
               key={project.title}
