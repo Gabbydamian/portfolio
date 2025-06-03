@@ -9,15 +9,24 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import type { BlogPageProps } from "@/app/types/blog";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ShareButton } from "@/components/share-button";
 
 const BlogPage = ({ post }: BlogPageProps) => {
+  const shareUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/blog/${post.slug}`
+      : "";
+
   return (
     <article className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
       <Breadcrumbs />
       <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-          {post.title}
-        </h1>
+        <div className="flex justify-between items-start mb-4">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+            {post.title}
+          </h1>
+          <ShareButton url={shareUrl} title={post.title} />
+        </div>
         <div className="flex items-center text-gray-400 mb-4">
           <span>{formatDate(post.date_created)}</span>
           <span className="mx-2">•</span>
