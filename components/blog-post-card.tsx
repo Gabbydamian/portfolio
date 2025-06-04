@@ -31,7 +31,11 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           {post.title}
         </h3>
         <p className="text-muted-foreground mb-3">{post.excerpt}</p>
-        {post.category && <Badge variant="default">{post.category}</Badge>}
+        {post.category && (
+          <Badge variant="default" className="capitalize">
+            {post.category}
+          </Badge>
+        )}
       </CardContent>
       <CardFooter className="p-6 pt-0">
         <Link

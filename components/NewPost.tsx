@@ -46,6 +46,11 @@ export function PostForm({
     e.preventDefault();
     const excerpt = removeMarkdown(content).slice(0, 60).trim() + "..." || "";
     await onSubmit({ title, category, cover_img: coverImg, content, excerpt });
+    setTitle("");
+    setCategory("");
+    setContent("");
+    setCoverImg("");
+    toast.success("Post submitted successfully");
   };
 
   return (

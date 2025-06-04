@@ -72,6 +72,7 @@ export async function addNewBlogPost(data: NewBlogPost) {
     author: author,
     email: email,
     approved: approved,
+    cover_img: data.cover_img || "/placeholder.svg?height=300&width=500"
   };
 
   // console.log(blog);

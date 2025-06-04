@@ -9,7 +9,7 @@ import { BlogPosts } from "@/components/BlogPosts";
 import { NewPost } from "@/components/NewPost";
 import { Projects } from "@/components/AdminProjects";
 import { NewProject } from "@/components/NewProject";
-import { fetchProjects } from "@/actions/projectActions";
+import { addProject, fetchProjects } from "@/actions/projectActions";
 
 export default async function AdminPage() {
   const pendingResult = await fetchBlogPosts("pending");
@@ -107,7 +107,7 @@ export default async function AdminPage() {
             value="new-project"
             className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
           >
-            <NewProject />
+            <NewProject onSubmit={async (data) => { await addProject(data); }} />
           </TabsContent>
         </Tabs>
       </div>

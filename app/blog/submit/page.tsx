@@ -177,7 +177,7 @@ export default function SubmitBlogPage() {
                 <option value="development">Development</option>
                 <option value="design">Design</option>
                 <option value="personal">Personal</option>
-                <option value="career">Security</option>
+                <option value="security">Security</option>
               </select>
             </div>
 

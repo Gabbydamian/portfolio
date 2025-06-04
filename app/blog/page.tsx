@@ -9,7 +9,7 @@ import {
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog | Damian Gabriel - Full-Stack Developer & Technical Architect",
+  title: "Blog | Damian Gabriel - Full-Stack Developer & IT Expert",
   description:
     "Read the latest articles and insights from Damian Gabriel on web development, React, Next.js, TypeScript, and more. Stay updated with best practices, tutorials, and industry trends.",
   keywords: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Tech Articles",
   ],
   openGraph: {
-    title: "Blog | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "Blog | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Latest blog posts and technical articles by Damian Gabriel. Explore web development, best practices, and more.",
     url: "https://astridamian.vercel.app/blog",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "Blog | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Latest blog posts and technical articles by Damian Gabriel. Explore web development, best practices, and more.",
     images: ["https://astridamian.vercel.app/og-image.png"],

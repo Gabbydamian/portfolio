@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Damian Gabriel",
     "Full Stack Developer",
     "Software Engineer",
-    "Technical Architect",
+    "IT Expert",
 
     // Technical expertise (long-tail keywords)
     "React performance optimization",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     "Discover innovative web development solutions through Damian Gabriel's expertise in React, Next.js, and TypeScript. Explore performance-optimized applications, architectural insights, and proven methodologies that transform complex technical challenges into elegant, scalable solutions. Specializing in full-stack development with a focus on user experience and code quality.",
 
   openGraph: {
-    title: "Damian Gabriel | Full-Stack Developer & Technical Architect",
+    title: "Damian Gabriel | Full-Stack Developer & IT Expert",
     description:
       "Expert full-stack developer specializing in React, Next.js, and TypeScript. Delivering high-performance web applications and scalable technical solutions that drive business growth and exceptional user experiences.",
     url: "https://astridamian.vercel.app/",
@@ -191,7 +191,7 @@ export default function RootLayout({
                 "API Design",
                 "Information Technology",
                 "Web Architecture",
-                "Application Security"
+                "Application Security",
               ],
             }),
           }}
@@ -207,7 +207,7 @@ export default function RootLayout({
           <LocationProvider>
             {/* <SpotifyProvider>
             </SpotifyProvider> */}
-              <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>{children}</QueryProvider>
           </LocationProvider>
           <Analytics />
           <SpeedInsights />

@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import AboutClient from "../../components/about-client";
 
 export const metadata: Metadata = {
-  title: "About | Damian Gabriel - Full-Stack Developer & Technical Architect",
+  title: "About | Damian Gabriel - Full-Stack Developer & IT Expert",
   description:
-    "Learn more about Damian Gabriel, a passionate full-stack developer and technical architect specializing in React, Next.js, and TypeScript. Discover his background, skills, interests, and professional journey.",
+    "Learn more about Damian Gabriel, a passionate full-stack developer and IT Expert specializing in React, Next.js, and TypeScript. Discover his background, skills, interests, and professional journey.",
   keywords: [
     "Damian Gabriel",
     "About",
     "Full-Stack Developer",
-    "Technical Architect",
+    "IT Expert",
     "Web Development",
     "React",
     "Next.js",
@@ -20,8 +20,7 @@ export const metadata: Metadata = {
     "Personal Story",
   ],
   openGraph: {
-    title:
-      "About | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "About | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Learn more about Damian Gabriel, his skills, experience, and journey as a web developer.",
     url: "https://astridamian.vercel.app/about",
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
         url: "https://astridamian.vercel.app/og-image.png",
         width: 1200,
         height: 630,
-        alt: "About Damian Gabriel - Full-Stack Developer & Technical Architect",
+        alt: "About Damian Gabriel - Full-Stack Developer & IT Expert",
       },
     ],
     locale: "en_US",
@@ -39,8 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "About | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "About | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Learn more about Damian Gabriel, his skills, experience, and journey as a web developer.",
     images: ["https://astridamian.vercel.app/og-image.png"],

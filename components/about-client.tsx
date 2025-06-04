@@ -188,9 +188,9 @@ export default function AboutClient() {
             "@type": "Person",
             name: "Damian Gabriel",
             url: "https://astridamian.vercel.app/about",
-            jobTitle: "Full-Stack Developer & Technical Architect",
+            jobTitle: "Full-Stack Developer & IT Expert",
             description:
-              "Learn more about Damian Gabriel, a passionate full-stack developer and technical architect specializing in React, Next.js, and TypeScript.",
+              "Learn more about Damian Gabriel, a passionate full-stack developer and IT Expert specializing in React, Next.js, and TypeScript.",
             sameAs: [
               "https://github.com/Gabbydamian",
               "https://linkedin.com/in/gabriel-damian-43309423b",

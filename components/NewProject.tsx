@@ -32,7 +32,7 @@ export function ProjectForm({
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
-  const [imageUrl, setImageUrl] = useState(initialData?.image_url || "");
+  const [imageUrl, setImageUrl] = useState(initialData?.image || "");
   const [projectLink, setProjectLink] = useState(initialData?.link || "");
   const [tags, setTags] = useState(
     initialData?.tags ? initialData.tags.join(", ") : ""
@@ -42,7 +42,7 @@ export function ProjectForm({
     if (initialData) {
       setTitle(initialData.title || "");
       setDescription(initialData.description || "");
-      setImageUrl(initialData.image_url || "");
+      setImageUrl(initialData.image || "");
       setProjectLink(initialData.link || "");
       setTags(initialData.tags ? initialData.tags.join(", ") : "");
     }

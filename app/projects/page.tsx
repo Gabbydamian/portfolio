@@ -6,8 +6,7 @@ import { HydrationBoundary } from "@tanstack/react-query";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Projects | Damian Gabriel - Full-Stack Developer & Technical Architect",
+  title: "Projects | Damian Gabriel - Full-Stack Developer & IT Expert",
   description:
     "Explore Damian Gabriel's portfolio projects, showcasing expertise in React, Next.js, TypeScript, and scalable web solutions. Discover innovative applications and technical achievements.",
   keywords: [
@@ -25,8 +24,7 @@ export const metadata: Metadata = {
     "Technical Solutions",
   ],
   openGraph: {
-    title:
-      "Projects | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "Projects | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Portfolio projects by Damian Gabriel. Explore innovative web applications and technical solutions.",
     url: "https://astridamian.vercel.app/projects",
@@ -44,8 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Projects | Damian Gabriel - Full-Stack Developer & Technical Architect",
+    title: "Projects | Damian Gabriel - Full-Stack Developer & IT Expert",
     description:
       "Portfolio projects by Damian Gabriel. Explore innovative web applications and technical solutions.",
     images: ["https://astridamian.vercel.app/og-image.png"],
