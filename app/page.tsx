@@ -3,12 +3,12 @@
 import { MainLayout } from "@/components/main-layout";
 import { ParticleBackground } from "@/components/particle-background";
 import { SocialIcons } from "@/components/social-icons";
-import { SpotifyWidget } from "@/components/spotify-widget";
+// import { SpotifyWidget } from "@/components/spotify-widget";
 import { LocationInfo } from "@/components/location-info";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-
+import Link from "next/link";
 export default function Home() {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -79,10 +79,19 @@ export default function Home() {
           </main>
 
           <footer className="w-full p-4 border-t border-border">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
               <LocationInfo />
-              <div className="my-4 md:my-0">
+              {/* <div className="my-4 md:my-0">
                 <SpotifyWidget floating={false} />
+              </div> */}
+              <div className="my-4 md:my-0 text-center text-sm flex flex-col md:flex-row items-center gap-2 md:gap-4">
+                <span className="text-primary">
+                  &copy; {new Date().getFullYear()} Damian Gabriel &middot;
+                  astridamian &middot;{" "}
+                  <Link className="underline" href="/privacy">
+                    Privacy Policy
+                  </Link>
+                </span>
               </div>
               <SocialIcons />
             </div>

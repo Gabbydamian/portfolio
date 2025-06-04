@@ -41,9 +41,9 @@ export default function SubmitBlogPage() {
         email,
       });
       setIsSubmitted(true);
-      setName
+      setName;
       setTitle("");
-      setEmail("")
+      setEmail("");
       setCategory("");
       setContent("");
     } catch (error) {
@@ -105,6 +105,18 @@ export default function SubmitBlogPage() {
         </motion.div>
 
         <div className="bg-card rounded-lg p-6 border border-border">
+          <div className="text-sm text-muted-foreground mb-6 text-center">
+            By submitting, you agree to our
+            <Link
+              href="/privacy"
+              className="ml-1 text-primary underline hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary rounded transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            . Your name and email are optional and only used for author credit
+            or to contact you about your submission. We do not share your
+            information.
+          </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">

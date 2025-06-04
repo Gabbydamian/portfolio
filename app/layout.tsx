@@ -7,7 +7,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "./providers/queryProvider";
 import { LocationProvider } from "@/app/contexts/location-context";
-import { SpotifyProvider } from "@/app/contexts/spotify-context";
+// import { SpotifyProvider } from "@/app/contexts/spotify-context";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
 
@@ -205,9 +205,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <LocationProvider>
-            <SpotifyProvider>
+            {/* <SpotifyProvider>
+            </SpotifyProvider> */}
               <QueryProvider>{children}</QueryProvider>
-            </SpotifyProvider>
           </LocationProvider>
           <Analytics />
           <SpeedInsights />
