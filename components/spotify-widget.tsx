@@ -7,8 +7,8 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Maximize2,
   Minimize,
+  Music4Icon
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -151,7 +151,7 @@ export function SpotifyWidget({ floating = false }: SpotifyWidgetProps) {
               onClick={() => setIsExpanded(true)}
             >
               <span className="sr-only">Expand music player</span>
-              <Maximize2 className="h-4 w-4" />
+              <Music4Icon className="h-4 w-4" />
             </Button>
           </motion.div>
         )}

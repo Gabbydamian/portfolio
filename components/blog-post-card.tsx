@@ -36,9 +36,15 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       <CardFooter className="p-6 pt-0">
         <Link
           href={`/blog/${post.slug}`}
-          className="inline-flex items-center text-card-foreground hover:underline hover:text-primary"
+          className="inline-flex items-center text-sm text-card-foreground hover:text-primary"
+          aria-label={`Read full post: ${post.title}`}
         >
-          Read more <ArrowRight className="ml-1 h-4 w-4" />
+          Read more:&nbsp;
+          <span className="underline">
+            {post.title.split(" ").slice(0, 2).join(" ")}
+            {""}...{""}
+          </span>
+          <ArrowRight className="ml-1 h-4 w-4" />
         </Link>
       </CardFooter>
     </Card>

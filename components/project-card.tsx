@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, LucideFolderCode } from "lucide-react";
 import { Project } from "@/app/types/project";
 
 interface ProjectCardProps {
@@ -34,14 +34,25 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="p-6 pt-0">
+      <CardFooter className="p-6 pt-0 flex justify-between items-start">
         <Link
           target="__blank"
           href={project.link}
-          className="inline-flex items-center text-card-foreground hover:underline hover:text-primary transition-colors duration-200"
+          className="inline-flex items-center text-sm text-card-foreground underline hover:text-primary transition-colors duration-200"
+          aria-label={`View project: ${project.title}`}
         >
-          View Project <ExternalLink className="ml-1 h-4 w-4" />
+          {project.title} <ExternalLink className="ml-1 h-4 w-4" />
         </Link>
+        {project.source_code && (
+          <Link
+            target="__blank"
+            href={project.source_code}
+            className="inline-flex items-center text-sm text-card-foreground hover:text-primary transition-colors duration-200"
+          >
+            <LucideFolderCode className="mr-1 h-4 w-4" />
+            View Source &nbsp;
+          </Link>
+        )}
       </CardFooter>
     </Card>
   );
