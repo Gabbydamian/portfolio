@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Damian Gabriel | Full-Stack Developer & TIT Expert",
+  title: "Damian Gabriel | Full-Stack Developer & IT Expert",
   keywords: [
     // Primary identity keywords
     "Damian Gabriel",
