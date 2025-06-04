@@ -1,6 +1,6 @@
 # My Portfolio
 
-![Portfolio Preview](https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/portfolio-project-images//astrid-damian.vercel.app_(Nest%20Hub).png)
+![Portfolio Preview](https://vkzysblijnkwykumefrg.supabase.co/storage/v1/object/public/portfolio-project-images//portfolio.webp)
 
 ## 📌 Overview
 
