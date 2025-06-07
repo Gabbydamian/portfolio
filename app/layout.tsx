@@ -161,6 +161,10 @@ export default function RootLayout({
         {/* Enhanced meta tags for better crawling */}
         <meta name="theme-color" content="#000000" />
         <meta name="msapplication-TileColor" content="#000000" />
+        <meta
+          name="google-site-verification"
+          content="12Vzs0o5A8FksNuRb6tb1K7SMLkHUuBhFtTjTjh65YI"
+        />
 
         {/* Structured data - implement this in a separate component */}
         <script
