@@ -107,7 +107,7 @@ export default async function AdminPage() {
             value="new-project"
             className="bg-background/60 backdrop-blur border border-border shadow-lg rounded-xl p-6"
           >
-            <NewProject onSubmit={async (data) => { await addProject(data); }} />
+            <NewProject />
           </TabsContent>
         </Tabs>
       </div>

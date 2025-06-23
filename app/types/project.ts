@@ -13,7 +13,9 @@ export type Project = {
 export interface NewProject {
   title: string;
   description: string;
-  image_url?: string | null;
+  image?: string | null;
   link: string;
   tags: string[];
+  source_code?: string;
+  last_modified?: Date;
 }

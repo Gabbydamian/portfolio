@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/supabase";
 import { calculateReadTime, generateSlug } from "@/lib/utils";
 // import { Blog } from "@/app/types/blog";
 import { NewBlogPost } from "@/app/types/blog";
+import { revalidateTag } from "next/cache";
 export async function fetchBlogPosts(status?: string) {
   const supabase = await createClient();
 
@@ -83,6 +84,8 @@ export async function addNewBlogPost(data: NewBlogPost) {
     console.error("Error inserting blog post:", error);
     throw error;
   }
+  revalidateTag('blog-posts');
+  revalidateTag('sitemap');
 }
 
 export async function approveBlogPost(id: string) {
@@ -123,7 +126,8 @@ export async function deleteBlogPost(id: string) {
     console.error("Error Deleting blog post:", error.message);
     return { success: false, error: error.message };
   }
-
+  revalidateTag('blog-posts');
+  revalidateTag('sitemap');
   return { success: true };
 }
 
@@ -151,6 +155,7 @@ export async function updateBlogPost(id: string, formData: NewBlogPost) {
     console.error("Error updating blog post:", error.message);
     return { success: false, error: error.message };
   }
-
+  revalidateTag('blog-posts');
+  revalidateTag('sitemap');
   return { success: true };
 }

@@ -55,12 +55,12 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
       <h1 className="text-4xl font-bold mb-8">Edit Project</h1>
       <div className="bg-background/60 backdrop-blur border border-border shadow rounded-lg p-6">
         <ProjectForm
-          project={{
+          initialData={{
             title: project.title,
             description: project.description,
-            imageUrl: project.image_url,
-            liveUrl: project.live_url,
-            technologies: project.technologies.join(", "),
+            image: project.image,
+            link: project.link,
+            tags: project.tags, 
           }}
           onSubmit={handleUpdate}
         />

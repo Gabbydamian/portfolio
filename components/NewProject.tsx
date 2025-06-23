@@ -12,7 +12,7 @@ import type { Project } from "@/app/types/project";
 interface ProjectFormData {
   title: string;
   description: string;
-  image_url: string | null;
+  image: string | null;
   link: string;
   tags: string[];
 }
@@ -25,14 +25,14 @@ interface ProjectFormProps {
 
 export function ProjectForm({
   initialData,
-  onSubmit,
   submitLabel = "Save Project",
+  onSubmit,
 }: ProjectFormProps) {
   const [title, setTitle] = useState(initialData?.title || "");
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
-  const [imageUrl, setImageUrl] = useState(initialData?.image || "");
+  const [image, setImage] = useState(initialData?.image || "");
   const [projectLink, setProjectLink] = useState(initialData?.link || "");
   const [tags, setTags] = useState(
     initialData?.tags ? initialData.tags.join(", ") : ""
@@ -42,7 +42,7 @@ export function ProjectForm({
     if (initialData) {
       setTitle(initialData.title || "");
       setDescription(initialData.description || "");
-      setImageUrl(initialData.image || "");
+      setImage(initialData.image || "");
       setProjectLink(initialData.link || "");
       setTags(initialData.tags ? initialData.tags.join(", ") : "");
     }
@@ -54,10 +54,16 @@ export function ProjectForm({
     await onSubmit({
       title,
       description,
-      image_url: imageUrl || null,
+      image: image || null,
       link: projectLink,
       tags: tagsArray,
     });
+    setTitle("");
+    setDescription("");
+    setImage("");
+    setProjectLink("");
+    setTags("");
+    toast.success("Project submitted successfully");
   };
 
   return (
@@ -92,8 +98,8 @@ export function ProjectForm({
           <Input
             id="project-image"
             placeholder="https://example.com/image.jpg"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
           />
         </div>
         <div>
@@ -121,17 +127,13 @@ export function ProjectForm({
   );
 }
 
-export type NewProjectProps = {
-  initialData?: Project;
-  onSubmit: (data: any) => Promise<void>;
-  submitLabel?: string;
-};
+// export type NewProjectProps = {
+//   initialData?: Project;
+//   onSubmit: (data: any) => Promise<void>;
+//   submitLabel?: string;
+// };
 
-export function NewProject({
-  initialData,
-  onSubmit,
-  submitLabel = "Create Project",
-}: NewProjectProps) {
+export function NewProject() {
   const handleCreate = async (data: ProjectFormData) => {
     try {
       await addProject(data);

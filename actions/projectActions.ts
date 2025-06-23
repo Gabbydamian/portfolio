@@ -18,13 +18,16 @@ export async function fetchProjects() {
 export async function addProject(projectData: Partial<Project>) {
   const supabase = await createClient();
 
-  const project = { ...projectData, last_modified: new Date() };
+  // Ensure last_modified is an ISO string
+  const project = { ...projectData, last_modified: new Date().toISOString() };
 
   const { data, error } = await supabase
     .from("projects")
-    .insert([project])
-    .select("*")
-    .single();
+    .insert([project]);
+
+  // Debug logging for Supabase response
+  console.log("Supabase insert data:", data);
+  console.log("Supabase insert error:", error);
 
   if (error) {
     return { projectData: null, error };
@@ -40,7 +43,7 @@ export async function updateProject(id: string, data: NewProject) {
     .update({
       title: data.title,
       description: data.description,
-      image_url: data.image_url,
+      image: data.image || null,
       link: data.link,
       tags: data.tags,
     })
