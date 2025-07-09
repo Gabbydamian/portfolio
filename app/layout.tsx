@@ -138,6 +138,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Preload Montserrat font for faster LCP */}
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap"
+          as="style"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap"
+        />
         {/* Enhanced favicon setup */}
         <link
           rel="apple-touch-icon"
@@ -202,21 +212,23 @@ export default function RootLayout({
         />
       </head>
       <body className={montserrat.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <LocationProvider>
-            {/* <SpotifyProvider>
-            </SpotifyProvider> */}
-            <QueryProvider>{children}</QueryProvider>
-          </LocationProvider>
-          <Analytics />
-          <SpeedInsights />
-          <Toaster />
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <LocationProvider>
+              {/* <SpotifyProvider>
+              </SpotifyProvider> */}
+              {children}
+            </LocationProvider>
+            <Analytics />
+            <SpeedInsights />
+            <Toaster />
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

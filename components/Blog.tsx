@@ -51,6 +51,7 @@ const BlogPage = ({
             alt={post.title}
             fill
             className="object-cover"
+            loading="eager"
           />
         </div>
       </div>

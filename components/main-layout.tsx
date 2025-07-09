@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { NavBar } from "@/components/nav-bar"
 import { AnimatePresence, motion } from "framer-motion"
-// import { SpotifyWidget } from "@/components/spotify-widget"
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -36,7 +35,6 @@ export function MainLayout({ children, showFloatingPlayer = true }: MainLayoutPr
           {children}
         </motion.div>
       </AnimatePresence>
-      {/* {showFloatingPlayer && !isHome && <SpotifyWidget floating={true} />} */}
     </div>
   )
 }

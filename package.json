@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "find:unused": "next-unused"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -83,8 +84,37 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "next-unused": "^0.0.6",
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "next-unused": {
+    "alias": {
+      "@": "./src"
+    },
+    "exclude": [
+      "node_modules",
+      "dist",
+      "build",
+      "public",
+      "test",
+      "tests"
+    ],
+    "entrypoints": [
+      "pages",
+      "components",
+      "lib",
+      "utils",
+      "hooks",
+      "styles",
+      "types",
+      "constants",
+      "services",
+      "contexts",
+      "app",
+      "api",
+      "ui"
+    ]
   }
 }

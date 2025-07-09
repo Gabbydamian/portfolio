@@ -7,22 +7,22 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    // dangerouslyAllowSVG: true,
-    unoptimized: true,
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "**.supabase.co",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "th.bing.com",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "placehold.co",
-    //   },
-    // ],
+    dangerouslyAllowSVG: true,
+    unoptimized: false,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "th.bing.com",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
+    ],
   },
   allowedDevOrigins: [
     "local-origin.dev",

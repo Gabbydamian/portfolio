@@ -216,6 +216,7 @@ export default function AboutClient() {
                   alt="Damian Gabriel"
                   fill
                   className="object-cover"
+                  loading="eager"
                 />
               </div>
               <div className="flex-1">
