@@ -42,7 +42,7 @@ export function LocationInfo() {
   };
 
   return (
-    <div className="flex items-center text-sm bg-background/60 backdrop-blur border border-border rounded-xl px-3 py-3 shadow-lg">
+    <div className="flex items-center text-sm bg-background/60 backdrop-blur border border-border rounded-xl px-3 py-3 shadow-sm">
       {loading ? (
         <span className="text-muted-foreground">Loading...</span>
       ) : (

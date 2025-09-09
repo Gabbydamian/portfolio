@@ -42,12 +42,12 @@ export default function DashboardPostForm({ initialValues = {}, onSubmit, loadin
   }
 
   return (
-    <form className="space-y-4 max-w-xl" onSubmit={handleSubmit}>
+    <form className="space-y-4 max-w-full mx-auto" onSubmit={handleSubmit}>
       <Input name="title" placeholder="Title" value={values.title} onChange={handleChange} required />
-      <BlogPostEditor value={values.content} onChange={handleContentChange} />
       <Input name="excerpt" placeholder="Excerpt" value={values.excerpt} onChange={handleChange} />
       <Input name="category" placeholder="Category" value={values.category} onChange={handleChange} />
       <Input name="cover_img" placeholder="Cover Image URL" value={values.cover_img} onChange={handleChange} />
+      <BlogPostEditor value={values.content} onChange={handleContentChange} />
       <Button type="submit" disabled={submitting || loading} className="w-full">
         {mode === "edit" ? "Update Post" : "Add Post"}
       </Button>

@@ -55,7 +55,7 @@ Enjoy writing your blog posts!
       </TabsContent>
       <TabsContent value="preview">
         <div
-          className={`border rounded-md p-4 min-h-[400px] ${
+          className={`border rounded-md p-4 min-h-[400px] max-h-[600px] overflow-y-auto ${
             isDark ? "bg-background" : "bg-white"
           }`}
         >

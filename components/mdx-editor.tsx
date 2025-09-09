@@ -105,7 +105,8 @@ export function MDXEditorComponent({
       diffSourcePlugin(),
       toolbarPlugin({
         toolbarContents: () => (
-          <DiffSourceToggleWrapper>
+          // <DiffSourceToggleWrapper>
+          <>
             <UndoRedo />
             <BoldItalicUnderlineToggles />
             <BlockTypeSelect />
@@ -116,7 +117,8 @@ export function MDXEditorComponent({
             <CodeToggle />
             <InsertCodeBlock />
             <InsertImage />
-          </DiffSourceToggleWrapper>
+          </>
+          // </DiffSourceToggleWrapper>
         ),
       }),
     ],
@@ -124,7 +126,7 @@ export function MDXEditorComponent({
   );
 
   return (
-    <div className="border rounded-md">
+    <div className="border rounded-md max-h-[600px] overflow-y-auto">
       <MDXEditor
         markdown={value || ""}
         onChange={debouncedOnChange}

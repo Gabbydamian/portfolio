@@ -63,7 +63,7 @@ export default function AdminDashboard() {
   // Client-side authentication check
   useEffect(() => {
     async function checkAuth() {
-      const supabase = await createClient();
+      const supabase = createClient();
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
 
   // Logout handler
   async function handleLogout() {
-    const supabase = await createClient();
+    const supabase = createClient();
     await supabase.auth.signOut();
     setUser(null);
   }
