@@ -9,9 +9,14 @@ import { useTheme } from "next-themes";
 interface BlogPostEditorProps {
   value?: string;
   onChange?: (value: string) => void;
+  bucket?: "blog-images" | "portfolio-project-images" | "learning-blog-images";
 }
 
-export function BlogPostEditor({ value, onChange }: BlogPostEditorProps) {
+export function BlogPostEditor({
+  value,
+  onChange,
+  bucket = "blog-images",
+}: BlogPostEditorProps) {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const [markdown, setMarkdown] = useState(
@@ -51,7 +56,11 @@ Enjoy writing your blog posts!
         <TabsTrigger value="preview">Preview</TabsTrigger>
       </TabsList>
       <TabsContent value="write">
-        <MDXEditorComponent value={markdown} onChange={handleChange} />
+        <MDXEditorComponent
+          value={markdown}
+          onChange={handleChange}
+          bucket={bucket}
+        />
       </TabsContent>
       <TabsContent value="preview">
         <div

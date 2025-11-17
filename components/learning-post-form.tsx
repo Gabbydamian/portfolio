@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { BlogPostEditor } from "@/components/blog-post-editor";
 import { TopicSelector } from "@/components/topic-selector";
+import { ImageUpload } from "@/components/image-upload";
 import { toast } from "sonner";
 import { addLearningPost } from "@/actions/learningActions";
 import type { NewLearningPost } from "@/app/types/learning";
@@ -115,22 +116,24 @@ export function LearningPostForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image" className="text-foreground">
-              Cover Image URL (Optional)
-            </Label>
-            <Input
-              id="image"
+            <Label className="text-foreground">Cover Image (Optional)</Label>
+            <ImageUpload
               value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              className="bg-background"
+              onChange={setImage}
+              onError={(error) => toast.error(error)}
+              bucket="learning-blog-images"
+              name={title || "learning-post"}
             />
           </div>
 
           <div className="space-y-2">
             <Label className="text-foreground">Content *</Label>
             <div className="bg-background border border-border rounded-md">
-              <BlogPostEditor value={content} onChange={setContent} />
+              <BlogPostEditor
+                value={content}
+                onChange={setContent}
+                bucket="learning-blog-images"
+              />
             </div>
           </div>
 

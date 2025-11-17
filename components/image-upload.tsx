@@ -12,7 +12,7 @@ interface ImageUploadProps {
   value?: string;
   onChange: (url: string) => void;
   onError: (error: string) => void;
-  bucket: "blog-images" | "portfolio-project-images";
+  bucket: "blog-images" | "portfolio-project-images" | "learning-blog-images";
   name: string;
 }
 
@@ -25,25 +25,38 @@ export function ImageUpload({
 }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(value || null);
+  const [uploadStatus, setUploadStatus] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
       if (!file) return;
 
-      const error = validateImage(file);
-      if (error) {
-        onError(error);
+      const validationError = validateImage(file);
+      if (validationError) {
+        console.error("[ImageUpload] Validation error:", validationError);
+        setError(validationError);
+        onError(validationError);
         return;
       }
 
       try {
+        console.log("[ImageUpload] Starting upload for file:", { name: file.name, size: file.size, type: file.type });
+        setError("");
         setIsUploading(true);
+        setUploadStatus("Compressing image...");
         const url = await uploadImage(file, bucket, name);
+        console.log("[ImageUpload] Upload successful:", url);
         setPreview(url);
         onChange(url);
-      } catch (error) {
-        onError(error instanceof Error ? error.message : "Upload failed");
+        setUploadStatus("");
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Upload failed";
+        console.error("[ImageUpload] Upload error:", errorMessage, err);
+        setError(errorMessage);
+        onError(errorMessage);
+        setUploadStatus("");
       } finally {
         setIsUploading(false);
       }
@@ -104,8 +117,22 @@ export function ImageUpload({
       )}
       {isUploading && (
         <p className="text-sm text-muted-foreground text-center">
-          Uploading...
+          {uploadStatus || "Uploading..."}
         </p>
+      )}
+      {error && (
+        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-3">
+          <p className="text-sm text-destructive">
+            <strong>Upload Error:</strong> {error}
+          </p>
+          <details className="mt-2 text-xs text-destructive/80">
+            <summary className="cursor-pointer">Debug Info</summary>
+            <pre className="mt-2 overflow-auto bg-background p-2 rounded text-foreground text-xs">
+              {JSON.stringify({ bucket, name, fileName: `${name}.webp` }, null, 2)}
+            </pre>
+            <p className="mt-2">Check browser console (F12) for detailed logs</p>
+          </details>
+        </div>
       )}
     </div>
   );
