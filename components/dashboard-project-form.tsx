@@ -3,6 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { TagsInput } from "@/components/ui/tags-input";
+import { ImageUpload } from "@/components/image-upload";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 interface DashboardProjectFormProps {
   initialValues?: {
@@ -54,34 +57,64 @@ export default function DashboardProjectForm({
 
   return (
     <form className="space-y-4 max-w-xl" onSubmit={handleSubmit}>
-      <Input
-        name="title"
-        placeholder="Title"
-        value={values.title}
-        onChange={handleChange}
-        required
-      />
-      <Textarea
-        name="description"
-        placeholder="Description"
-        value={values.description}
-        onChange={handleChange}
-        rows={5}
-        required
-      />
-      <Input
-        name="image"
-        placeholder="Image URL"
-        value={values.image}
-        onChange={handleChange}
-      />
-      <Input
-        name="link"
-        placeholder="Project Link"
-        value={values.link}
-        onChange={handleChange}
-      />
-      <TagsInput value={tags} onChange={setTags} placeholder="Add tag..." />
+      <div className="space-y-2">
+        <Label htmlFor="title" className="text-foreground">
+          Title *
+        </Label>
+        <Input
+          id="title"
+          name="title"
+          placeholder="Title"
+          value={values.title}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="description" className="text-foreground">
+          Description *
+        </Label>
+        <Textarea
+          id="description"
+          name="description"
+          placeholder="Description"
+          value={values.description}
+          onChange={handleChange}
+          rows={5}
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-foreground">Project Image (Optional)</Label>
+        <ImageUpload
+          value={values.image}
+          onChange={(url) => setValues((v) => ({ ...v, image: url }))}
+          onError={(error) => toast.error(error)}
+          bucket="portfolio-project-images"
+          name={values.title || "project"}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="link" className="text-foreground">
+          Project Link
+        </Label>
+        <Input
+          id="link"
+          name="link"
+          placeholder="Project Link"
+          value={values.link}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-foreground">Tags</Label>
+        <TagsInput value={tags} onChange={setTags} placeholder="Add tag..." />
+      </div>
+
       <Button type="submit" disabled={submitting || loading} className="w-full">
         {mode === "edit" ? "Update Project" : "Add Project"}
       </Button>

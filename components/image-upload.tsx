@@ -42,7 +42,11 @@ export function ImageUpload({
       }
 
       try {
-        console.log("[ImageUpload] Starting upload for file:", { name: file.name, size: file.size, type: file.type });
+        console.log("[ImageUpload] Starting upload for file:", {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        });
         setError("");
         setIsUploading(true);
         setUploadStatus("Compressing image...");
@@ -52,7 +56,8 @@ export function ImageUpload({
         onChange(url);
         setUploadStatus("");
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Upload failed";
+        const errorMessage =
+          err instanceof Error ? err.message : "Upload failed";
         console.error("[ImageUpload] Upload error:", errorMessage, err);
         setError(errorMessage);
         onError(errorMessage);
@@ -128,9 +133,15 @@ export function ImageUpload({
           <details className="mt-2 text-xs text-destructive/80">
             <summary className="cursor-pointer">Debug Info</summary>
             <pre className="mt-2 overflow-auto bg-background p-2 rounded text-foreground text-xs">
-              {JSON.stringify({ bucket, name, fileName: `${name}.webp` }, null, 2)}
+              {JSON.stringify(
+                { bucket, name, fileName: `${name}.webp` },
+                null,
+                2
+              )}
             </pre>
-            <p className="mt-2">Check browser console (F12) for detailed logs</p>
+            <p className="mt-2">
+              Check browser console (F12) for detailed logs
+            </p>
           </details>
         </div>
       )}

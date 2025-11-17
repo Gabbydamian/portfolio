@@ -64,7 +64,7 @@ export async function uploadImage(
   name: string
 ) {
   console.log("[uploadImage] Starting upload:", { bucket, name, fileSize: file.size, fileType: file.type });
-  
+
   if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
     const error = "Invalid file type. Only JPG, PNG and WebP are allowed.";
     console.error("[uploadImage] Validation error:", error, { fileType: file.type });
@@ -82,14 +82,14 @@ export async function uploadImage(
     console.log("[uploadImage] Starting compression...");
     const compressedBlob = await compressImageToWebP(file, 0.8);
     console.log("[uploadImage] Compression complete:", { compressedSize: compressedBlob.size });
-    
+
     const compressedFile = new File([compressedBlob], `${name}.webp`, {
       type: "image/webp",
     });
 
     const supabase = createClient();
     const fileName = `${generateSlug(name)}.webp`;
-    
+
     console.log("[uploadImage] Uploading to bucket:", { bucket, fileName, fileSize: compressedFile.size });
 
     const { data, error } = await supabase.storage
