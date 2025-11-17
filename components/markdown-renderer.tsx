@@ -130,9 +130,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               borderLeftWidth: "4px",
               borderLeftStyle: "solid",
               borderLeftColor: "#22c55e",
-              backgroundColor: isDark
-                ? "rgba(59, 130, 246, 0.1)"
-                : "#fff",
+              backgroundColor: isDark ? "rgba(59, 130, 246, 0.1)" : "#fff",
               borderRadius: "0.25rem",
               padding: "1rem",
             }}
@@ -171,11 +169,70 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             {children}
           </li>
         ),
-        table: ({node, children, ...props}) => (
-          <table>
-
+        table: ({ node, children, ...props }) => (
+          <table
+            className="w-full my-6 border-collapse"
+            style={{
+              border: isDark ? "1px solid #3f3f46" : "1px solid #e5e7eb",
+            }}
+            {...props}
+          >
+            {children}
           </table>
-        )
+        ),
+        thead: ({ node, children, ...props }) => (
+          <thead
+            style={{
+              backgroundColor: isDark ? "#27272a" : "#f3f4f6",
+            }}
+            {...props}
+          >
+            {children}
+          </thead>
+        ),
+        tbody: ({ node, children, ...props }) => (
+          <tbody {...props}>{children}</tbody>
+        ),
+        tr: ({ node, children, ...props }) => (
+          <tr
+            style={{
+              borderBottomWidth: "1px",
+              borderBottomStyle: "solid",
+              borderBottomColor: isDark ? "#3f3f46" : "#e5e7eb",
+            }}
+            {...props}
+          >
+            {children}
+          </tr>
+        ),
+        td: ({ node, children, ...props }) => (
+          <td
+            className="px-4 py-3"
+            style={{
+              color: isDark ? "var(--muted-foreground, #a1a1aa)" : "#000000",
+              borderRightWidth: "1px",
+              borderRightStyle: "solid",
+              borderRightColor: isDark ? "#3f3f46" : "#e5e7eb",
+            }}
+            {...props}
+          >
+            {children}
+          </td>
+        ),
+        th: ({ node, children, ...props }) => (
+          <th
+            className="px-4 py-3 text-left font-semibold"
+            style={{
+              color: isDark ? "#e4e4e7" : "#000000",
+              borderRightWidth: "1px",
+              borderRightStyle: "solid",
+              borderRightColor: isDark ? "#3f3f46" : "#e5e7eb",
+            }}
+            {...props}
+          >
+            {children}
+          </th>
+        ),
       }}
     >
       {content}

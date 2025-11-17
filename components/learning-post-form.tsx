@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { BlogPostEditor } from "@/components/blog-post-editor";
+import { TopicSelector } from "@/components/topic-selector";
 import { toast } from "sonner";
 import { addLearningPost } from "@/actions/learningActions";
 import type { NewLearningPost } from "@/app/types/learning";
@@ -123,14 +124,7 @@ export function LearningPostForm({
               <Label htmlFor="topic" className="text-foreground">
                 Topic *
               </Label>
-              <Input
-                id="topic"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                required
-                placeholder="e.g., React, TypeScript, CSS"
-                className="bg-background"
-              />
+              <TopicSelector value={topic} onChange={setTopic} />
             </div>
           </div>
 
