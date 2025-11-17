@@ -88,12 +88,16 @@ export async function getAllTopics() {
 export async function addLearningPost(postData: NewLearningPost) {
     const supabase = await createClient();
 
-    const slug = generateSlug(postData.title);
+    // Check authentication
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
 
-    const session = await supabase.auth.getSession();
-    const author = session.data.session
-        ? "Damian Gabriel"
-        : postData.author || "Anonymous";
+    if (!session) {
+        return { success: false, error: "Unauthorized: You must be logged in" };
+    }
+
+    const slug = generateSlug(postData.title);
 
     const now = new Date().toISOString();
 
@@ -102,7 +106,7 @@ export async function addLearningPost(postData: NewLearningPost) {
         slug,
         content: postData.content,
         topic: postData.topic,
-        author,
+        author: "Damian Gabriel",
         image: postData.image || null,
         status: postData.status || "published",
         date_created: now,
@@ -121,9 +125,7 @@ export async function addLearningPost(postData: NewLearningPost) {
     revalidateTag("sitemap");
 
     return { success: true };
-}
-
-export async function updateLearningPost(
+} export async function updateLearningPost(
     id: string,
     postData: NewLearningPost
 ) {

@@ -7,6 +7,7 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
+import { LearningPageClient } from "./components/learning-page-client";
 
 export const metadata: Metadata = {
   title: "Learning | Damian Gabriel - Web Development Courses & Tutorials",
@@ -97,7 +98,7 @@ export default async function LearningPage() {
         </div>
 
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <LearningPosts initialPosts={posts} topics={topics} />
+          <LearningPageClient initialPosts={posts} topics={topics} />
         </HydrationBoundary>
       </div>
     </MainLayout>
