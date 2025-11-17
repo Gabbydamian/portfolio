@@ -1,6 +1,5 @@
 import { MainLayout } from "@/components/main-layout";
 import { fetchLearningPosts, getAllTopics } from "@/actions/learningActions";
-import { LearningPosts } from "./components/learning-posts";
 import {
   QueryClient,
   dehydrate,
@@ -8,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { LearningPageClient } from "./components/learning-page-client";
+import { createClient } from "@/utils/supabase/supabase";
 
 export const metadata: Metadata = {
   title: "Learning | Damian Gabriel - Web Development Courses & Tutorials",
@@ -65,6 +65,13 @@ export default async function LearningPage() {
   const posts = postsResult.error ? [] : postsResult.posts ?? [];
   const topics = topicsResult.topics ?? [];
 
+  // Check authentication on the server
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const isAuthenticated = !!session;
+
   return (
     <MainLayout>
       {/* Structured data for Learning page */}
@@ -98,7 +105,11 @@ export default async function LearningPage() {
         </div>
 
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <LearningPageClient initialPosts={posts} topics={topics} />
+          <LearningPageClient
+            initialPosts={posts}
+            topics={topics}
+            isAuthenticated={isAuthenticated}
+          />
         </HydrationBoundary>
       </div>
     </MainLayout>

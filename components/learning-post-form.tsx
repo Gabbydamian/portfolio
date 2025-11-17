@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,6 @@ import { TopicSelector } from "@/components/topic-selector";
 import { toast } from "sonner";
 import { addLearningPost } from "@/actions/learningActions";
 import type { NewLearningPost } from "@/app/types/learning";
-import { createClient } from "@/utils/supabase/client";
 import {
   Dialog,
   DialogContent,
@@ -23,39 +22,22 @@ interface LearningPostFormProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  topics: string[];
+  isAuthenticated: boolean;
 }
 
 export function LearningPostForm({
   isOpen,
   onClose,
   onSuccess,
+  topics,
+  isAuthenticated,
 }: LearningPostFormProps) {
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Check authentication status when form opens
-  useEffect(() => {
-    const checkAuth = async () => {
-      const supabase = createClient();
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-
-      if (!session && isOpen) {
-        toast.error("You must be logged in to create learning posts");
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      checkAuth();
-    }
-  }, [isOpen, onClose]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +77,7 @@ export function LearningPostForm({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen && isAuthenticated} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Create New Learning Post</DialogTitle>
@@ -124,7 +106,11 @@ export function LearningPostForm({
               <Label htmlFor="topic" className="text-foreground">
                 Topic *
               </Label>
-              <TopicSelector value={topic} onChange={setTopic} />
+              <TopicSelector
+                value={topic}
+                onChange={setTopic}
+                topics={topics}
+              />
             </div>
           </div>
 

@@ -1,40 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { LearningPosts } from "./learning-posts";
 import { LearningPostForm } from "@/components/learning-post-form";
 import { LearningPost } from "@/app/types/learning";
-import { createClient } from "@/utils/supabase/client";
 
 interface LearningPageClientProps {
   initialPosts: LearningPost[];
   topics: string[];
+  isAuthenticated: boolean;
 }
 
 export function LearningPageClient({
   initialPosts,
   topics,
+  isAuthenticated,
 }: LearningPageClientProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Check authentication status on mount
-  useEffect(() => {
-    const checkAuth = async () => {
-      const supabase = createClient();
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-      setIsLoading(false);
-    };
-
-    checkAuth();
-  }, []);
 
   const handlePostCreated = () => {
     // Trigger a refresh of the learning posts
@@ -43,7 +28,7 @@ export function LearningPageClient({
 
   return (
     <>
-      {!isLoading && isAuthenticated && (
+      {isAuthenticated && (
         <div className="mb-8 flex justify-end">
           <Button
             onClick={() => setIsFormOpen(true)}
@@ -62,6 +47,8 @@ export function LearningPageClient({
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
         onSuccess={handlePostCreated}
+        topics={topics}
+        isAuthenticated={isAuthenticated}
       />
     </>
   );
