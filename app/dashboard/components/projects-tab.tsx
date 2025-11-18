@@ -22,7 +22,7 @@ interface ProjectsTabProps {
   editingProject: any | null;
   editProjectSuccess: boolean;
   onEdit: (project: any) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, title: string) => void;
   onSubmitEdit: (values: any) => Promise<void>;
 }
 
@@ -127,7 +127,7 @@ export function ProjectsTab({
                   type="button"
                   variant="destructive"
                   size="sm"
-                  onClick={() => onDelete(project.id)}
+                  onClick={() => onDelete(project.id, project.title)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

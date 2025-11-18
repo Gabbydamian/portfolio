@@ -12,7 +12,7 @@ import Image from "next/image";
 interface LearningTabProps {
   learningPosts: any[];
   onEdit?: (post: any) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, title: string) => void;
 }
 
 export function LearningTab({
@@ -85,7 +85,7 @@ export function LearningTab({
                   type="button"
                   variant="destructive"
                   size="sm"
-                  onClick={() => onDelete(post.id)}
+                  onClick={() => onDelete(post.id, post.title)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

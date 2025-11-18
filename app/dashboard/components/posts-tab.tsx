@@ -15,7 +15,7 @@ interface PostsTabProps {
   editingPost: any | null;
   editPostSuccess: boolean;
   onEdit: (post: any) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, title: string) => void;
   onSubmitEdit: (values: any) => Promise<void>;
 }
 
@@ -108,7 +108,7 @@ export function PostsTab({
                   type="button"
                   variant="destructive"
                   size="sm"
-                  onClick={() => onDelete(post.id)}
+                  onClick={() => onDelete(post.id, post.title)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

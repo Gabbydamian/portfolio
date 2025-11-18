@@ -15,6 +15,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   fetchBlogPosts,
   approveBlogPost,
   rejectBlogPost,
@@ -36,6 +44,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LocationInfo } from "@/components/location-info";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { DashboardOverview } from "./dashboard-overview";
 import { SubmissionsTab } from "./submissions-tab";
 import { PostsTab } from "./posts-tab";
@@ -113,85 +122,153 @@ export function DashboardClient({
   const [editingProject, setEditingProject] = useState<any | null>(null);
   const [editPostSuccess, setEditPostSuccess] = useState(false);
   const [editProjectSuccess, setEditProjectSuccess] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    id: string;
+    type: "post" | "project" | "learning";
+    title: string;
+  } | null>(null);
 
-  // Handlers for CRUD
   async function handleApprove(id: string) {
-    await approveBlogPost(id);
-    const pendingResult = await fetchBlogPosts("pending");
-    setPendingSubmissions(pendingResult.error ? [] : pendingResult.blogs ?? []);
+    try {
+      await approveBlogPost(id);
+      const pendingResult = await fetchBlogPosts("pending");
+      setPendingSubmissions(pendingResult.error ? [] : pendingResult.blogs ?? []);
+      toast.success("Post approved successfully");
+    } catch (error) {
+      toast.error("Failed to approve post");
+      console.error(error);
+    }
   }
 
   async function handleReject(id: string) {
-    await rejectBlogPost(id);
-    const pendingResult = await fetchBlogPosts("pending");
-    setPendingSubmissions(pendingResult.error ? [] : pendingResult.blogs ?? []);
+    try {
+      await rejectBlogPost(id);
+      const pendingResult = await fetchBlogPosts("pending");
+      setPendingSubmissions(pendingResult.error ? [] : pendingResult.blogs ?? []);
+      toast.success("Post rejected successfully");
+    } catch (error) {
+      toast.error("Failed to reject post");
+      console.error(error);
+    }
   }
 
-  async function handleDeletePost(id: string) {
-    await deleteBlogPost(id);
-    const publishedResult = await fetchBlogPosts();
-    setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+  async function handleDeletePost(id: string, title: string) {
+    setDeleteConfirm({ id, type: "post", title });
   }
 
-  async function handleDeleteProject(id: string) {
-    await deleteProject(id);
-    const projectsResult = await fetchProjects();
-    setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+  async function handleDeleteProject(id: string, title: string) {
+    setDeleteConfirm({ id, type: "project", title });
   }
 
-  async function handleDeleteLearningPost(id: string) {
-    await deleteLearningPost(id);
-    const learningResult = await fetchLearningPosts();
-    setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
+  async function handleDeleteLearningPost(id: string, title: string) {
+    setDeleteConfirm({ id, type: "learning", title });
+  }
+
+  async function confirmDelete() {
+    if (!deleteConfirm) return;
+
+    try {
+      if (deleteConfirm.type === "post") {
+        await deleteBlogPost(deleteConfirm.id);
+        const publishedResult = await fetchBlogPosts();
+        setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+        toast.success(`"${deleteConfirm.title}" deleted successfully`);
+      } else if (deleteConfirm.type === "project") {
+        await deleteProject(deleteConfirm.id);
+        const projectsResult = await fetchProjects();
+        setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+        toast.success(`"${deleteConfirm.title}" deleted successfully`);
+      } else if (deleteConfirm.type === "learning") {
+        await deleteLearningPost(deleteConfirm.id);
+        const learningResult = await fetchLearningPosts();
+        setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
+        toast.success(`"${deleteConfirm.title}" deleted successfully`);
+      }
+    } catch (error) {
+      toast.error("Failed to delete item");
+      console.error(error);
+    } finally {
+      setDeleteConfirm(null);
+    }
   }
 
   async function handleAddPost(values: any) {
-    await addNewBlogPost(values);
-    setPostSuccess(true);
-    const publishedResult = await fetchBlogPosts();
-    setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+    try {
+      await addNewBlogPost(values);
+      setPostSuccess(true);
+      const publishedResult = await fetchBlogPosts();
+      setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+      toast.success("Blog post created successfully");
+    } catch (error) {
+      toast.error("Failed to create blog post");
+      console.error(error);
+    }
   }
 
   async function handleAddProject(values: any) {
-    await addProject({
-      ...values,
-      tags: values.tags
-        ? values.tags.split(",").map((t: string) => t.trim())
-        : [],
-    });
-    setProjectSuccess(true);
-    const projectsResult = await fetchProjects();
-    setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+    try {
+      await addProject({
+        ...values,
+        tags: values.tags
+          ? values.tags.split(",").map((t: string) => t.trim())
+          : [],
+      });
+      setProjectSuccess(true);
+      const projectsResult = await fetchProjects();
+      setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+      toast.success("Project created successfully");
+    } catch (error) {
+      toast.error("Failed to create project");
+      console.error(error);
+    }
   }
 
   async function handleAddLearningPost(values: any) {
-    await addLearningPost(values);
-    const learningResult = await fetchLearningPosts();
-    setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
+    try {
+      await addLearningPost(values);
+      const learningResult = await fetchLearningPosts();
+      setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
+      toast.success("Learning post created successfully");
+    } catch (error) {
+      toast.error("Failed to create learning post");
+      console.error(error);
+    }
   }
 
   async function handleEditPost(values: any) {
     if (!editingPost) return;
-    await fetch("/api/edit-post", {
-      method: "POST",
-      body: JSON.stringify({ id: editingPost.id, ...values }),
-    });
-    setEditPostSuccess(true);
-    setEditingPost(null);
-    const publishedResult = await fetchBlogPosts();
-    setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+    try {
+      await fetch("/api/edit-post", {
+        method: "POST",
+        body: JSON.stringify({ id: editingPost.id, ...values }),
+      });
+      setEditPostSuccess(true);
+      setEditingPost(null);
+      const publishedResult = await fetchBlogPosts();
+      setBlogPosts(publishedResult.error ? [] : publishedResult.blogs ?? []);
+      toast.success("Blog post updated successfully");
+    } catch (error) {
+      toast.error("Failed to update blog post");
+      console.error(error);
+    }
   }
 
   async function handleEditProject(values: any) {
     if (!editingProject) return;
-    await fetch("/api/edit-project", {
-      method: "POST",
-      body: JSON.stringify({ id: editingProject.id, ...values }),
-    });
-    setEditProjectSuccess(true);
-    setEditingProject(null);
-    const projectsResult = await fetchProjects();
-    setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+    try {
+      await fetch("/api/edit-project", {
+        method: "POST",
+        body: JSON.stringify({ id: editingProject.id, ...values }),
+      });
+      setEditProjectSuccess(true);
+      setEditingProject(null);
+      const projectsResult = await fetchProjects();
+      setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+      toast.success("Project updated successfully");
+    } catch (error) {
+      toast.error("Failed to update project");
+      console.error(error);
+    }
   }
 
   // Logout handler
@@ -313,6 +390,21 @@ export function DashboardClient({
         </header>
         <div className="p-8">{renderTabContent()}</div>
       </SidebarInset>
+
+      <AlertDialog open={!!deleteConfirm} onOpenChange={(open) => !open && setDeleteConfirm(null)}>
+        <AlertDialogContent>
+          <AlertDialogTitle>Delete Item</AlertDialogTitle>
+          <AlertDialogDescription>
+            Are you sure you want to delete "{deleteConfirm?.title}"? This action cannot be undone.
+          </AlertDialogDescription>
+          <div className="flex gap-2 justify-end">
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </SidebarProvider>
   );
 }
