@@ -25,6 +25,13 @@ import {
   addProject,
 } from "@/actions/projectActions";
 import { fetchLearningPosts } from "@/actions/learningActions";
+import {
+  fetchProfile,
+  fetchSkills,
+  fetchExperience,
+  fetchEducation,
+  fetchInterests,
+} from "@/actions/profileActions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -74,6 +81,28 @@ export default async function AdminDashboard() {
   const learningResult = await fetchLearningPosts();
   const learningPosts = learningResult.error ? [] : learningResult.posts ?? [];
 
+  // Fetch profile data
+  const profileResult = await fetchProfile();
+  const profile = profileResult.error ? null : profileResult.profile;
+
+  const skillsResult = await fetchSkills();
+  const skills = skillsResult.error ? [] : skillsResult.skills ?? [];
+
+  const experienceResult = await fetchExperience();
+  const experience = experienceResult.error
+    ? []
+    : experienceResult.experience ?? [];
+
+  const educationResult = await fetchEducation();
+  const education = educationResult.error
+    ? []
+    : educationResult.education ?? [];
+
+  const interestsResult = await fetchInterests();
+  const interests = interestsResult.error
+    ? []
+    : interestsResult.interests ?? [];
+
   // Chart data
   const chartData = getMonthlyCounts(blogPosts, projects);
 
@@ -85,6 +114,11 @@ export default async function AdminDashboard() {
       initialLearningPosts={learningPosts}
       chartData={chartData}
       userEmail={user.email || ""}
+      initialProfile={profile}
+      initialSkills={skills}
+      initialExperience={experience}
+      initialEducation={education}
+      initialInterests={interests}
     />
   );
 }

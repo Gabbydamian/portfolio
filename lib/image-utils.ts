@@ -60,7 +60,7 @@ async function compressImageToWebP(
 
 export async function uploadImage(
   file: File,
-  bucket: "blog-images" | "portfolio-project-images" | "learning-blog-images",
+  bucket: "blog-images" | "portfolio-project-images" | "learning-blog-images" | "profile-images",
   name: string
 ) {
   console.log("[uploadImage] Starting upload:", { bucket, name, fileSize: file.size, fileType: file.type });

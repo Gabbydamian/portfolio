@@ -29,6 +29,7 @@ import {
 import {
   fetchLearningPosts,
   deleteLearningPost,
+  addLearningPost,
 } from "@/actions/learningActions";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -42,13 +43,24 @@ import { LearningTab } from "./learning-tab";
 import { ProjectsTab } from "./projects-tab";
 import { NewPostTab } from "./new-post-tab";
 import { NewProjectTab } from "./new-project-tab";
+import { NewLearningTab } from "./new-learning-tab";
+import { AboutSettingsTab } from "./about-settings-tab";
+import type {
+  Profile,
+  Skill,
+  Experience,
+  Education,
+  Interest,
+} from "@/app/types/profile";
 
 const TABS = [
   { key: "dashboard", label: "Dashboard" },
   { key: "submissions", label: "Pending Submissions" },
+  { key: "about-settings", label: "About Settings" },
   { key: "posts", label: "Blog Posts" },
   { key: "new-post", label: "New Post" },
   { key: "learning", label: "Learning Posts" },
+  { key: "new-learning", label: "New Learning Post" },
   { key: "projects", label: "Projects" },
   { key: "new-project", label: "New Project" },
 ];
@@ -60,6 +72,11 @@ interface DashboardClientProps {
   initialLearningPosts: any[];
   chartData: any[];
   userEmail: string;
+  initialProfile: Profile | null;
+  initialSkills: Skill[];
+  initialExperience: Experience[];
+  initialEducation: Education[];
+  initialInterests: Interest[];
 }
 
 export function DashboardClient({
@@ -69,6 +86,11 @@ export function DashboardClient({
   initialLearningPosts,
   chartData,
   userEmail,
+  initialProfile,
+  initialSkills,
+  initialExperience,
+  initialEducation,
+  initialInterests,
 }: DashboardClientProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -78,6 +100,11 @@ export function DashboardClient({
   );
   const [projects, setProjects] = useState(initialProjects);
   const [learningPosts, setLearningPosts] = useState(initialLearningPosts);
+  const [profile] = useState(initialProfile);
+  const [skills] = useState(initialSkills);
+  const [experience] = useState(initialExperience);
+  const [education] = useState(initialEducation);
+  const [interests] = useState(initialInterests);
   const [postSuccess, setPostSuccess] = useState(false);
   const [projectSuccess, setProjectSuccess] = useState(false);
   const [editingPost, setEditingPost] = useState<any | null>(null);
@@ -135,6 +162,12 @@ export function DashboardClient({
     setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
   }
 
+  async function handleAddLearningPost(values: any) {
+    await addLearningPost(values);
+    const learningResult = await fetchLearningPosts();
+    setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
+  }
+
   async function handleEditPost(values: any) {
     if (!editingPost) return;
     await fetch("/api/edit-post", {
@@ -189,6 +222,16 @@ export function DashboardClient({
             onReject={handleReject}
           />
         );
+      case "about-settings":
+        return (
+          <AboutSettingsTab
+            profile={profile}
+            skills={skills}
+            experience={experience}
+            education={education}
+            interests={interests}
+          />
+        );
       case "posts":
         return (
           <PostsTab
@@ -207,6 +250,8 @@ export function DashboardClient({
             onDelete={handleDeleteLearningPost}
           />
         );
+      case "new-learning":
+        return <NewLearningTab onSubmit={handleAddLearningPost} />;
       case "projects":
         return (
           <ProjectsTab

@@ -15,9 +15,11 @@ import {
   FileText,
   FilePlus,
   BookOpen,
+  BookPlus,
   FolderKanban,
   FolderPlus,
   Sparkles,
+  User,
 } from "lucide-react";
 
 interface AppSidebarProps {
@@ -31,6 +33,7 @@ const navGroups = [
     items: [
       { label: "Dashboard", key: "dashboard", icon: LayoutDashboard },
       { label: "Pending Submissions", key: "submissions", icon: Clock },
+      { label: "About Settings", key: "about-settings", icon: User },
     ],
   },
   {
@@ -42,7 +45,10 @@ const navGroups = [
   },
   {
     label: "Learning",
-    items: [{ label: "All Learning Posts", key: "learning", icon: BookOpen }],
+    items: [
+      { label: "All Learning Posts", key: "learning", icon: BookOpen },
+      { label: "New Learning Post", key: "new-learning", icon: BookPlus },
+    ],
   },
   {
     label: "Projects",

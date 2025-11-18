@@ -14,6 +14,8 @@ const LearningPostPage = ({ post }: LearningPostPageProps) => {
       ? `${window.location.origin}/learning/${post.slug}`
       : "";
 
+  const postImage = post.image || "/placeholder.svg";
+
   return (
     <article className="container mx-auto px-4 md:px-24 py-12 mt-24 max-w-4xl">
       <Breadcrumbs />
@@ -34,17 +36,15 @@ const LearningPostPage = ({ post }: LearningPostPageProps) => {
             <Badge variant="default">{post.topic}</Badge>
           </div>
         )}
-        {post.image && (
-          <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">
-            <Image
-              src={post.image}
-              alt={post.title}
-              fill
-              className="object-cover"
-              loading="eager"
-            />
-          </div>
-        )}
+        <div className="relative w-full h-[300px] md:h-[400px] mb-8 rounded-lg overflow-hidden">
+          <Image
+            src={postImage}
+            alt={post.title}
+            fill
+            className="object-cover"
+            loading="eager"
+          />
+        </div>
       </div>
 
       <div className="prose prose-invert max-w-none">
