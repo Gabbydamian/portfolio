@@ -30,20 +30,19 @@ export async function middleware(request: NextRequest) {
     // Check if user is trying to access protected routes
     const { pathname } = request.nextUrl;
 
-    // Admin/Dashboard routes that require authentication
-    const adminRoutes = ["/dashboard", "/admin"];
-
-    const isAdminRoute = adminRoutes.some((route) =>
-        pathname.startsWith(route)
-    );
-
-    if (isAdminRoute) {
+    // Only check authentication for admin and dashboard routes
+    if (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")) {
         const {
             data: { session },
         } = await supabase.auth.getSession();
 
-        // If no session, redirect to admin login page
-        if (!session) {
+        // If authenticated user tries to access /admin login page, redirect to dashboard
+        if (pathname === "/admin" && session) {
+            return NextResponse.redirect(new URL("/dashboard", request.url));
+        }
+
+        // Dashboard routes require authentication
+        if (pathname.startsWith("/dashboard") && !session) {
             return NextResponse.redirect(new URL("/admin", request.url));
         }
     }

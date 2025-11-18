@@ -25,9 +25,10 @@ export function AdminLogin() {
         toast.error("Login Failed");
         return;
       }
-      router.refresh();
 
       toast.success("Login Successful");
+      router.push("/dashboard");
+      router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "An error occured");
     } finally {

@@ -22,6 +22,7 @@ const navGroups = [
       { label: "Pending Submissions", key: "submissions" },
       { label: "Blog Posts", key: "posts" },
       { label: "New Post", key: "new-post" },
+      { label: "Learning Posts", key: "learning" },
     ],
   },
   {

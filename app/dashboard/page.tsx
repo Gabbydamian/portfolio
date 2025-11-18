@@ -24,6 +24,7 @@ import {
   deleteProject,
   addProject,
 } from "@/actions/projectActions";
+import { fetchLearningPosts } from "@/actions/learningActions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -70,6 +71,9 @@ export default async function AdminDashboard() {
     ? []
     : projectsResult.projectsData ?? [];
 
+  const learningResult = await fetchLearningPosts();
+  const learningPosts = learningResult.error ? [] : learningResult.posts ?? [];
+
   // Chart data
   const chartData = getMonthlyCounts(blogPosts, projects);
 
@@ -78,6 +82,7 @@ export default async function AdminDashboard() {
       initialBlogPosts={blogPosts}
       initialPendingSubmissions={pendingSubmissions}
       initialProjects={projects}
+      initialLearningPosts={learningPosts}
       chartData={chartData}
       userEmail={user.email || ""}
     />

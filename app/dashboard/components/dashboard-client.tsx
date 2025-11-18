@@ -14,7 +14,6 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import DashboardMetricsChart from "@/components/dashboard-metrics-chart";
 import {
   fetchBlogPosts,
   approveBlogPost,
@@ -27,31 +26,29 @@ import {
   deleteProject,
   addProject,
 } from "@/actions/projectActions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  fetchLearningPosts,
+  deleteLearningPost,
+} from "@/actions/learningActions";
 import { Button } from "@/components/ui/button";
-import DashboardPostForm from "@/components/dashboard-post-form";
-import DashboardProjectForm from "@/components/dashboard-project-form";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LocationInfo } from "@/components/location-info";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { 
-  FileText, 
-  FolderKanban, 
-  Clock, 
-  TrendingUp, 
-  Eye,
-  Calendar,
-  ArrowUpRight,
-  Activity
-} from "lucide-react";
-import Link from "next/link";
+import { DashboardOverview } from "./dashboard-overview";
+import { SubmissionsTab } from "./submissions-tab";
+import { PostsTab } from "./posts-tab";
+import { LearningTab } from "./learning-tab";
+import { ProjectsTab } from "./projects-tab";
+import { NewPostTab } from "./new-post-tab";
+import { NewProjectTab } from "./new-project-tab";
 
 const TABS = [
   { key: "dashboard", label: "Dashboard" },
   { key: "submissions", label: "Pending Submissions" },
   { key: "posts", label: "Blog Posts" },
   { key: "new-post", label: "New Post" },
+  { key: "learning", label: "Learning Posts" },
   { key: "projects", label: "Projects" },
   { key: "new-project", label: "New Project" },
 ];
@@ -60,6 +57,7 @@ interface DashboardClientProps {
   initialBlogPosts: any[];
   initialPendingSubmissions: any[];
   initialProjects: any[];
+  initialLearningPosts: any[];
   chartData: any[];
   userEmail: string;
 }
@@ -68,6 +66,7 @@ export function DashboardClient({
   initialBlogPosts,
   initialPendingSubmissions,
   initialProjects,
+  initialLearningPosts,
   chartData,
   userEmail,
 }: DashboardClientProps) {
@@ -78,6 +77,7 @@ export function DashboardClient({
     initialPendingSubmissions
   );
   const [projects, setProjects] = useState(initialProjects);
+  const [learningPosts, setLearningPosts] = useState(initialLearningPosts);
   const [postSuccess, setPostSuccess] = useState(false);
   const [projectSuccess, setProjectSuccess] = useState(false);
   const [editingPost, setEditingPost] = useState<any | null>(null);
@@ -108,6 +108,12 @@ export function DashboardClient({
     await deleteProject(id);
     const projectsResult = await fetchProjects();
     setProjects(projectsResult.error ? [] : projectsResult.projectsData ?? []);
+  }
+
+  async function handleDeleteLearningPost(id: string) {
+    await deleteLearningPost(id);
+    const learningResult = await fetchLearningPosts();
+    setLearningPosts(learningResult.error ? [] : learningResult.posts ?? []);
   }
 
   async function handleAddPost(values: any) {
@@ -166,412 +172,61 @@ export function DashboardClient({
     switch (activeTab) {
       case "dashboard":
         return (
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-              <p className="text-muted-foreground">
-                Welcome back! Here's what's happening with your content.
-              </p>
-            </div>
-
-            {/* Stats Cards */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Total Posts
-                  </CardTitle>
-                  <FileText className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{blogPosts.length}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Published blog posts
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Projects
-                  </CardTitle>
-                  <FolderKanban className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{projects.length}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Active projects
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Pending
-                  </CardTitle>
-                  <Clock className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {pendingSubmissions.length}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Awaiting review
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Total Content
-                  </CardTitle>
-                  <Activity className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {blogPosts.length + projects.length}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    All published items
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Charts and Recent Activity */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Content Overview</CardTitle>
-                  <CardDescription>
-                    Monthly posts and projects over the last 6 months
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <DashboardMetricsChart chartData={chartData} />
-                </CardContent>
-              </Card>
-
-              <Card className="col-span-3">
-                <CardHeader>
-                  <CardTitle>Recent Posts</CardTitle>
-                  <CardDescription>
-                    Your latest published blog posts
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {blogPosts.slice(0, 5).map((post: any) => (
-                      <div
-                        key={post.id}
-                        className="flex items-start justify-between space-x-4"
-                      >
-                        <div className="flex-1 space-y-1">
-                          <Link 
-                            href={`/blog/${post.slug}`}
-                            className="text-sm font-medium leading-none hover:underline"
-                          >
-                            {post.title}
-                          </Link>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(post.date_created).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <Link href={`/blog/${post.slug}`}>
-                          <Button variant="ghost" size="sm">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </div>
-                    ))}
-                    {blogPosts.length === 0 && (
-                      <p className="text-sm text-muted-foreground text-center py-4">
-                        No posts yet
-                      </p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Quick Actions & Recent Projects */}
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Projects</CardTitle>
-                  <CardDescription>
-                    Your latest portfolio projects
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {projects.slice(0, 4).map((project: any) => (
-                      <div
-                        key={project.id}
-                        className="flex items-start justify-between"
-                      >
-                        <div className="flex-1 space-y-1">
-                          <p className="text-sm font-medium leading-none">
-                            {project.title}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {project.description?.substring(0, 60)}...
-                          </p>
-                        </div>
-                        {project.link && (
-                          <Link href={project.link} target="_blank">
-                            <Button variant="ghost" size="sm">
-                              <ArrowUpRight className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        )}
-                      </div>
-                    ))}
-                    {projects.length === 0 && (
-                      <p className="text-sm text-muted-foreground text-center py-4">
-                        No projects yet
-                      </p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
-                  <CardDescription>
-                    Common tasks and shortcuts
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <Button
-                    onClick={() => setActiveTab("new-post")}
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    Create New Post
-                  </Button>
-                  <Button
-                    onClick={() => setActiveTab("new-project")}
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
-                    <FolderKanban className="mr-2 h-4 w-4" />
-                    Add New Project
-                  </Button>
-                  <Button
-                    onClick={() => setActiveTab("submissions")}
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
-                    <Clock className="mr-2 h-4 w-4" />
-                    Review Submissions
-                    {pendingSubmissions.length > 0 && (
-                      <span className="ml-auto bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full">
-                        {pendingSubmissions.length}
-                      </span>
-                    )}
-                  </Button>
-                  <Button
-                    onClick={() => setActiveTab("posts")}
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    Manage Posts
-                  </Button>
-                  <Button
-                    onClick={() => setActiveTab("projects")}
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
-                    <FolderKanban className="mr-2 h-4 w-4" />
-                    Manage Projects
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          <DashboardOverview
+            blogPosts={blogPosts}
+            projects={projects}
+            pendingSubmissions={pendingSubmissions}
+            chartData={chartData}
+            onTabChange={setActiveTab}
+          />
         );
       case "submissions":
         return (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Pending Submissions</h1>
-            {pendingSubmissions.length === 0 ? (
-              <div className="text-muted-foreground">
-                No pending submissions.
-              </div>
-            ) : (
-              <div className="grid gap-4">
-                {pendingSubmissions.map((submission: any) => (
-                  <Card
-                    key={submission.id}
-                    className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                  >
-                    <div>
-                      <div className="font-semibold">{submission.title}</div>
-                      <div className="text-sm text-muted-foreground">
-                        By {submission.author || "Anonymous"}
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        type="button"
-                        variant="default"
-                        onClick={() => handleApprove(submission.id)}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => handleReject(submission.id)}
-                      >
-                        Reject
-                      </Button>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </>
+          <SubmissionsTab
+            pendingSubmissions={pendingSubmissions}
+            onApprove={handleApprove}
+            onReject={handleReject}
+          />
         );
       case "posts":
         return (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Blog Posts</h1>
-            {editPostSuccess && (
-              <div className="mb-4 text-green-600">
-                Post updated successfully!
-              </div>
-            )}
-            {editingPost ? (
-              <DashboardPostForm
-                initialValues={editingPost}
-                onSubmit={handleEditPost}
-                mode="edit"
-              />
-            ) : blogPosts.length === 0 ? (
-              <div className="text-muted-foreground">No blog posts yet.</div>
-            ) : (
-              <div className="grid gap-4">
-                {blogPosts.map((post: any) => (
-                  <Card
-                    key={post.id}
-                    className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                  >
-                    <div>
-                      <div className="font-semibold">{post.title}</div>
-                      <div className="text-sm text-muted-foreground">
-                        By {post.author || "Anonymous"}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {new Date(post.date_created).toLocaleDateString()}
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setEditingPost(post)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => handleDeletePost(post.id)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </>
+          <PostsTab
+            blogPosts={blogPosts}
+            editingPost={editingPost}
+            editPostSuccess={editPostSuccess}
+            onEdit={setEditingPost}
+            onDelete={handleDeletePost}
+            onSubmitEdit={handleEditPost}
+          />
+        );
+      case "learning":
+        return (
+          <LearningTab
+            learningPosts={learningPosts}
+            onDelete={handleDeleteLearningPost}
+          />
         );
       case "projects":
         return (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Projects</h1>
-            {editProjectSuccess && (
-              <div className="mb-4 text-green-600">
-                Project updated successfully!
-              </div>
-            )}
-            {editingProject ? (
-              <DashboardProjectForm
-                initialValues={editingProject}
-                onSubmit={handleEditProject}
-                mode="edit"
-              />
-            ) : projects.length === 0 ? (
-              <div className="text-muted-foreground">No projects yet.</div>
-            ) : (
-              <div className="grid gap-4">
-                {projects.map((project: any) => (
-                  <Card
-                    key={project.id}
-                    className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                  >
-                    <div>
-                      <div className="font-semibold">{project.title}</div>
-                      <div className="text-xs text-muted-foreground">
-                        Last modified:{" "}
-                        {new Date(project.last_modified).toLocaleDateString()}
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setEditingProject(project)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => handleDeleteProject(project.id)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </>
+          <ProjectsTab
+            projects={projects}
+            editingProject={editingProject}
+            editProjectSuccess={editProjectSuccess}
+            onEdit={setEditingProject}
+            onDelete={handleDeleteProject}
+            onSubmitEdit={handleEditProject}
+          />
         );
       case "new-post":
         return (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Add New Post</h1>
-            {postSuccess && (
-              <div className="mb-4 text-green-600">
-                Post added successfully!
-              </div>
-            )}
-            <DashboardPostForm onSubmit={handleAddPost} mode="add" />
-          </div>
+          <NewPostTab postSuccess={postSuccess} onSubmit={handleAddPost} />
         );
       case "new-project":
         return (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Add New Project</h1>
-            {projectSuccess && (
-              <div className="mb-4 text-green-600">
-                Project added successfully!
-              </div>
-            )}
-            <DashboardProjectForm onSubmit={handleAddProject} mode="add" />
-          </div>
+          <NewProjectTab
+            projectSuccess={projectSuccess}
+            onSubmit={handleAddProject}
+          />
         );
       default:
         return null;
