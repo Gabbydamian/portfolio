@@ -19,7 +19,12 @@ interface DashboardPostFormProps {
   mode?: "add" | "edit";
 }
 
-export default function DashboardPostForm({ initialValues = {}, onSubmit, loading, mode = "add" }: DashboardPostFormProps) {
+export default function DashboardPostForm({
+  initialValues = {},
+  onSubmit,
+  loading,
+  mode = "add",
+}: DashboardPostFormProps) {
   const [values, setValues] = useState({
     title: initialValues.title || "",
     content: initialValues.content || "",
@@ -29,7 +34,9 @@ export default function DashboardPostForm({ initialValues = {}, onSubmit, loadin
   });
   const [submitting, setSubmitting] = useState(false);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
   }
 
