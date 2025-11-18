@@ -13,7 +13,7 @@ interface DashboardProjectFormProps {
     description?: string;
     image?: string;
     link?: string;
-    tags?: string;
+    tags?: string | string[];
   };
   onSubmit: (values: any) => Promise<void>;
   loading?: boolean;
@@ -34,10 +34,12 @@ export default function DashboardProjectForm({
   });
   const [tags, setTags] = useState<string[]>(
     initialValues.tags
-      ? initialValues.tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean)
+      ? Array.isArray(initialValues.tags)
+        ? initialValues.tags
+        : initialValues.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
       : []
   );
   const [submitting, setSubmitting] = useState(false);

@@ -175,6 +175,7 @@ export function DashboardClient({
           <DashboardOverview
             blogPosts={blogPosts}
             projects={projects}
+            learningPosts={learningPosts}
             pendingSubmissions={pendingSubmissions}
             chartData={chartData}
             onTabChange={setActiveTab}
