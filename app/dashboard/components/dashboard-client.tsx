@@ -77,6 +77,7 @@ interface DashboardClientProps {
   initialExperience: Experience[];
   initialEducation: Education[];
   initialInterests: Interest[];
+  topics: string[];
 }
 
 export function DashboardClient({
@@ -91,6 +92,7 @@ export function DashboardClient({
   initialExperience,
   initialEducation,
   initialInterests,
+  topics,
 }: DashboardClientProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -251,7 +253,9 @@ export function DashboardClient({
           />
         );
       case "new-learning":
-        return <NewLearningTab onSubmit={handleAddLearningPost} />;
+        return (
+          <NewLearningTab onSubmit={handleAddLearningPost} topics={topics} />
+        );
       case "projects":
         return (
           <ProjectsTab

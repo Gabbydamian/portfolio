@@ -4,17 +4,11 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ImageUpload } from "@/components/image-upload";
 import { MDXEditorComponent } from "@/components/mdx-editor";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { TopicSelector } from "@/components/topic-selector";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
@@ -36,7 +30,7 @@ export function DashboardLearningPostForm({
   onSubmit,
   loading,
   mode = "add",
-  topics = ["JavaScript", "React", "TypeScript", "Web Development", "CSS"],
+  topics = [],
 }: DashboardLearningPostFormProps) {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
@@ -119,18 +113,11 @@ export function DashboardLearningPostForm({
 
       <div className="space-y-2">
         <Label htmlFor="topic">Topic *</Label>
-        <Select value={values.topic} onValueChange={handleTopicChange}>
-          <SelectTrigger id="topic">
-            <SelectValue placeholder="Select a topic" />
-          </SelectTrigger>
-          <SelectContent>
-            {topics.map((t) => (
-              <SelectItem key={t} value={t}>
-                {t}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <TopicSelector
+          value={values.topic}
+          onChange={handleTopicChange}
+          topics={topics}
+        />
       </div>
 
       <div className="space-y-2">

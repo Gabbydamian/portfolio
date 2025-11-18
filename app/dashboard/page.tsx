@@ -24,7 +24,7 @@ import {
   deleteProject,
   addProject,
 } from "@/actions/projectActions";
-import { fetchLearningPosts } from "@/actions/learningActions";
+import { fetchLearningPosts, getAllTopics } from "@/actions/learningActions";
 import {
   fetchProfile,
   fetchSkills,
@@ -81,6 +81,9 @@ export default async function AdminDashboard() {
   const learningResult = await fetchLearningPosts();
   const learningPosts = learningResult.error ? [] : learningResult.posts ?? [];
 
+  const topicsResult = await getAllTopics();
+  const topics = topicsResult.error ? [] : topicsResult.topics ?? [];
+
   // Fetch profile data
   const profileResult = await fetchProfile();
   const profile = profileResult.error ? null : profileResult.profile;
@@ -119,6 +122,7 @@ export default async function AdminDashboard() {
       initialExperience={experience}
       initialEducation={education}
       initialInterests={interests}
+      topics={topics}
     />
   );
 }

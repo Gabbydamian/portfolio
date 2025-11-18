@@ -4,9 +4,10 @@ import { DashboardLearningPostForm } from "@/components/dashboard-learning-post-
 
 interface NewLearningTabProps {
   onSubmit: (values: any) => Promise<void>;
+  topics: string[];
 }
 
-export function NewLearningTab({ onSubmit }: NewLearningTabProps) {
+export function NewLearningTab({ onSubmit, topics }: NewLearningTabProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -20,7 +21,11 @@ export function NewLearningTab({ onSubmit }: NewLearningTabProps) {
       </div>
 
       <div className="rounded-lg border bg-card p-6">
-        <DashboardLearningPostForm onSubmit={onSubmit} mode="add" />
+        <DashboardLearningPostForm
+          onSubmit={onSubmit}
+          mode="add"
+          topics={topics}
+        />
       </div>
     </div>
   );
