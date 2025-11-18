@@ -30,26 +30,21 @@ export async function middleware(request: NextRequest) {
     // Check if user is trying to access protected routes
     const { pathname } = request.nextUrl;
 
-    // Protected routes that require authentication
-    const protectedRoutes = ["/learning"];
+    // Admin/Dashboard routes that require authentication
+    const adminRoutes = ["/dashboard", "/admin"];
 
-    const isProtectedRoute = protectedRoutes.some((route) =>
+    const isAdminRoute = adminRoutes.some((route) =>
         pathname.startsWith(route)
     );
 
-    if (isProtectedRoute) {
+    if (isAdminRoute) {
         const {
             data: { session },
         } = await supabase.auth.getSession();
 
-        // If no session and trying to create a learning post, redirect to login
-        if (!session && pathname.includes("/learning")) {
-            // Allow viewing learning posts, but protect the form/creation
-            const isCreatingPost = pathname === "/learning" && request.method === "POST";
-
-            if (isCreatingPost) {
-                return NextResponse.redirect(new URL("/admin", request.url));
-            }
+        // If no session, redirect to admin login page
+        if (!session) {
+            return NextResponse.redirect(new URL("/admin", request.url));
         }
     }
 
