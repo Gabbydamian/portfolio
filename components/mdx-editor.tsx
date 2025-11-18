@@ -33,6 +33,7 @@ import { useCallback, useMemo, useState } from "react";
 import debounce from "lodash/debounce";
 // Add image upload handler for MDXEditor using Supabase
 import { uploadImage, validateImage } from "@/lib/image-utils";
+import { prepareMarkdownForEditor } from "@/lib/markdown-utils";
 
 interface MDXEditorProps {
   value?: string;
@@ -139,7 +140,7 @@ export function MDXEditorComponent({
   return (
     <div className="border rounded-md max-h-[600px] overflow-y-auto">
       <MDXEditor
-        markdown={value || ""}
+        markdown={prepareMarkdownForEditor(value) || ""}
         onChange={debouncedOnChange}
         contentEditableClassName="prose prose-sm dark:prose-invert max-w-none"
         className={`mdx-editor ${isDark ? "dark-theme" : ""}`}

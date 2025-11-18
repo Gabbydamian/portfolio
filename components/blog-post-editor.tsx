@@ -5,6 +5,7 @@ import { MDXEditorComponent } from "@/components/mdx-editor";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme } from "next-themes";
+import { prepareMarkdownForEditor } from "@/lib/markdown-utils";
 
 interface BlogPostEditorProps {
   value?: string;
@@ -20,7 +21,7 @@ export function BlogPostEditor({
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const [markdown, setMarkdown] = useState(
-    value ||
+    prepareMarkdownForEditor(value) ||
       `# Hello, Markdown!
 
 This is a sample blog post written in Markdown.
