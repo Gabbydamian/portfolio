@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/supabase";
 import { calculateReadTime, generateSlug } from "@/lib/utils";
 // import { Blog } from "@/app/types/blog";
 import { NewBlogPost } from "@/app/types/blog";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 export async function fetchBlogPosts(status?: string) {
   const supabase = await createClient();
 
@@ -155,7 +155,9 @@ export async function updateBlogPost(id: string, formData: NewBlogPost) {
     console.error("Error updating blog post:", error.message);
     return { success: false, error: error.message };
   }
-  revalidateTag('blog-posts');
-  revalidateTag('sitemap');
+  revalidatePath("/blog");
+  revalidatePath("/dashboard");
+  revalidateTag("blog-posts");
+  revalidateTag("sitemap");
   return { success: true };
 }

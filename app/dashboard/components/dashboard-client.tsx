@@ -39,6 +39,8 @@ import {
   deleteLearningPost,
   addLearningPost,
 } from "@/actions/learningActions";
+import { updateBlogPost } from "@/actions/blogActions";
+import { updateProject } from "@/actions/projectActions";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LocationInfo } from "@/components/location-info";
@@ -238,10 +240,14 @@ export function DashboardClient({
   async function handleEditPost(values: any) {
     if (!editingPost) return;
     try {
-      await fetch("/api/edit-post", {
-        method: "POST",
-        body: JSON.stringify({ id: editingPost.id, ...values }),
+      const result = await updateBlogPost(editingPost.id, {
+        ...values,
       });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
       setEditPostSuccess(true);
       setEditingPost(null);
       const publishedResult = await fetchBlogPosts();
@@ -256,10 +262,15 @@ export function DashboardClient({
   async function handleEditProject(values: any) {
     if (!editingProject) return;
     try {
-      await fetch("/api/edit-project", {
-        method: "POST",
-        body: JSON.stringify({ id: editingProject.id, ...values }),
+      const result = await updateProject(editingProject.id, {
+        id: editingProject.id,
+        ...values,
       });
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
       setEditProjectSuccess(true);
       setEditingProject(null);
       const projectsResult = await fetchProjects();

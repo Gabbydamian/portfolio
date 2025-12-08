@@ -1,6 +1,7 @@
 "use server";
 import { Project, NewProject } from "@/app/types/project";
 import { createClient } from "@/utils/supabase/supabase";
+import { revalidatePath } from "next/cache";
 
 export async function fetchProjects() {
   const supabase = await createClient();
@@ -23,7 +24,9 @@ export async function addProject(projectData: Partial<Project>) {
 
   const { data, error } = await supabase
     .from("projects")
-    .insert([project]);
+    .insert([project])
+    .select() // Select to return the inserted data
+    .single();
 
   // Debug logging for Supabase response
   console.log("Supabase insert data:", data);
@@ -32,10 +35,13 @@ export async function addProject(projectData: Partial<Project>) {
   if (error) {
     return { projectData: null, error };
   }
+
+  revalidatePath("/projects");
+  revalidatePath("/dashboard");
   return { projectData: data, error: null };
 }
 
-export async function updateProject(id: string, data: NewProject) {
+export async function updateProject(id: string, data: Partial<NewProject>) {
   const supabase = await createClient();
 
   const { error } = await supabase
@@ -46,6 +52,7 @@ export async function updateProject(id: string, data: NewProject) {
       image: data.image || null,
       link: data.link,
       tags: data.tags,
+      last_modified: new Date().toISOString(), // Update last_modified
     })
     .eq("id", id);
 
@@ -54,6 +61,8 @@ export async function updateProject(id: string, data: NewProject) {
     return { success: false, error: error.message };
   }
 
+  revalidatePath("/projects");
+  revalidatePath("/dashboard");
   return { success: true };
 }
 
@@ -63,12 +72,14 @@ export async function deleteProject(id: string) {
   const { error } = await supabase
     .from("projects")
     .delete()
-    .eq("id", id)
-    .single();
+    .eq("id", id);
+  // .single(); // Single is not always necessary for delete
 
   if (error) {
     return { error };
   }
 
+  revalidatePath("/projects");
+  revalidatePath("/dashboard");
   return {};
 }
