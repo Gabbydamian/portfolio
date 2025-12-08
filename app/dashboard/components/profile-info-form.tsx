@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Upload, FileText, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
 import {
   updateProfile,
   uploadAvatar,
@@ -24,7 +25,6 @@ export function ProfileInfoForm({ profile }: ProfileInfoFormProps) {
   const [isUploadingResume, setIsUploadingResume] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || "");
   const [resumeUrl, setResumeUrl] = useState(profile?.resume_url || "");
-  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
@@ -51,14 +51,14 @@ export function ProfileInfoForm({ profile }: ProfileInfoFormProps) {
     if (!file) return;
 
     setIsUploadingAvatar(true);
-    setUploadError(null);
 
     const result = await uploadAvatar(file);
 
     if (result.error) {
-      setUploadError(result.error);
+      toast.error(result.error);
     } else if (result.url) {
       setAvatarUrl(result.url);
+      toast.success("Profile photo updated successfully");
     }
 
     setIsUploadingAvatar(false);
@@ -69,14 +69,14 @@ export function ProfileInfoForm({ profile }: ProfileInfoFormProps) {
     if (!file) return;
 
     setIsUploadingResume(true);
-    setUploadError(null);
 
     const result = await uploadResume(file);
 
     if (result.error) {
-      setUploadError(result.error);
+      toast.error(result.error);
     } else if (result.url) {
       setResumeUrl(result.url);
+      toast.success("Resume uploaded successfully");
     }
 
     setIsUploadingResume(false);
@@ -184,11 +184,6 @@ export function ProfileInfoForm({ profile }: ProfileInfoFormProps) {
         <p className="text-xs text-muted-foreground">PDF only. Max 5MB.</p>
       </div>
 
-      {uploadError && (
-        <Alert variant="destructive">
-          <AlertDescription>{uploadError}</AlertDescription>
-        </Alert>
-      )}
 
       {/* Profile Form */}
       <form action={formAction} className="space-y-4">

@@ -40,6 +40,12 @@ import type {
   Education,
   Interest,
 } from "@/app/types/profile";
+import {
+  STATIC_SKILLS,
+  STATIC_EXPERIENCE,
+  STATIC_EDUCATION,
+  STATIC_INTERESTS,
+} from "@/lib/placeholder-data";
 
 interface InterestType {
   icon: ReactElement;
@@ -83,172 +89,32 @@ export default function AboutClient({
 }: AboutClientProps) {
   const [showContactForm, setShowContactForm] = useState(false);
 
-  // Fallback static data
-  const staticSkills = [
-    {
-      name: "JavaScript",
-      color:
-        "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
-    },
-    {
-      name: "TypeScript",
-      color:
-        "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
-    },
-    {
-      name: "Python",
-      color:
-        "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-    },
-    {
-      name: "React",
-      color: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-    },
-    {
-      name: "Node.js",
-      color:
-        "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-    },
-    {
-      name: "Docker",
-      color: "bg-sky-50 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
-    },
-    {
-      name: "Next.js",
-      color:
-        "bg-slate-50 text-slate-800 dark:bg-slate-800/30 dark:text-slate-300",
-    },
-    {
-      name: "Git",
-      color: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-    },
-    {
-      name: "Tailwind CSS",
-      color: "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
-    },
-    {
-      name: "Figma",
-      color:
-        "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-    },
-    {
-      name: "UI/UX Design",
-      color:
-        "bg-violet-50 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
-    },
-    {
-      name: "SQL",
-      color: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-    },
-    {
-      name: "Linux/Unix",
-      color:
-        "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-    },
-    {
-      name: "AI Systems",
-      color:
-        "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
-    },
-    {
-      name: "APIs",
-      color: "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
-    },
-    {
-      name: "Supabase",
-      color:
-        "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
-    },
-    {
-      name: "OOP",
-      color: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300",
-    },
-  ];
-
   // Use database data or fallback to static data
-  const skills = dbSkills.length > 0 ? dbSkills : staticSkills;
+  const skills = dbSkills.length > 0 ? dbSkills : STATIC_SKILLS;
 
   // Map interests with icons
   const mappedInterests: InterestType[] = dbInterests.map((interest) => ({
     icon: iconMap[interest.icon_name] || <Star className="w-5 h-5" />,
-    text: interest.description,
+    text: interest.text,
   }));
 
   // Fallback interests
-  const staticInterests: InterestType[] = [
-    {
-      icon: <Clapperboard className="w-5 h-5" />,
-      text: "Classic film analysis and theory",
-    },
-    {
-      icon: <Headphones className="w-5 h-5" />,
-      text: "Music production and discovery",
-    },
-    { icon: <ChessKnight className="w-5 h-5" />, text: "Competitive chess" },
-    {
-      icon: <Rocket className="w-5 h-5" />,
-      text: "Learning new technologies and skills",
-    },
-  ];
+  const staticInterests: InterestType[] = STATIC_INTERESTS.map((interest) => ({
+    icon: iconMap[interest.icon_name] || <Star className="w-5 h-5" />,
+    text: interest.text,
+  }));
 
   const interests =
     mappedInterests.length > 0 ? mappedInterests : staticInterests;
 
   // Use database data or fallback for experience and education
-  const staticExperience = [
-    {
-      title: "Frontend Developer",
-      company: "Valdymas",
-      period: "Mar 2025 – Present",
-      description:
-        "Built responsive interfaces for a student management system and a full-stack savings/loan app using React, Next.js, and Supabase. Focused on authentication, data security, and performance visualization.",
-    },
-    {
-      title: "Frontend Developer (Next.js)",
-      company: "Hire-ng",
-      period: "Apr 2024 – Present",
-      description:
-        "Developed reusable components using Next.js and TailwindCSS. Partnered with design teams to deliver optimized, engaging user interfaces and improve load times.",
-    },
-    {
-      title: "Frontend Developer Intern",
-      company: "IINVIO",
-      period: "Nov 2023 – Feb 2024",
-      description:
-        "Collaborated on React-based app components and system architecture prototypes. Contributed to product research and business model development.",
-    },
-  ];
+  const experience =
+    dbExperience.length > 0 ? dbExperience : STATIC_EXPERIENCE;
 
-  const experience = dbExperience.length > 0 ? dbExperience : staticExperience;
-
-  const staticEducation = [
-    {
-      degree: "B.Sc. in Quantity Surveying",
-      institution: "Obafemi Awolowo University",
-      period: "2017 – 2024",
-      description:
-        "Graduated with Second Class Honours (Upper Division). Built foundational analytical and project planning skills.",
-    },
-    {
-      degree: "CompTIA IT Fundamentals (ITF+)",
-      institution: "CompTIA",
-      period: "Sep 2024 – Nov 2024",
-      description:
-        "Studied core IT concepts, security, operating systems, and troubleshooting. Achieved strong mock exam scores (avg. 83%).",
-    },
-    {
-      degree: "Introduction to Computer Science (CS50X)",
-      institution: "Harvard University (edX)",
-      period: "Nov 2023 – Jun 2024",
-      description:
-        "Covered CS fundamentals with C, Python, JavaScript, and SQL. Focused on algorithmic thinking and secure web development.",
-    },
-  ];
-
-  const education = dbEducation.length > 0 ? dbEducation : staticEducation;
+  const education = dbEducation.length > 0 ? dbEducation : STATIC_EDUCATION;
 
   // Profile data with fallbacks
-  const displayName = profile?.name || "Damian Gabriel O.";
+  const displayName = profile?.full_name || "Damian Gabriel O.";
   const displayBio = profile?.bio || "Developer. Problem-solver. UX thinker.";
   const displayAvatar = profile?.avatar_url || "/headshot.webp";
   const displayResume = profile?.resume_url || "/Damian_Gabriel-Resume.pdf";
@@ -296,6 +162,7 @@ export default function AboutClient({
                   fill
                   className="object-cover"
                   loading="eager"
+                  priority
                 />
               </div>
               <div className="flex-1">
