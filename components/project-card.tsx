@@ -7,9 +7,10 @@ import { Project } from "@/app/types/project";
 
 interface ProjectCardProps {
   project: Project;
+  priority?: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   return (
     <Card className="overflow-hidden bg-card border-border h-full flex flex-col hover:border-primary hover:scale-[1.01] transition-all duration-200">
       <div className="relative h-48">
@@ -18,7 +19,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           alt={project.title}
           fill
           className="object-cover object-top"
-          loading="eager"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={priority}
         />
       </div>
       <CardContent className="p-6 flex-1">

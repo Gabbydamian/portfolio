@@ -72,7 +72,7 @@ const Blogs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <BlogPostCard post={post} />
+            <BlogPostCard post={post} priority={index < 3} />
           </motion.div>
         ))}
       </div>

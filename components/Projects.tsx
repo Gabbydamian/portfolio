@@ -74,7 +74,7 @@ export function Projects() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} priority={index < 3} />
             </motion.div>
           ))}
       </div>

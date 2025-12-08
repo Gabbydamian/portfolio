@@ -8,9 +8,10 @@ import { Link as HrefLink, ArrowRight } from "lucide-react";
 
 interface BlogPostCardProps {
   post: Blog;
+  priority?: boolean;
 }
 
-export function BlogPostCard({ post }: BlogPostCardProps) {
+export function BlogPostCard({ post, priority = false }: BlogPostCardProps) {
   return (
     <Card className="overflow-hidden bg-card border-border hover:border-primary hover:scale-[1.01] transition-all duration-200 h-full flex flex-col">
       <div className="relative h-48">
@@ -19,7 +20,8 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           alt={post.title}
           fill
           className="object-cover object-top"
-          loading="eager"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={priority}
         />
       </div>
       <CardContent className="p-6 flex-1">
