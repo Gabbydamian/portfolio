@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import AboutClient from "../../components/about-client";
+import {
+  fetchProfile,
+  fetchSkills,
+  fetchExperience,
+  fetchEducation,
+  fetchInterests,
+} from "@/actions/profileActions";
 
 export const metadata: Metadata = {
   title: "About | Damian Gabriel - Full-Stack Developer & IT Expert",
@@ -49,6 +56,33 @@ export const metadata: Metadata = {
   category: "Technology",
 };
 
-export default function AboutPage() {
-  return <AboutClient />;
+export default async function AboutPage() {
+  // Fetch all about page data from database
+  const profileResult = await fetchProfile();
+  const skillsResult = await fetchSkills();
+  const experienceResult = await fetchExperience();
+  const educationResult = await fetchEducation();
+  const interestsResult = await fetchInterests();
+
+  const profile = profileResult.error ? null : profileResult.profile;
+  const skills = skillsResult.error ? [] : skillsResult.skills ?? [];
+  const experience = experienceResult.error
+    ? []
+    : experienceResult.experience ?? [];
+  const education = educationResult.error
+    ? []
+    : educationResult.education ?? [];
+  const interests = interestsResult.error
+    ? []
+    : interestsResult.interests ?? [];
+
+  return (
+    <AboutClient
+      profile={profile}
+      skills={skills}
+      experience={experience}
+      education={education}
+      interests={interests}
+    />
+  );
 }

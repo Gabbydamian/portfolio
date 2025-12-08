@@ -17,21 +17,74 @@ import {
   Rocket,
   FileDown,
   Gamepad2,
+  Code,
+  Music,
+  Film,
+  Book,
+  Coffee,
+  Heart,
+  Star,
+  Zap,
+  Trophy,
+  Target,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ContactForm } from "@/components/contact-form";
 import Link from "next/link";
+import type {
+  Profile,
+  Skill,
+  Experience,
+  Education,
+  Interest,
+} from "@/app/types/profile";
 
 interface InterestType {
   icon: ReactElement;
   text: string;
 }
 
-export default function AboutClient() {
+interface AboutClientProps {
+  profile: Profile | null;
+  skills: Skill[];
+  experience: Experience[];
+  education: Education[];
+  interests: Interest[];
+}
+
+// Map icon names to Lucide components
+const iconMap: Record<string, ReactElement> = {
+  Clapperboard: <Clapperboard className="w-5 h-5" />,
+  Headphones: <Headphones className="w-5 h-5" />,
+  ChessKnight: <ChessKnight className="w-5 h-5" />,
+  Rocket: <Rocket className="w-5 h-5" />,
+  Gamepad2: <Gamepad2 className="w-5 h-5" />,
+  Code: <Code className="w-5 h-5" />,
+  Music: <Music className="w-5 h-5" />,
+  Film: <Film className="w-5 h-5" />,
+  Book: <Book className="w-5 h-5" />,
+  Coffee: <Coffee className="w-5 h-5" />,
+  Heart: <Heart className="w-5 h-5" />,
+  Star: <Star className="w-5 h-5" />,
+  Zap: <Zap className="w-5 h-5" />,
+  Trophy: <Trophy className="w-5 h-5" />,
+  Target: <Target className="w-5 h-5" />,
+  Sparkles: <Sparkles className="w-5 h-5" />,
+};
+
+export default function AboutClient({
+  profile,
+  skills: dbSkills,
+  experience: dbExperience,
+  education: dbEducation,
+  interests: dbInterests,
+}: AboutClientProps) {
   const [showContactForm, setShowContactForm] = useState(false);
 
-  const skills = [
+  // Fallback static data
+  const staticSkills = [
     {
       name: "JavaScript",
       color:
@@ -112,7 +165,17 @@ export default function AboutClient() {
     },
   ];
 
-  const interests: InterestType[] = [
+  // Use database data or fallback to static data
+  const skills = dbSkills.length > 0 ? dbSkills : staticSkills;
+
+  // Map interests with icons
+  const mappedInterests: InterestType[] = dbInterests.map((interest) => ({
+    icon: iconMap[interest.icon_name] || <Star className="w-5 h-5" />,
+    text: interest.description,
+  }));
+
+  // Fallback interests
+  const staticInterests: InterestType[] = [
     {
       icon: <Clapperboard className="w-5 h-5" />,
       text: "Classic film analysis and theory",
@@ -126,10 +189,13 @@ export default function AboutClient() {
       icon: <Rocket className="w-5 h-5" />,
       text: "Learning new technologies and skills",
     },
-    // { icon: <Gamepad2 className="w-5 h-5" />, text: "Gameplay" },
   ];
 
-  const experience = [
+  const interests =
+    mappedInterests.length > 0 ? mappedInterests : staticInterests;
+
+  // Use database data or fallback for experience and education
+  const staticExperience = [
     {
       title: "Frontend Developer",
       company: "Valdymas",
@@ -153,7 +219,9 @@ export default function AboutClient() {
     },
   ];
 
-  const education = [
+  const experience = dbExperience.length > 0 ? dbExperience : staticExperience;
+
+  const staticEducation = [
     {
       degree: "B.Sc. in Quantity Surveying",
       institution: "Obafemi Awolowo University",
@@ -176,6 +244,17 @@ export default function AboutClient() {
         "Covered CS fundamentals with C, Python, JavaScript, and SQL. Focused on algorithmic thinking and secure web development.",
     },
   ];
+
+  const education = dbEducation.length > 0 ? dbEducation : staticEducation;
+
+  // Profile data with fallbacks
+  const displayName = profile?.name || "Damian Gabriel O.";
+  const displayBio = profile?.bio || "Developer. Problem-solver. UX thinker.";
+  const displayAvatar = profile?.avatar_url || "/headshot.webp";
+  const displayResume = profile?.resume_url || "/Damian_Gabriel-Resume.pdf";
+  const displayLocation = profile?.location || "Lagos, Nigeria";
+  const displayEmail = profile?.email || "gabbydamian92@gmail.com";
+  const displayWebsite = profile?.website || "https://astridamian.vercel.app/";
 
   return (
     <MainLayout>
@@ -212,8 +291,8 @@ export default function AboutClient() {
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start px-0  py-0 md:py-4 md:px-8">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary">
                 <Image
-                  src="/headshot.webp"
-                  alt="Damian Gabriel"
+                  src={displayAvatar}
+                  alt={displayName}
                   fill
                   className="object-cover"
                   loading="eager"
@@ -221,9 +300,9 @@ export default function AboutClient() {
               </div>
               <div className="flex-1">
                 <h1 className="text-2xl md:text-4xl font-bold mb-4 flex items-center text-center md:text-left justify-self-center md:justify-self-start">
-                  Damian Gabriel O.{" "}
+                  {displayName}{" "}
                   <Link
-                    href="/Damian_Gabriel-Resume.pdf"
+                    href={displayResume}
                     target="_blank"
                     className="ml-2 hover:text-[#6B26D9] transition-colors"
                   >
@@ -373,10 +452,10 @@ export default function AboutClient() {
                   </span>
                   <span>
                     <Link
-                      href={"mailto:gabbydamian92@gmail.com"}
+                      href={`mailto:${displayEmail}`}
                       className="hover:text-primary transition-colors font-medium"
                     >
-                      gabbydamian92@gmail.com
+                      {displayEmail}
                     </Link>
                   </span>
                 </div>
@@ -386,10 +465,13 @@ export default function AboutClient() {
                   </span>
                   <span>
                     <Link
-                      href={"https://astridamian.vercel.app/"}
+                      href={displayWebsite}
                       className="hover:text-primary transition-colors font-medium"
+                      target="_blank"
                     >
-                      astridamian.dev
+                      {displayWebsite
+                        .replace(/^https?:\/\//, "")
+                        .replace(/\/$/, "")}
                     </Link>
                   </span>
                 </div>
@@ -397,7 +479,7 @@ export default function AboutClient() {
                   <span className="text-primary">
                     <MapPin className="w-5 h-5" />
                   </span>
-                  <span className="font-medium">Lagos, Nigeria</span>
+                  <span className="font-medium">{displayLocation}</span>
                 </div>
               </div>
               <div className="col-span-2">
