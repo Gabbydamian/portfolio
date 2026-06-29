@@ -8,13 +8,22 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { fetchProfile } from "@/actions/profileActions";
+import type { Profile } from "@/app/types/profile";
+
 export default function Home() {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   // This effect ensures we only render theme-dependent UI after mount
   useEffect(() => {
     setMounted(true);
+    fetchProfile().then((res) => {
+      if (res && res.profile) {
+        setProfile(res.profile);
+      }
+    });
   }, []);
 
   // Determine if dark mode based on resolvedTheme (more reliable than theme)
@@ -50,26 +59,46 @@ export default function Home() {
                   className="text-6xl md:text-8xl font-extrabold text-primary-foreground mb-6"
                   style={styles.insetText}
                 >
-                  DAM<span className="italic">I</span>AN
+                  {profile ? (
+                    (() => {
+                      const firstName = profile.full_name.split(" ")[0].toUpperCase();
+                      if (firstName === "DAMIAN") {
+                        return (
+                          <>
+                            DAM<span className="italic">I</span>AN
+                          </>
+                        );
+                      }
+                      return firstName;
+                    })()
+                  ) : (
+                    <>
+                      DAM<span className="italic">I</span>AN
+                    </>
+                  )}
                 </h1>
                 <p
                   className={`max-w-3xl mx-auto text-lg md:text-lg mb-8 ${
                     isDark ? "text-muted-foreground" : "text-black"
-                  }`}
+                  } whitespace-pre-line leading-relaxed`}
                 >
-                  Quantity Surveyor turned{" "}
-                  <span className="highlight">
-                    <span className="font-semibold text-[#06B6D4]">
-                      Software developer
-                    </span>{" "}
-                    and{" "}
-                    <span className="font-semibold text-[#22C55E]">
-                      IT expert
-                    </span>
-                  </span>
-                  , bringing analytical precision to web applications. Building
-                  responsive web experiences that simplify complexity across
-                  diverse domains.
+                  {profile?.bio || (
+                    <>
+                      Quantity Surveyor turned{" "}
+                      <span className="highlight">
+                        <span className="font-semibold text-[#06B6D4]">
+                          Software developer
+                        </span>{" "}
+                        and{" "}
+                        <span className="font-semibold text-[#22C55E]">
+                          IT expert
+                        </span>
+                      </span>
+                      , bringing analytical precision to web applications. Building
+                      responsive web experiences that simplify complexity across
+                      diverse domains.
+                    </>
+                  )}
                 </p>
               </motion.div>
             ) : (

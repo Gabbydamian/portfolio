@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import AboutClient from "../../components/about-client";
+
+export const revalidate = 3600; // Revalidate every hour (ISR)
 import {
   fetchProfile,
   fetchSkills,

@@ -66,11 +66,11 @@ Live site: [https://astrid-damian.vercel.app/](https://astrid-damian.vercel.app/
 │   ├── blog/             # Blog pages
 │   │   ├── [slug]/       # Dynamic blog post routes
 │   │   └── submit/       # Blog submission form
-│   └── projects/         # Projects showcase
+│   ├── projects/         # Projects showcase
+│   └── sitemap.ts        # Dynamic sitemap generation
 ├── components/           # Reusable React components
 ├── public/               # Static assets
-│   ├── robots.txt        # Search engine instructions
-│   └── sitemap.xml       # Site structure for crawlers
+│   └── robots.txt        # Search engine instructions
 └── styles/               # Global styles
 ```
 

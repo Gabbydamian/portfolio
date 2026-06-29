@@ -19,13 +19,14 @@ import type {
 } from "@/app/types/profile";
 import { uploadImage } from "@/lib/image-utils";
 import { createClient } from "@/utils/supabase/supabase";
+import { createPublicClient } from "@/utils/supabase/public";
 
 // =============================================
 // PROFILE ACTIONS
 // =============================================
 
 export async function fetchProfile() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("profile")
@@ -130,7 +131,7 @@ export async function uploadResume(file: File) {
 // =============================================
 
 export async function fetchSkills() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("skills")
@@ -237,7 +238,7 @@ export async function reorderSkills(skillIds: string[]) {
 // =============================================
 
 export async function fetchExperience() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("experience")
@@ -343,7 +344,7 @@ export async function reorderExperience(expIds: string[]) {
 // =============================================
 
 export async function fetchEducation() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("education")
@@ -449,7 +450,7 @@ export async function reorderEducation(eduIds: string[]) {
 // =============================================
 
 export async function fetchInterests() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("interests")

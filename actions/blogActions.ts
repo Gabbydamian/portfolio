@@ -1,12 +1,14 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/supabase";
+import { createPublicClient } from "@/utils/supabase/public";
 import { calculateReadTime, generateSlug } from "@/lib/utils";
 // import { Blog } from "@/app/types/blog";
 import { NewBlogPost } from "@/app/types/blog";
 import { revalidateTag, revalidatePath } from "next/cache";
 export async function fetchBlogPosts(status?: string) {
-  const supabase = await createClient();
+  // If requesting approved posts, use the cookie-free public client to allow static generation (SSG)
+  const supabase = status === "approved" ? createPublicClient() : await createClient();
 
   let query = supabase
     .from("blogs")
@@ -29,7 +31,8 @@ export async function fetchBlogPosts(status?: string) {
 }
 
 export async function fetchBlogPostBySlug(slug: string) {
-  const supabase = await createClient();
+  // Use public client to allow static generation (SSG) of individual blog pages
+  const supabase = createPublicClient();
 
   const { data, error } = await supabase
     .from("blogs")

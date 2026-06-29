@@ -1,5 +1,7 @@
 import { MainLayout } from "@/components/main-layout";
 import { fetchProjects } from "@/actions/projectActions";
+
+export const revalidate = 3600; // Revalidate every hour (ISR)
 import { Projects } from "@/components/Projects";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { HydrationBoundary } from "@tanstack/react-query";

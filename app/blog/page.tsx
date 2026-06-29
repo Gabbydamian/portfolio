@@ -1,6 +1,8 @@
 import { MainLayout } from "@/components/main-layout";
 import Blogs from "@/components/Blogs";
 import { fetchBlogPosts } from "@/actions/blogActions";
+
+export const revalidate = 3600; // Revalidate every hour (ISR)
 import {
   QueryClient,
   dehydrate,

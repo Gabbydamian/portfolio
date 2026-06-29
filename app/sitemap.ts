@@ -1,4 +1,5 @@
 import { fetchBlogPosts } from "@/actions/blogActions";
+import { fetchLearningPosts } from "@/actions/learningActions";
 import { MetadataRoute } from "next";
 import { unstable_cache } from 'next/cache';
 
@@ -17,6 +18,24 @@ const getCachedBlogPosts = unstable_cache(
     {
         revalidate: 3600, // 1 hour in seconds
         tags: ['blog-posts', 'sitemap']
+    }
+);
+
+// Cache the learning posts fetch for 1 hour
+const getCachedLearningPosts = unstable_cache(
+    async () => {
+        try {
+            const learningResult = await fetchLearningPosts();
+            return learningResult.posts || [];
+        } catch (error) {
+            console.error('Error fetching learning posts for sitemap:', error);
+            return [];
+        }
+    },
+    ['sitemap-learning-posts'],
+    {
+        revalidate: 3600, // 1 hour in seconds
+        tags: ['learning-posts', 'sitemap']
     }
 );
 
@@ -67,11 +86,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
 
     try {
-        // Get cached blog posts
-        const blogPosts = await getCachedBlogPosts();
+        // Get cached blog posts and learning posts in parallel
+        const [blogPosts, learningPosts] = await Promise.all([
+            getCachedBlogPosts(),
+            getCachedLearningPosts()
+        ]);
 
         const blogUrls = blogPosts.map((post: any) => ({
             url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: post.date_created ? post.date_created.split("T")[0] : today,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+        }));
+
+        const learningUrls = learningPosts.map((post: any) => ({
+            url: `${baseUrl}/learning/${post.slug}`,
             lastModified: post.date_created ? post.date_created.split("T")[0] : today,
             changeFrequency: "monthly" as const,
             priority: 0.7,
@@ -85,6 +114,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 priority: route.priority,
             })),
             ...blogUrls,
+            ...learningUrls,
         ];
     } catch (error) {
         console.error('Error generating sitemap:', error);

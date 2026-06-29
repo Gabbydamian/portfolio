@@ -176,28 +176,34 @@ export default function AboutClient({
                     <FileDown className="w-6 h-6" />
                   </Link>
                 </h1>
-                <p className="text-muted-foreground mb-6 text-center md:text-justify">
-                  <span className="font-semibold text-rose-500">
-                    Developer.{" "}
-                  </span>
-                  <span className="font-semibold text-amber-500">
-                    Problem-solver.{" "}
-                  </span>
-                  <span className="font-semibold text-cyan-500">
-                    UX thinker.{" "}
-                  </span>
-                  I build full-stack web apps that are
-                  <span className="text-green-400 font-medium">
-                    {" "}
-                    fast, clean, and built to scale.{" "}
-                  </span>
-                  A product MVP, admin dashboard, or internal tool? I've got you
-                  covered. I build with{" "}
-                  <span className="text-blue-400 font-medium">React</span>,{" "}
-                  <span className="text-blue-400 font-medium">Next.js</span>,
-                  and modern backend stacks, I focus on {""}
-                  detail, performance, and creating products that people
-                  actually enjoy using.
+                <p className="text-muted-foreground mb-6 text-center md:text-justify whitespace-pre-line leading-relaxed">
+                  {profile?.bio ? (
+                    profile.bio
+                  ) : (
+                    <>
+                      <span className="font-semibold text-rose-500">
+                        Developer.{" "}
+                      </span>
+                      <span className="font-semibold text-amber-500">
+                        Problem-solver.{" "}
+                      </span>
+                      <span className="font-semibold text-cyan-500">
+                        UX thinker.{" "}
+                      </span>
+                      I build full-stack web apps that are
+                      <span className="text-green-400 font-medium">
+                        {" "}
+                        fast, clean, and built to scale.{" "}
+                      </span>
+                      A product MVP, admin dashboard, or internal tool? I've got you
+                      covered. I build with{" "}
+                      <span className="text-blue-400 font-medium">React</span>,{" "}
+                      <span className="text-blue-400 font-medium">Next.js</span>,
+                      and modern backend stacks, I focus on {""}
+                      detail, performance, and creating products that people
+                      actually enjoy using.
+                    </>
+                  )}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {skills.map((skill) => (

@@ -1,8 +1,10 @@
 import { MainLayout } from "@/components/main-layout";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import { fetchLearningPostBySlug } from "@/actions/learningActions";
+import { fetchLearningPostBySlug, fetchLearningPosts } from "@/actions/learningActions";
 import type { Metadata } from "next";
+
+export const revalidate = 3600; // Revalidate every hour (ISR)
 
 const LearningPostPageWithSpinner = dynamic(
   () => import("@/components/learning-post"),
@@ -17,17 +19,25 @@ const LearningPostPageWithSpinner = dynamic(
 );
 
 type Params = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
+
+export async function generateStaticParams() {
+  const result = await fetchLearningPosts();
+  const posts = result.error ? [] : result.posts ?? [];
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const result = await fetchLearningPostBySlug(slug);
   const post = result?.post;
 

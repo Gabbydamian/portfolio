@@ -1,8 +1,10 @@
 import { MainLayout } from "@/components/main-layout";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import { fetchBlogPostBySlug } from "@/actions/blogActions";
+import { fetchBlogPostBySlug, fetchBlogPosts } from "@/actions/blogActions";
 import type { Metadata } from "next";
+
+export const revalidate = 3600; // Revalidate every hour (ISR)
 
 const BlogPageWithSpinner = dynamic(() => import("@/components/Blog"), {
   loading: () => (
@@ -14,17 +16,25 @@ const BlogPageWithSpinner = dynamic(() => import("@/components/Blog"), {
 });
 
 type Params = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
+
+export async function generateStaticParams() {
+  const result = await fetchBlogPosts("approved");
+  const blogs = result.error ? [] : result.blogs ?? [];
+  return blogs.map((blog) => ({
+    slug: blog.slug,
+  }));
+}
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const result = await fetchBlogPostBySlug(slug);
   const post = result?.blogPost;
 

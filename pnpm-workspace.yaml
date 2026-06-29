@@ -1,0 +1,6 @@
+allowBuilds:
+  '@vercel/speed-insights': true
+  es5-ext: true
+  react-particles: true
+  sharp: true
+  tsparticles-engine: true

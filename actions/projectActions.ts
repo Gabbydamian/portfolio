@@ -1,10 +1,12 @@
 "use server";
 import { Project, NewProject } from "@/app/types/project";
 import { createClient } from "@/utils/supabase/supabase";
+import { createPublicClient } from "@/utils/supabase/public";
 import { revalidatePath } from "next/cache";
 
 export async function fetchProjects() {
-  const supabase = await createClient();
+  // Use public client to allow static generation (SSG) of projects page
+  const supabase = createPublicClient();
 
   const { data, error } = await supabase
     .from("projects")

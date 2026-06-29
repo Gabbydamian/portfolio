@@ -1,12 +1,13 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/supabase";
+import { createPublicClient } from "@/utils/supabase/public";
 import { calculateReadTime, generateSlug } from "@/lib/utils";
 import { NewLearningPost, LearningPost } from "@/app/types/learning";
 import { revalidateTag } from "next/cache";
 
 export async function fetchLearningPosts() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("learning_posts")
@@ -23,7 +24,7 @@ export async function fetchLearningPosts() {
 }
 
 export async function fetchLearningPostsByTopic(topic: string) {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     let query = supabase
         .from("learning_posts")
@@ -46,7 +47,7 @@ export async function fetchLearningPostsByTopic(topic: string) {
 }
 
 export async function fetchLearningPostBySlug(slug: string) {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("learning_posts")
@@ -64,7 +65,7 @@ export async function fetchLearningPostBySlug(slug: string) {
 }
 
 export async function getAllTopics() {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
 
     const { data, error } = await supabase
         .from("learning_posts")
